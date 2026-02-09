@@ -15,28 +15,28 @@ const HeroSection = () => {
   const navigate = useNavigate();
 
   return (
-    <section className="relative pt-32 md:pt-40 pb-8 px-4 sm:px-6 md:px-10 lg:px-16">
+    <section className="relative pt-28 md:pt-36 pb-4 px-3 sm:px-4 md:px-8 lg:px-14">
       {/* Main Hero Card - Rounded Corners */}
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7, ease: 'easeOut' }}
-        className="relative rounded-[2rem] md:rounded-[3rem] border border-border/50 bg-card/60 backdrop-blur-md overflow-hidden"
+        className="relative rounded-[1.5rem] sm:rounded-[2rem] md:rounded-[3rem] border border-border/50 bg-card/60 backdrop-blur-md overflow-hidden"
       >
-        {/* Glow effect */}
+        {/* Glow line top */}
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[60%] h-[2px] bg-gradient-to-r from-transparent via-primary/60 to-transparent" />
 
-        {/* Content Area */}
-        <div className="relative z-10 px-6 sm:px-10 md:px-16 pt-12 sm:pt-16 md:pt-20 pb-0">
+        {/* Upper content area */}
+        <div className="relative z-10 px-5 sm:px-8 md:px-12 pt-8 sm:pt-12 md:pt-16">
           {/* Badge */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/30 mb-6 sm:mb-8"
+            className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 border border-primary/30 mb-5 sm:mb-6"
           >
-            <Sparkles className="w-3.5 h-3.5 text-primary animate-spin" style={{ animationDuration: '4s' }} />
-            <span className="text-xs sm:text-sm font-medium text-primary">Our Engineers Are Waiting For Your Order</span>
+            <Sparkles className="w-3 h-3 text-primary animate-spin" style={{ animationDuration: '4s' }} />
+            <span className="text-[10px] sm:text-xs font-medium text-primary">Our Engineers Are Waiting</span>
             <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
           </motion.div>
 
@@ -45,16 +45,17 @@ const HeroSection = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.3 }}
-            className="font-heading text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold leading-tight mb-4"
+            className="font-heading text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-bold leading-tight mb-3 sm:mb-4"
           >
             Transform Your
             <br />
             <span className="text-gradient">Career Story</span>
             <br />
-            Into <span className="relative inline-block">
+            Into{' '}
+            <span className="relative inline-block">
               <span className="relative z-10">Art</span>
               <motion.span
-                className="absolute -inset-2 bg-primary/20 rounded-lg -z-0"
+                className="absolute -inset-1.5 sm:-inset-2 bg-primary/20 rounded-lg -z-0"
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}
                 transition={{ delay: 0.8, type: 'spring' }}
@@ -67,10 +68,10 @@ const HeroSection = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.4 }}
-            className="text-base sm:text-lg md:text-xl text-muted-foreground max-w-2xl mb-8 sm:mb-10 leading-relaxed"
+            className="text-sm sm:text-base md:text-lg text-muted-foreground max-w-xl mb-6 sm:mb-8 leading-relaxed"
           >
             We craft stunning, personalized portfolios that showcase your unique talents
-            and help you stand out in today's competitive world.
+            and help you stand out.
           </motion.p>
 
           {/* CTA Buttons */}
@@ -78,13 +79,13 @@ const HeroSection = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.5 }}
-            className="flex flex-col sm:flex-row gap-3 sm:gap-4 mb-10 md:mb-0"
+            className="flex flex-row gap-3"
           >
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.98 }}>
-              <Button variant="hero" size="xl" className="group w-full sm:w-auto">
-                <span className="flex items-center gap-2">
+              <Button variant="hero" size="lg" className="group text-xs sm:text-sm">
+                <span className="flex items-center gap-1.5">
                   Start Your Journey
-                  <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-200" />
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </span>
               </Button>
             </motion.div>
@@ -92,7 +93,7 @@ const HeroSection = () => {
               <Button
                 variant="heroOutline"
                 size="lg"
-                className="backdrop-blur-sm w-full sm:w-auto px-6"
+                className="backdrop-blur-sm text-xs sm:text-sm"
                 onClick={() => setShowPortfolios(true)}
               >
                 View Example
@@ -101,35 +102,31 @@ const HeroSection = () => {
           </motion.div>
         </div>
 
-        {/* Bottom Section: L-shaped layout with Video */}
-        <div className="relative z-10 flex flex-col md:flex-row gap-0">
-          {/* Video Section - Bottom Left with rounded top-right */}
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.6 }}
-            className="w-full md:w-[60%] lg:w-[55%] p-4 sm:p-6 md:p-8"
-          >
-            <div className="relative rounded-2xl md:rounded-3xl overflow-hidden border border-border/30 bg-background/50">
-              <video
-                src={portfolioVideo}
-                autoPlay
-                loop
-                muted
-                playsInline
-                className="w-full aspect-video object-cover"
-              />
-              {/* Video overlay label */}
-              <div className="absolute bottom-3 left-3 px-3 py-1.5 rounded-full bg-background/80 backdrop-blur-sm border border-border/50">
-                <span className="text-xs font-medium text-muted-foreground">
-                  📽️ কেন পোর্টফোলিও দরকার?
-                </span>
+        {/* Bottom L-Shape: Video bottom-left, empty space right */}
+        <div className="relative z-10 mt-6 sm:mt-8 md:mt-10">
+          <div className="flex">
+            {/* Video - bottom left, smaller */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.6 }}
+              className="w-[55%] sm:w-[50%] md:w-[45%] p-3 sm:p-4 md:p-6"
+            >
+              <div className="relative rounded-xl sm:rounded-2xl overflow-hidden border border-border/30">
+                <video
+                  src={portfolioVideo}
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  className="w-full aspect-video object-cover"
+                />
               </div>
-            </div>
-          </motion.div>
+            </motion.div>
 
-          {/* Right spacer block for L-shape effect (hidden on mobile) */}
-          <div className="hidden md:block flex-1" />
+            {/* Right empty space - part of the L shape */}
+            <div className="flex-1" />
+          </div>
         </div>
       </motion.div>
 
@@ -157,10 +154,8 @@ const HeroSection = () => {
               >
                 <X className="w-4 h-4 text-muted-foreground" />
               </button>
-
               <h3 className="font-heading text-xl font-bold mb-2">Portfolio Examples</h3>
               <p className="text-muted-foreground text-sm mb-6">Choose a portfolio to explore</p>
-
               <div className="flex flex-col gap-3">
                 {portfolios.map((portfolio, index) => (
                   <motion.button
