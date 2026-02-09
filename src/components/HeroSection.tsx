@@ -120,11 +120,14 @@ const HeroSection = () => {
                 className="w-full aspect-video object-cover"
               />
               {/* Video overlay label */}
-              <div className="absolute bottom-3 left-3 px-3 py-1.5 rounded-full bg-background/80 backdrop-blur-sm border border-border/50">
-                <span className="text-xs font-medium text-muted-foreground">
-                  📽️ কেন পোর্টফোলিও দরকার?
+              <button
+                onClick={() => navigate('/portfolio-design')}
+                className="absolute bottom-3 left-3 px-4 py-2 rounded-full bg-background/80 backdrop-blur-sm border border-border/50 hover:border-primary/50 hover:bg-primary/10 transition-all duration-300 group cursor-pointer"
+              >
+                <span className="text-xs font-medium text-muted-foreground group-hover:text-primary transition-colors">
+                  📽️ Your work deserves a stunning page →
                 </span>
-              </div>
+              </button>
             </div>
           </motion.div>
 
