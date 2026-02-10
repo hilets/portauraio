@@ -86,8 +86,8 @@ const Header = () => {
                     exit={{ opacity: 0, y: -20 }}
                     transition={{ delay: 0.1 + i * 0.06, duration: 0.5, ease: 'easeOut' }}
                   >
-                    <Link
-                      to={page.href}
+                    <a
+                      href={page.href}
                       onClick={() => setIsMenuOpen(false)}
                       className={`group flex items-center gap-3 text-3xl md:text-5xl font-heading font-bold transition-colors duration-300 py-2 ${
                         location.pathname === page.href
@@ -97,10 +97,24 @@ const Header = () => {
                     >
                       {page.name}
                       <ArrowUpRight className="w-5 h-5 md:w-7 md:h-7 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300" />
-                    </Link>
+                    </a>
                   </motion.div>
                 ))}
               </nav>
+
+              {/* CTA Button */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.5, duration: 0.4 }}
+                className="mt-8"
+              >
+                <a href="/contact">
+                  <Button variant="hero" size="xl" onClick={() => setIsMenuOpen(false)}>
+                    Order Now
+                  </Button>
+                </a>
+              </motion.div>
             </div>
           </motion.div>
         )}
@@ -187,25 +201,17 @@ const Header = () => {
                     initial={{ scale: 0, rotate: -180 }}
                     animate={{ scale: 1, rotate: 0 }}
                     exit={{ scale: 0, rotate: 180 }}
-                    transition={{ type: 'spring', stiffness: 500, damping: 15 }}
+                    transition={{ type: 'spring', stiffness: 800, damping: 12 }}
                     onClick={() => setIsMenuOpen(true)}
                     className="relative w-12 h-12 rounded-full bg-primary flex items-center justify-center group overflow-hidden"
                   >
                     <motion.div
                       className="absolute inset-0 bg-gradient-to-tr from-primary via-primary to-accent rounded-full"
-                      animate={{ rotate: [0, 360] }}
-                      transition={{ duration: 8, repeat: Infinity, ease: 'linear' }}
                     />
                     <motion.div
                       className="absolute inset-[2px] bg-primary rounded-full"
                     />
                     <Menu className="w-5 h-5 text-primary-foreground relative z-10 group-hover:scale-110 transition-transform" />
-                    {/* Pulse ring */}
-                    <motion.span
-                      className="absolute inset-0 rounded-full border-2 border-primary"
-                      animate={{ scale: [1, 1.5], opacity: [0.6, 0] }}
-                      transition={{ duration: 1.5, repeat: Infinity }}
-                    />
                   </motion.button>
                 ) : (
                   <motion.div
@@ -232,16 +238,11 @@ const Header = () => {
                     initial={{ scale: 0, rotate: -180 }}
                     animate={{ scale: 1, rotate: 0 }}
                     exit={{ scale: 0, rotate: 180 }}
-                    transition={{ type: 'spring', stiffness: 500, damping: 15 }}
+                    transition={{ type: 'spring', stiffness: 800, damping: 12 }}
                     onClick={() => setIsMenuOpen(true)}
                     className="relative w-10 h-10 rounded-full bg-primary flex items-center justify-center"
                   >
                     <Menu className="w-4 h-4 text-primary-foreground relative z-10" />
-                    <motion.span
-                      className="absolute inset-0 rounded-full border-2 border-primary"
-                      animate={{ scale: [1, 1.4], opacity: [0.5, 0] }}
-                      transition={{ duration: 1, repeat: Infinity }}
-                    />
                   </motion.button>
                 ) : (
                   <motion.div
