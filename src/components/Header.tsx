@@ -203,17 +203,28 @@ const Header = () => {
                     exit={{ scale: 0, rotate: 180 }}
                     transition={{ type: 'spring', stiffness: 800, damping: 12 }}
                     onClick={() => setIsMenuOpen(true)}
-                    className="relative w-12 h-12 rounded-full bg-primary flex items-center justify-center group overflow-hidden"
+                    className="relative w-12 h-12 rounded-full bg-primary flex items-center justify-center group overflow-hidden hover:shadow-[0_0_20px_hsl(185_100%_50%_/_0.4)] transition-shadow duration-300"
                   >
                     <motion.div
-                      className="absolute inset-0 bg-gradient-to-tr from-primary via-primary to-accent rounded-full"
+                      className="absolute inset-0 bg-gradient-to-tr from-primary via-primary to-accent rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                     />
                     <motion.div
                       className="absolute inset-[2px] bg-primary rounded-full"
                     />
-                    <div className="relative z-10 flex flex-col gap-[5px] group-hover:gap-[6px] transition-all">
-                      <span className="block w-5 h-[2px] bg-primary-foreground rounded-full" />
-                      <span className="block w-3.5 h-[2px] bg-primary-foreground rounded-full ml-auto" />
+                    <div className="relative z-10 flex flex-col items-end gap-[5px]">
+                      <motion.span 
+                        className="block h-[2.5px] bg-primary-foreground rounded-full"
+                        initial={false}
+                        animate={{ width: 18 }}
+                        whileHover={{ width: 20 }}
+                        style={{ width: 18 }}
+                      />
+                      <motion.span 
+                        className="block h-[2.5px] bg-primary-foreground/70 rounded-full group-hover:bg-primary-foreground transition-colors duration-300"
+                        initial={false}
+                        animate={{ width: 12 }}
+                        style={{ width: 12 }}
+                      />
                     </div>
                   </motion.button>
                 ) : (
@@ -245,9 +256,9 @@ const Header = () => {
                     onClick={() => setIsMenuOpen(true)}
                     className="relative w-10 h-10 rounded-full bg-primary flex items-center justify-center"
                   >
-                    <div className="relative z-10 flex flex-col gap-[4px]">
+                    <div className="relative z-10 flex flex-col items-end gap-[4px]">
                       <span className="block w-4 h-[2px] bg-primary-foreground rounded-full" />
-                      <span className="block w-3 h-[2px] bg-primary-foreground rounded-full ml-auto" />
+                      <span className="block w-2.5 h-[2px] bg-primary-foreground/70 rounded-full" />
                     </div>
                   </motion.button>
                 ) : (
