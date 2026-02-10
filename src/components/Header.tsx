@@ -211,7 +211,10 @@ const Header = () => {
                     <motion.div
                       className="absolute inset-[2px] bg-primary rounded-full"
                     />
-                    <Menu className="w-5 h-5 text-primary-foreground relative z-10 group-hover:scale-110 transition-transform" />
+                    <div className="relative z-10 flex flex-col gap-[5px] group-hover:gap-[6px] transition-all">
+                      <span className="block w-5 h-[2px] bg-primary-foreground rounded-full" />
+                      <span className="block w-3.5 h-[2px] bg-primary-foreground rounded-full ml-auto" />
+                    </div>
                   </motion.button>
                 ) : (
                   <motion.div
@@ -242,7 +245,10 @@ const Header = () => {
                     onClick={() => setIsMenuOpen(true)}
                     className="relative w-10 h-10 rounded-full bg-primary flex items-center justify-center"
                   >
-                    <Menu className="w-4 h-4 text-primary-foreground relative z-10" />
+                    <div className="relative z-10 flex flex-col gap-[4px]">
+                      <span className="block w-4 h-[2px] bg-primary-foreground rounded-full" />
+                      <span className="block w-3 h-[2px] bg-primary-foreground rounded-full ml-auto" />
+                    </div>
                   </motion.button>
                 ) : (
                   <motion.div
