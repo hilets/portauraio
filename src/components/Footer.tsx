@@ -5,13 +5,11 @@ import { Link } from 'react-router-dom';
 const footerLinks = {
   company: [
     { name: 'About Us', href: '/about' },
-    { name: 'Careers', href: '/careers' },
     { name: 'Contact', href: '/contact' },
   ],
   services: [
     { name: 'Portfolio Design', href: '/portfolio-design' },
     { name: 'Resume Writing', href: '/resume-writing' },
-    { name: 'Career Consulting', href: '/career-consulting' },
   ],
   legal: [
     { name: 'Privacy Policy', href: '/privacy' },

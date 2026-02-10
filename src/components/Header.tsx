@@ -15,9 +15,7 @@ const menuPages = [
   { name: 'Home', href: '/' },
   { name: 'Portfolio Design', href: '/portfolio-design' },
   { name: 'Resume Writing', href: '/resume-writing' },
-  { name: 'Career Consulting', href: '/career-consulting' },
   { name: 'About Us', href: '/about' },
-  { name: 'Careers', href: '/careers' },
   { name: 'Contact', href: '/contact' },
 ];
 
@@ -189,7 +187,7 @@ const Header = () => {
                     initial={{ scale: 0, rotate: -180 }}
                     animate={{ scale: 1, rotate: 0 }}
                     exit={{ scale: 0, rotate: 180 }}
-                    transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+                    transition={{ type: 'spring', stiffness: 500, damping: 15 }}
                     onClick={() => setIsMenuOpen(true)}
                     className="relative w-12 h-12 rounded-full bg-primary flex items-center justify-center group overflow-hidden"
                   >
@@ -234,7 +232,7 @@ const Header = () => {
                     initial={{ scale: 0, rotate: -180 }}
                     animate={{ scale: 1, rotate: 0 }}
                     exit={{ scale: 0, rotate: 180 }}
-                    transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+                    transition={{ type: 'spring', stiffness: 500, damping: 15 }}
                     onClick={() => setIsMenuOpen(true)}
                     className="relative w-10 h-10 rounded-full bg-primary flex items-center justify-center"
                   >
@@ -242,7 +240,7 @@ const Header = () => {
                     <motion.span
                       className="absolute inset-0 rounded-full border-2 border-primary"
                       animate={{ scale: [1, 1.4], opacity: [0.5, 0] }}
-                      transition={{ duration: 1.5, repeat: Infinity }}
+                      transition={{ duration: 1, repeat: Infinity }}
                     />
                   </motion.button>
                 ) : (
