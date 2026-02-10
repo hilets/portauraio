@@ -15,7 +15,7 @@ const HeroSection = () => {
   const navigate = useNavigate();
 
   return (
-    <section className="relative pt-20 md:pt-24 pb-8 px-4 sm:px-6 md:px-10 lg:px-16">
+    <section className="relative pt-24 md:pt-30 pb-8 px-4 sm:px-6 md:px-10 lg:px-16">
       {/* Main Hero Card - Rounded Corners */}
       <motion.div
         initial={{ opacity: 0, y: 30 }}

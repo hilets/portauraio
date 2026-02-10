@@ -18,6 +18,7 @@ import AdminPanel from "./pages/AdminPanel";
 import PortfolioExample from "./pages/PortfolioExample";
 import PortfolioSkills from "./pages/PortfolioSkills";
 import NotFound from "./pages/NotFound";
+import ScrollToTopOnNavigate from "./components/ScrollToTopOnNavigate";
 
 const queryClient = new QueryClient();
 
@@ -28,6 +29,7 @@ const App = () => (
         <Toaster />
         <Sonner />
         <BrowserRouter>
+          <ScrollToTopOnNavigate />
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/contact" element={<Contact />} />
