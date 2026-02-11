@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowLeft, Menu, X, ArrowUpRight } from 'lucide-react';
+import { ArrowLeft, X, ArrowUpRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 
@@ -192,89 +192,135 @@ const Header = () => {
               ))}
             </nav>
 
-            {/* Desktop CTA / Menu Button */}
+            {/* Desktop CTA / Menu Button - Morphing Animation */}
             <div className="hidden md:flex items-center gap-4">
-              <AnimatePresence mode="wait">
-                {isScrolled ? (
-                  <motion.button
-                    key="menu-btn"
-                    initial={{ scale: 0, rotate: -180 }}
-                    animate={{ scale: 1, rotate: 0 }}
-                    exit={{ scale: 0, rotate: 180 }}
-                    transition={{ type: 'spring', stiffness: 800, damping: 12 }}
-                    onClick={() => setIsMenuOpen(true)}
-                    className="relative w-12 h-12 rounded-full bg-primary flex items-center justify-center group overflow-hidden hover:shadow-[0_0_20px_hsl(185_100%_50%_/_0.4)] transition-shadow duration-300"
-                  >
-                    <motion.div
-                      className="absolute inset-0 bg-gradient-to-tr from-primary via-primary to-accent rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                    />
-                    <motion.div
-                      className="absolute inset-[2px] bg-primary rounded-full"
-                    />
-                    <div className="relative z-10 flex flex-col items-end gap-[5px]">
-                      <motion.span 
-                        className="block h-[2.5px] bg-primary-foreground rounded-full"
-                        initial={false}
-                        animate={{ width: 18 }}
-                        whileHover={{ width: 20 }}
-                        style={{ width: 18 }}
-                      />
-                      <motion.span 
-                        className="block h-[2.5px] bg-primary-foreground/70 rounded-full group-hover:bg-primary-foreground transition-colors duration-300"
-                        initial={false}
-                        animate={{ width: 12 }}
-                        style={{ width: 12 }}
-                      />
-                    </div>
-                  </motion.button>
-                ) : (
-                  <motion.div
-                    key="order-btn"
-                    initial={{ scale: 0 }}
-                    animate={{ scale: 1 }}
-                    exit={{ scale: 0 }}
-                    transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-                  >
-                    <Button variant="hero" size="lg">
-                      Order Now
-                    </Button>
-                  </motion.div>
-                )}
-              </AnimatePresence>
+              <motion.button
+                onClick={() => isScrolled ? setIsMenuOpen(true) : navigate('/contact')}
+                className="relative rounded-full bg-primary flex items-center justify-center group overflow-hidden cursor-pointer"
+                animate={{
+                  width: isScrolled ? 52 : 140,
+                  height: isScrolled ? 52 : 48,
+                  borderRadius: 9999,
+                }}
+                transition={{
+                  duration: 0.6,
+                  ease: [0.76, 0, 0.24, 1],
+                }}
+                whileHover={{ 
+                  scale: 1.06,
+                  boxShadow: '0 0 25px hsl(185 100% 50% / 0.5)',
+                }}
+                whileTap={{ scale: 0.94 }}
+              >
+                {/* Gradient overlay */}
+                <motion.div
+                  className="absolute inset-0 bg-gradient-to-tr from-primary via-primary to-accent rounded-full"
+                  animate={{ opacity: isScrolled ? 0 : 0.3 }}
+                  whileHover={{ opacity: 1 }}
+                  transition={{ duration: 0.3 }}
+                />
+                <motion.div className="absolute inset-[2px] bg-primary rounded-full" />
+
+                {/* "Order Now" text */}
+                <motion.span
+                  className="relative z-10 text-primary-foreground font-heading font-semibold tracking-wider text-base whitespace-nowrap"
+                  animate={{
+                    opacity: isScrolled ? 0 : 1,
+                    scale: isScrolled ? 0.3 : 1,
+                    filter: isScrolled ? 'blur(8px)' : 'blur(0px)',
+                  }}
+                  transition={{
+                    duration: 0.4,
+                    ease: [0.76, 0, 0.24, 1],
+                    delay: isScrolled ? 0 : 0.2,
+                  }}
+                  style={{ position: isScrolled ? 'absolute' : 'relative' }}
+                >
+                  Order Now
+                </motion.span>
+
+                {/* 2-line menu icon */}
+                <motion.div
+                  className="absolute z-10 flex flex-col items-end gap-[6px]"
+                  animate={{
+                    opacity: isScrolled ? 1 : 0,
+                    scale: isScrolled ? 1 : 0.3,
+                    rotate: isScrolled ? 0 : -180,
+                    filter: isScrolled ? 'blur(0px)' : 'blur(8px)',
+                  }}
+                  transition={{
+                    duration: 0.5,
+                    ease: [0.76, 0, 0.24, 1],
+                    delay: isScrolled ? 0.15 : 0,
+                  }}
+                >
+                  <motion.span
+                    className="block h-[2.5px] bg-primary-foreground rounded-full"
+                    animate={{ width: isScrolled ? 20 : 0 }}
+                    transition={{ duration: 0.4, delay: isScrolled ? 0.25 : 0, ease: [0.76, 0, 0.24, 1] }}
+                  />
+                  <motion.span
+                    className="block h-[2.5px] bg-primary-foreground/70 rounded-full group-hover:bg-primary-foreground transition-colors duration-300"
+                    animate={{ width: isScrolled ? 13 : 0 }}
+                    transition={{ duration: 0.4, delay: isScrolled ? 0.32 : 0, ease: [0.76, 0, 0.24, 1] }}
+                  />
+                </motion.div>
+              </motion.button>
             </div>
 
-            {/* Mobile: Order Now or Menu */}
+            {/* Mobile: Morphing Order Now / Menu */}
             <div className="md:hidden">
-              <AnimatePresence mode="wait">
-                {isScrolled ? (
-                  <motion.button
-                    key="mobile-menu"
-                    initial={{ scale: 0, rotate: -180 }}
-                    animate={{ scale: 1, rotate: 0 }}
-                    exit={{ scale: 0, rotate: 180 }}
-                    transition={{ type: 'spring', stiffness: 800, damping: 12 }}
-                    onClick={() => setIsMenuOpen(true)}
-                    className="relative w-10 h-10 rounded-full bg-primary flex items-center justify-center"
-                  >
-                    <div className="relative z-10 flex flex-col items-end gap-[4px]">
-                      <span className="block w-4 h-[2px] bg-primary-foreground rounded-full" />
-                      <span className="block w-2.5 h-[2px] bg-primary-foreground/70 rounded-full" />
-                    </div>
-                  </motion.button>
-                ) : (
-                  <motion.div
-                    key="mobile-order"
-                    initial={{ scale: 0 }}
-                    animate={{ scale: 1 }}
-                    exit={{ scale: 0 }}
-                    transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-                  >
-                    <Button variant="hero" size="sm" className="rounded-full px-5">
-                      Order Now
-                    </Button>
-                  </motion.div>
-                )}
-              </AnimatePresence>
+              <motion.button
+                onClick={() => isScrolled ? setIsMenuOpen(true) : navigate('/contact')}
+                className="relative rounded-full bg-primary flex items-center justify-center group overflow-hidden"
+                animate={{
+                  width: isScrolled ? 42 : 100,
+                  height: isScrolled ? 42 : 36,
+                }}
+                transition={{
+                  duration: 0.6,
+                  ease: [0.76, 0, 0.24, 1],
+                }}
+                whileTap={{ scale: 0.92 }}
+              >
+                <motion.div className="absolute inset-[1px] bg-primary rounded-full" />
+
+                {/* "Order Now" text */}
+                <motion.span
+                  className="relative z-10 text-primary-foreground font-heading font-semibold tracking-wider text-sm whitespace-nowrap"
+                  animate={{
+                    opacity: isScrolled ? 0 : 1,
+                    scale: isScrolled ? 0.3 : 1,
+                    filter: isScrolled ? 'blur(6px)' : 'blur(0px)',
+                  }}
+                  transition={{ duration: 0.35, ease: [0.76, 0, 0.24, 1], delay: isScrolled ? 0 : 0.15 }}
+                  style={{ position: isScrolled ? 'absolute' : 'relative' }}
+                >
+                  Order Now
+                </motion.span>
+
+                {/* 2-line menu icon */}
+                <motion.div
+                  className="absolute z-10 flex flex-col items-end gap-[4px]"
+                  animate={{
+                    opacity: isScrolled ? 1 : 0,
+                    scale: isScrolled ? 1 : 0.3,
+                    rotate: isScrolled ? 0 : -180,
+                  }}
+                  transition={{ duration: 0.45, ease: [0.76, 0, 0.24, 1], delay: isScrolled ? 0.12 : 0 }}
+                >
+                  <motion.span
+                    className="block h-[2px] bg-primary-foreground rounded-full"
+                    animate={{ width: isScrolled ? 16 : 0 }}
+                    transition={{ duration: 0.35, delay: isScrolled ? 0.2 : 0 }}
+                  />
+                  <motion.span
+                    className="block h-[2px] bg-primary-foreground/70 rounded-full"
+                    animate={{ width: isScrolled ? 10 : 0 }}
+                    transition={{ duration: 0.35, delay: isScrolled ? 0.26 : 0 }}
+                  />
+                </motion.div>
+              </motion.button>
             </div>
           </div>
         </div>
