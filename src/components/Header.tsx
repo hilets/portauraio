@@ -29,7 +29,14 @@ const Header = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 300);
+      const featuresSection = document.getElementById('features');
+      if (featuresSection) {
+        const featuresTop = featuresSection.getBoundingClientRect().top;
+        // Show menu button only between hero scroll and features section
+        setIsScrolled(window.scrollY > 300 && featuresTop > 200);
+      } else {
+        setIsScrolled(window.scrollY > 300);
+      }
     };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
