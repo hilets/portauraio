@@ -198,7 +198,7 @@ const Header = () => {
                 onClick={() => isScrolled ? setIsMenuOpen(true) : navigate('/contact')}
                 className="relative rounded-full bg-primary flex items-center justify-center group overflow-hidden cursor-pointer"
                 animate={{
-                  width: isScrolled ? 52 : 140,
+                  width: isScrolled ? 52 : 170,
                   height: isScrolled ? 52 : 48,
                   borderRadius: 9999,
                 }}
@@ -274,7 +274,7 @@ const Header = () => {
                 onClick={() => isScrolled ? setIsMenuOpen(true) : navigate('/contact')}
                 className="relative rounded-full bg-primary flex items-center justify-center group overflow-hidden"
                 animate={{
-                  width: isScrolled ? 42 : 100,
+                  width: isScrolled ? 42 : 120,
                   height: isScrolled ? 42 : 36,
                 }}
                 transition={{
