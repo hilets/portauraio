@@ -1,17 +1,15 @@
-import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowRight, Sparkles, X } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { ArrowRight, Sparkles, ExternalLink } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import portfolioVideo from '@/assets/portfolio-importance.mp4';
 
 const portfolios = [
-  { id: 'portfolio-example', name: 'Photographer Portfolio', description: 'Editorial & Wedding' },
-  { id: 'portfolio-skills', name: 'Personal Skills Portfolio', description: 'Skills & Gaming' },
+  { id: 'portfolio-example', name: 'Photographer Portfolio', description: 'Editorial & Wedding Photography' },
+  { id: 'portfolio-skills', name: 'Personal Skills Portfolio', description: 'Skills & Gaming Portfolio' },
 ];
 
 const HeroSection = () => {
-  const [showPortfolios, setShowPortfolios] = useState(false);
   const navigate = useNavigate();
 
   return (
@@ -93,11 +91,46 @@ const HeroSection = () => {
                 variant="heroOutline"
                 size="lg"
                 className="backdrop-blur-sm w-full sm:w-auto px-6"
-                onClick={() => setShowPortfolios(true)}
+                onClick={() => {
+                  const section = document.getElementById('portfolio-examples');
+                  if (section) {
+                    section.scrollIntoView({ behavior: 'smooth' });
+                  }
+                }}
               >
                 View Example
               </Button>
             </motion.div>
+          </motion.div>
+
+          {/* Portfolio Quick Links */}
+          <motion.div
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.6 }}
+            className="flex flex-wrap gap-3 mb-10 md:mb-0"
+          >
+            {portfolios.map((portfolio, index) => (
+              <motion.button
+                key={portfolio.id}
+                initial={{ opacity: 0, x: -10 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.7 + index * 0.1 }}
+                whileHover={{ scale: 1.04, y: -2 }}
+                whileTap={{ scale: 0.97 }}
+                onClick={() => navigate(`/${portfolio.id}`)}
+                className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-muted/50 hover:bg-primary/10 border border-border/50 hover:border-primary/30 transition-all group"
+              >
+                <ExternalLink className="w-3.5 h-3.5 text-muted-foreground group-hover:text-primary transition-colors" />
+                <div className="text-left">
+                  <span className="text-xs font-semibold text-foreground group-hover:text-primary transition-colors block leading-tight">
+                    {portfolio.name}
+                  </span>
+                  <span className="text-[10px] text-muted-foreground leading-tight">{portfolio.description}</span>
+                </div>
+                <ArrowRight className="w-3 h-3 text-muted-foreground group-hover:text-primary group-hover:translate-x-0.5 transition-all" />
+              </motion.button>
+            ))}
           </motion.div>
         </div>
 
@@ -127,60 +160,6 @@ const HeroSection = () => {
         </div>
       </motion.div>
 
-      {/* Portfolio Popup Modal */}
-      <AnimatePresence>
-        {showPortfolios && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-background/80 backdrop-blur-md"
-            onClick={() => setShowPortfolios(false)}
-          >
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9, y: 20 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.9, y: 20 }}
-              transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-              className="bg-card border border-border/50 rounded-3xl p-6 sm:p-8 w-full max-w-md shadow-2xl relative"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <button
-                onClick={() => setShowPortfolios(false)}
-                className="absolute top-4 right-4 w-8 h-8 rounded-full bg-muted flex items-center justify-center hover:bg-muted/80 transition-colors"
-              >
-                <X className="w-4 h-4 text-muted-foreground" />
-              </button>
-
-              <h3 className="font-heading text-xl font-bold mb-2">Portfolio Examples</h3>
-              <p className="text-muted-foreground text-sm mb-6">Choose a portfolio to explore</p>
-
-              <div className="flex flex-col gap-3">
-                {portfolios.map((portfolio, index) => (
-                  <motion.button
-                    key={portfolio.id}
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: index * 0.1 }}
-                    onClick={() => {
-                      navigate(`/${portfolio.id}`);
-                      setShowPortfolios(false);
-                    }}
-                    className="w-full p-4 text-left bg-muted/50 hover:bg-primary/10 border border-border/50 hover:border-primary/30 rounded-2xl transition-all group"
-                  >
-                    <div className="font-heading text-sm font-bold text-foreground group-hover:text-primary transition-colors">
-                      {portfolio.name}
-                    </div>
-                    <div className="text-xs text-muted-foreground mt-1">
-                      {portfolio.description}
-                    </div>
-                  </motion.button>
-                ))}
-              </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
     </section>
   );
 };

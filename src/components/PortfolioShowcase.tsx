@@ -1,5 +1,5 @@
-import { useState, useRef } from 'react';
-import { Play, Pause, ExternalLink } from 'lucide-react';
+import { useState, useRef, useEffect } from 'react';
+import { Play, Pause, ExternalLink, Volume2, VolumeX } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import portfolioHero from '@/assets/portfolio-hero.jpg';
 import portfolioBrand from '@/assets/portfolio-brand.jpg';
@@ -21,6 +21,7 @@ const portfolios = [
     image: portfolioHero,
     video: videoDev,
     gradient: 'from-pink-500/20 to-rose-500/20',
+    accent: 'bg-pink-500',
   },
   {
     title: 'Creative Studio',
@@ -28,6 +29,7 @@ const portfolios = [
     image: portfolioBrand,
     video: videoBrand,
     gradient: 'from-blue-500/20 to-indigo-500/20',
+    accent: 'bg-blue-500',
   },
   {
     title: 'Visual Storyteller',
@@ -35,6 +37,7 @@ const portfolios = [
     image: portfolioLifestyle,
     video: videoPhoto,
     gradient: 'from-purple-500/20 to-violet-500/20',
+    accent: 'bg-purple-500',
   },
   {
     title: 'Elegant Portraits',
@@ -42,6 +45,7 @@ const portfolios = [
     image: portfolioPortrait,
     video: videoPortrait,
     gradient: 'from-orange-500/20 to-amber-500/20',
+    accent: 'bg-orange-500',
   },
   {
     title: 'Wedding Dreams',
@@ -49,6 +53,7 @@ const portfolios = [
     image: portfolioWedding,
     video: videoWedding,
     gradient: 'from-teal-500/20 to-cyan-500/20',
+    accent: 'bg-teal-500',
   },
   {
     title: 'Minimalist Design',
@@ -56,6 +61,7 @@ const portfolios = [
     image: beforePortfolio,
     video: videoUiux,
     gradient: 'from-primary/20 to-lime-glow/20',
+    accent: 'bg-primary',
   },
 ];
 
@@ -86,7 +92,7 @@ const PortfolioShowcase = () => {
           style={{ scrollBehavior: 'smooth', WebkitOverflowScrolling: 'touch' }}
         >
           {topRow.map((item, index) => (
-            <PortfolioCard key={`row1-${index}`} item={item} />
+            <PortfolioCard key={`row1-${index}`} item={item} index={index} />
           ))}
         </div>
       </div>
@@ -98,7 +104,7 @@ const PortfolioShowcase = () => {
           style={{ scrollBehavior: 'smooth', WebkitOverflowScrolling: 'touch' }}
         >
           {bottomRow.map((item, index) => (
-            <PortfolioCard key={`row2-${index}`} item={item} />
+            <PortfolioCard key={`row2-${index}`} item={item} index={index + 3} />
           ))}
         </div>
       </div>
@@ -122,9 +128,14 @@ const PortfolioShowcase = () => {
   );
 };
 
-const PortfolioCard = ({ item }: { item: typeof portfolios[0] }) => {
+const PortfolioCard = ({ item, index }: { item: typeof portfolios[0]; index: number }) => {
   const [isPlaying, setIsPlaying] = useState(false);
+  const [isMuted, setIsMuted] = useState(true);
+  const [progress, setProgress] = useState(0);
+  const [isHovered, setIsHovered] = useState(false);
+  const [thumbnailLoaded, setThumbnailLoaded] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
+  const progressInterval = useRef<ReturnType<typeof setInterval> | null>(null);
 
   const toggleVideo = () => {
     if (!videoRef.current) return;
@@ -136,51 +147,138 @@ const PortfolioCard = ({ item }: { item: typeof portfolios[0] }) => {
     setIsPlaying(!isPlaying);
   };
 
+  const toggleMute = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (!videoRef.current) return;
+    videoRef.current.muted = !isMuted;
+    setIsMuted(!isMuted);
+  };
+
+  useEffect(() => {
+    if (isPlaying && videoRef.current) {
+      progressInterval.current = setInterval(() => {
+        if (videoRef.current) {
+          const pct = (videoRef.current.currentTime / videoRef.current.duration) * 100;
+          setProgress(isNaN(pct) ? 0 : pct);
+        }
+      }, 100);
+    } else {
+      if (progressInterval.current) clearInterval(progressInterval.current);
+    }
+    return () => {
+      if (progressInterval.current) clearInterval(progressInterval.current);
+    };
+  }, [isPlaying]);
+
+  // Auto-play preview on hover
+  useEffect(() => {
+    if (!videoRef.current) return;
+    if (isHovered && !isPlaying) {
+      videoRef.current.currentTime = 0;
+      videoRef.current.play();
+      setIsPlaying(true);
+    }
+  }, [isHovered]);
+
   return (
-    <div className="flex-shrink-0 w-[280px] md:w-[320px] snap-start">
+    <motion.div
+      className="flex-shrink-0 w-[280px] md:w-[320px] snap-start"
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.3 }}
+      transition={{ duration: 0.5, delay: index * 0.08 }}
+    >
       <div
-        className="rounded-2xl bg-card border border-border/50 h-full relative overflow-hidden hover:border-primary/30 transition-colors duration-200 group cursor-pointer"
+        className="rounded-2xl bg-card border border-border/50 h-full relative overflow-hidden hover:border-primary/30 transition-all duration-300 group cursor-pointer hover:shadow-lg hover:shadow-primary/5"
         onClick={toggleVideo}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => {
+          setIsHovered(false);
+          if (isPlaying && videoRef.current) {
+            videoRef.current.pause();
+            setIsPlaying(false);
+            setProgress(0);
+          }
+        }}
       >
         {/* Gradient Background */}
-        <div className={`absolute inset-0 bg-gradient-to-br ${item.gradient} opacity-10`} />
+        <div className={`absolute inset-0 bg-gradient-to-br ${item.gradient} opacity-0 group-hover:opacity-20 transition-opacity duration-500`} />
 
         {/* Image / Video */}
         <div className="relative z-10 w-full h-[180px] md:h-[200px] overflow-hidden rounded-t-2xl">
+          {/* Thumbnail with loading state */}
+          <div className={`absolute inset-0 bg-muted animate-pulse ${thumbnailLoaded ? 'hidden' : 'block'}`} />
           <img
             src={item.image}
             alt={item.title}
-            className={`w-full h-full object-cover transition-all duration-500 ${isPlaying ? 'opacity-0' : 'opacity-100 group-hover:scale-105'}`}
+            loading="lazy"
+            onLoad={() => setThumbnailLoaded(true)}
+            className={`w-full h-full object-cover transition-all duration-700 ${isPlaying ? 'opacity-0 scale-110' : 'opacity-100 group-hover:scale-105'}`}
           />
           <video
             ref={videoRef}
             src={item.video}
             loop
-            muted
+            muted={isMuted}
             playsInline
-            onEnded={() => setIsPlaying(false)}
+            preload="metadata"
+            onEnded={() => {
+              setIsPlaying(false);
+              setProgress(0);
+            }}
             className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ${isPlaying ? 'opacity-100' : 'opacity-0'}`}
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-card/80 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-card/90 via-card/20 to-transparent" />
+
+          {/* Category badge */}
+          <div className="absolute top-3 left-3 z-20">
+            <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-semibold uppercase tracking-wider bg-background/70 backdrop-blur-md text-foreground border border-border/30`}>
+              <span className={`w-1.5 h-1.5 rounded-full ${item.accent}`} />
+              {item.category}
+            </span>
+          </div>
+
+          {/* Mute toggle */}
+          <AnimatePresence>
+            {isPlaying && (
+              <motion.button
+                initial={{ opacity: 0, scale: 0.5 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.5 }}
+                onClick={toggleMute}
+                className="absolute top-3 right-3 z-20 w-7 h-7 rounded-full bg-background/60 backdrop-blur-sm flex items-center justify-center hover:bg-background/80 transition-colors"
+              >
+                {isMuted ? <VolumeX className="w-3.5 h-3.5 text-foreground" /> : <Volume2 className="w-3.5 h-3.5 text-foreground" />}
+              </motion.button>
+            )}
+          </AnimatePresence>
 
           {/* Play/Pause overlay */}
-          <AnimatePresence>
+          <div className="absolute inset-0 flex items-center justify-center z-10">
             <motion.div
-              key={isPlaying ? 'pause' : 'play'}
-              initial={{ opacity: 0, scale: 0.5 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.5 }}
-              className="absolute inset-0 flex items-center justify-center"
+              animate={{
+                scale: isHovered ? 1 : 0.8,
+                opacity: isPlaying ? (isHovered ? 0.9 : 0) : (isHovered ? 1 : 0.7),
+              }}
+              transition={{ duration: 0.3 }}
+              className="w-12 h-12 rounded-full bg-primary/90 backdrop-blur-sm flex items-center justify-center shadow-lg shadow-primary/20"
             >
-              <div className={`w-12 h-12 rounded-full bg-primary/80 backdrop-blur-sm flex items-center justify-center transition-opacity duration-300 ${isPlaying ? 'opacity-0 group-hover:opacity-100' : 'opacity-80 group-hover:opacity-100'}`}>
-                {isPlaying ? (
-                  <Pause className="w-5 h-5 text-primary-foreground" />
-                ) : (
-                  <Play className="w-5 h-5 text-primary-foreground ml-0.5" />
-                )}
-              </div>
+              {isPlaying ? (
+                <Pause className="w-5 h-5 text-primary-foreground" />
+              ) : (
+                <Play className="w-5 h-5 text-primary-foreground ml-0.5" />
+              )}
             </motion.div>
-          </AnimatePresence>
+          </div>
+
+          {/* Progress bar */}
+          <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-border/30 z-20">
+            <motion.div
+              className="h-full bg-primary"
+              style={{ width: `${progress}%` }}
+              transition={{ duration: 0.1 }}
+            />
+          </div>
         </div>
 
         {/* Info */}
@@ -192,7 +290,7 @@ const PortfolioCard = ({ item }: { item: typeof portfolios[0] }) => {
           <p className="text-xs text-muted-foreground">{item.category}</p>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 
