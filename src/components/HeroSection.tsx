@@ -1,13 +1,8 @@
 import { motion } from 'framer-motion';
-import { ArrowRight, Sparkles, ExternalLink } from 'lucide-react';
+import { ArrowRight, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
 import portfolioVideo from '@/assets/portfolio-importance.mp4';
-
-const portfolios = [
-  { id: 'portfolio-example', name: 'Photographer Portfolio', description: 'Editorial & Wedding Photography' },
-  { id: 'portfolio-skills', name: 'Personal Skills Portfolio', description: 'Skills & Gaming Portfolio' },
-];
 
 const HeroSection = () => {
   const navigate = useNavigate();
@@ -103,35 +98,6 @@ const HeroSection = () => {
             </motion.div>
           </motion.div>
 
-          {/* Portfolio Quick Links */}
-          <motion.div
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.6 }}
-            className="flex flex-wrap gap-3 mb-10 md:mb-0"
-          >
-            {portfolios.map((portfolio, index) => (
-              <motion.button
-                key={portfolio.id}
-                initial={{ opacity: 0, x: -10 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.7 + index * 0.1 }}
-                whileHover={{ scale: 1.04, y: -2 }}
-                whileTap={{ scale: 0.97 }}
-                onClick={() => navigate(`/${portfolio.id}`)}
-                className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-muted/50 hover:bg-primary/10 border border-border/50 hover:border-primary/30 transition-all group"
-              >
-                <ExternalLink className="w-3.5 h-3.5 text-muted-foreground group-hover:text-primary transition-colors" />
-                <div className="text-left">
-                  <span className="text-xs font-semibold text-foreground group-hover:text-primary transition-colors block leading-tight">
-                    {portfolio.name}
-                  </span>
-                  <span className="text-[10px] text-muted-foreground leading-tight">{portfolio.description}</span>
-                </div>
-                <ArrowRight className="w-3 h-3 text-muted-foreground group-hover:text-primary group-hover:translate-x-0.5 transition-all" />
-              </motion.button>
-            ))}
-          </motion.div>
         </div>
 
         {/* Bottom Section: L-shaped layout with Video */}

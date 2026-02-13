@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { Play, Pause, ExternalLink, Volume2, VolumeX } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 import portfolioHero from '@/assets/portfolio-hero.jpg';
 import portfolioBrand from '@/assets/portfolio-brand.jpg';
 import portfolioLifestyle from '@/assets/portfolio-lifestyle.jpg';
@@ -13,24 +14,32 @@ import videoBrand from '@/assets/portfolio-video-brand.mp4';
 import videoWedding from '@/assets/portfolio-video-wedding.mp4';
 import videoPortrait from '@/assets/portfolio-video-portrait.mp4';
 import videoUiux from '@/assets/portfolio-video-uiux.mp4';
+import videoPhotographer from '@/assets/portfolio-video-photographer.mp4';
+import videoSkills from '@/assets/portfolio-video-skills.mp4';
+
+// Featured portfolio examples with navigation links
+const featuredPortfolios = [
+  {
+    title: 'Photographer Portfolio',
+    category: 'Editorial & Wedding Photography',
+    image: portfolioLifestyle,
+    video: videoPhotographer,
+    gradient: 'from-amber-500/20 to-orange-500/20',
+    accent: 'bg-amber-500',
+    link: '/portfolio-example',
+  },
+  {
+    title: 'Personal Skills Portfolio',
+    category: 'Skills & Gaming Portfolio',
+    image: portfolioHero,
+    video: videoSkills,
+    gradient: 'from-violet-500/20 to-purple-500/20',
+    accent: 'bg-violet-500',
+    link: '/portfolio-skills',
+  },
+];
 
 const portfolios = [
-  {
-    title: 'Modern Developer',
-    category: 'Web Development',
-    image: portfolioHero,
-    video: videoDev,
-    gradient: 'from-pink-500/20 to-rose-500/20',
-    accent: 'bg-pink-500',
-  },
-  {
-    title: 'Creative Studio',
-    category: 'Brand Design',
-    image: portfolioBrand,
-    video: videoBrand,
-    gradient: 'from-blue-500/20 to-indigo-500/20',
-    accent: 'bg-blue-500',
-  },
   {
     title: 'Visual Storyteller',
     category: 'Photography',
@@ -66,9 +75,6 @@ const portfolios = [
 ];
 
 const PortfolioShowcase = () => {
-  const topRow = portfolios.slice(0, 3);
-  const bottomRow = portfolios.slice(3);
-
   return (
     <section id="portfolio-examples" className="py-16 md:py-24 relative overflow-hidden">
       <div className="container-custom">
@@ -85,26 +91,23 @@ const PortfolioShowcase = () => {
         </div>
       </div>
 
-      {/* Row 1 */}
+      {/* Featured Portfolio Examples */}
+      <div className="container-custom mb-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+          {featuredPortfolios.map((item, index) => (
+            <FeaturedPortfolioCard key={`featured-${index}`} item={item} index={index} />
+          ))}
+        </div>
+      </div>
+
+      {/* More Examples */}
       <div className="relative mb-8 ml-4 md:ml-8 lg:mx-0">
         <div
           className="flex gap-6 overflow-x-auto scrollbar-hide pb-2 snap-x snap-mandatory justify-start lg:justify-center lg:px-16"
           style={{ scrollBehavior: 'smooth', WebkitOverflowScrolling: 'touch' }}
         >
-          {topRow.map((item, index) => (
-            <PortfolioCard key={`row1-${index}`} item={item} index={index} />
-          ))}
-        </div>
-      </div>
-
-      {/* Row 2 */}
-      <div className="relative ml-8 md:ml-16 lg:mx-0">
-        <div
-          className="flex gap-6 overflow-x-auto scrollbar-hide pb-2 snap-x snap-mandatory justify-start lg:justify-center lg:px-16"
-          style={{ scrollBehavior: 'smooth', WebkitOverflowScrolling: 'touch' }}
-        >
-          {bottomRow.map((item, index) => (
-            <PortfolioCard key={`row2-${index}`} item={item} index={index + 3} />
+          {portfolios.map((item, index) => (
+            <PortfolioCard key={`row-${index}`} item={item} index={index} />
           ))}
         </div>
       </div>
@@ -125,6 +128,140 @@ const PortfolioShowcase = () => {
         </div>
       </div>
     </section>
+  );
+};
+
+// Featured portfolio card with navigation link
+const FeaturedPortfolioCard = ({ item, index }: { item: typeof featuredPortfolios[0]; index: number }) => {
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [isMuted, setIsMuted] = useState(true);
+  const [progress, setProgress] = useState(0);
+  const [thumbnailLoaded, setThumbnailLoaded] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const progressInterval = useRef<ReturnType<typeof setInterval> | null>(null);
+  const navigate = useNavigate();
+
+  const toggleVideo = () => {
+    if (!videoRef.current) return;
+    if (isPlaying) {
+      videoRef.current.pause();
+    } else {
+      videoRef.current.play();
+    }
+    setIsPlaying(!isPlaying);
+  };
+
+  const toggleMute = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (!videoRef.current) return;
+    videoRef.current.muted = !isMuted;
+    setIsMuted(!isMuted);
+  };
+
+  useEffect(() => {
+    if (isPlaying && videoRef.current) {
+      progressInterval.current = setInterval(() => {
+        if (videoRef.current) {
+          const pct = (videoRef.current.currentTime / videoRef.current.duration) * 100;
+          setProgress(isNaN(pct) ? 0 : pct);
+        }
+      }, 100);
+    } else {
+      if (progressInterval.current) clearInterval(progressInterval.current);
+    }
+    return () => {
+      if (progressInterval.current) clearInterval(progressInterval.current);
+    };
+  }, [isPlaying]);
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.3 }}
+      transition={{ duration: 0.5, delay: index * 0.15 }}
+    >
+      <div
+        className="rounded-2xl bg-card border border-border/50 relative overflow-hidden hover:border-primary/30 transition-all duration-300 group cursor-pointer hover:shadow-lg hover:shadow-primary/5"
+        onClick={toggleVideo}
+      >
+        <div className={`absolute inset-0 bg-gradient-to-br ${item.gradient} opacity-0 group-hover:opacity-20 transition-opacity duration-500`} />
+
+        <div className="relative z-10 w-full aspect-video overflow-hidden rounded-t-2xl">
+          <div className={`absolute inset-0 bg-muted animate-pulse ${thumbnailLoaded ? 'hidden' : 'block'}`} />
+          <img
+            src={item.image}
+            alt={item.title}
+            loading="lazy"
+            onLoad={() => setThumbnailLoaded(true)}
+            className={`w-full h-full object-cover transition-all duration-700 ${isPlaying ? 'opacity-0 scale-110' : 'opacity-100 group-hover:scale-105'}`}
+          />
+          <video
+            ref={videoRef}
+            src={item.video}
+            loop
+            muted={isMuted}
+            playsInline
+            preload="metadata"
+            className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ${isPlaying ? 'opacity-100' : 'opacity-0'}`}
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-card/90 via-card/20 to-transparent" />
+
+          <div className="absolute top-3 left-3 z-20">
+            <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-semibold uppercase tracking-wider bg-background/70 backdrop-blur-md text-foreground border border-border/30">
+              <span className={`w-1.5 h-1.5 rounded-full ${item.accent}`} />
+              {item.category}
+            </span>
+          </div>
+
+          <AnimatePresence>
+            {isPlaying && (
+              <motion.button
+                initial={{ opacity: 0, scale: 0.5 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.5 }}
+                onClick={toggleMute}
+                className="absolute top-3 right-3 z-20 w-7 h-7 rounded-full bg-background/60 backdrop-blur-sm flex items-center justify-center hover:bg-background/80 transition-colors"
+              >
+                {isMuted ? <VolumeX className="w-3.5 h-3.5 text-foreground" /> : <Volume2 className="w-3.5 h-3.5 text-foreground" />}
+              </motion.button>
+            )}
+          </AnimatePresence>
+
+          <div className="absolute inset-0 flex items-center justify-center z-10">
+            <motion.div
+              animate={{ scale: isPlaying ? 0.8 : 1, opacity: isPlaying ? 0 : 0.9 }}
+              transition={{ duration: 0.3 }}
+              className="w-14 h-14 rounded-full bg-primary/90 backdrop-blur-sm flex items-center justify-center shadow-lg shadow-primary/20"
+            >
+              {isPlaying ? <Pause className="w-6 h-6 text-primary-foreground" /> : <Play className="w-6 h-6 text-primary-foreground ml-0.5" />}
+            </motion.div>
+          </div>
+
+          <div className="absolute bottom-0 left-0 right-0 h-1 bg-border/30 z-20">
+            <motion.div className="h-full bg-primary" style={{ width: `${progress}%` }} transition={{ duration: 0.1 }} />
+          </div>
+        </div>
+
+        <div className="relative z-10 p-5 flex items-center justify-between">
+          <div>
+            <h3 className="font-heading font-semibold text-foreground text-base md:text-lg">{item.title}</h3>
+            <p className="text-xs text-muted-foreground mt-1">{item.category}</p>
+          </div>
+          <motion.button
+            whileHover={{ scale: 1.15 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={(e) => {
+              e.stopPropagation();
+              navigate(item.link);
+            }}
+            className="w-10 h-10 rounded-full bg-primary/10 hover:bg-primary/20 border border-primary/30 flex items-center justify-center transition-colors"
+          >
+            <ExternalLink className="w-4 h-4 text-primary" />
+          </motion.button>
+        </div>
+      </div>
+    </motion.div>
   );
 };
 
