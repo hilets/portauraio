@@ -17,6 +17,8 @@ import Cookies from "./pages/Cookies";
 import AdminPanel from "./pages/AdminPanel";
 import PortfolioExample from "./pages/PortfolioExample";
 import PortfolioSkills from "./pages/PortfolioSkills";
+import Templates from "./pages/Templates";
+import Checkout from "./pages/Checkout";
 import NotFound from "./pages/NotFound";
 import ScrollToTopOnNavigate from "./components/ScrollToTopOnNavigate";
 
@@ -44,6 +46,8 @@ const App = () => (
             <Route path="/admin" element={<AdminPanel />} />
             <Route path="/portfolio-example" element={<PortfolioExample />} />
             <Route path="/portfolio-skills" element={<PortfolioSkills />} />
+            <Route path="/templates" element={<Templates />} />
+            <Route path="/checkout/:templateId" element={<Checkout />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
