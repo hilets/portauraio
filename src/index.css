@@ -71,6 +71,64 @@
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
 
+  .theme-minimal {
+    --background: 0 0% 97%;
+    --foreground: 0 0% 12%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 12%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 12%;
+
+    --primary: 0 0% 15%;
+    --primary-foreground: 0 0% 97%;
+
+    --secondary: 0 0% 92%;
+    --secondary-foreground: 0 0% 20%;
+
+    --muted: 0 0% 94%;
+    --muted-foreground: 0 0% 45%;
+
+    --accent: 0 0% 90%;
+    --accent-foreground: 0 0% 15%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 0 0% 88%;
+    --input: 0 0% 88%;
+    --ring: 0 0% 15%;
+
+    --radius: 0.75rem;
+
+    --lime: 0 0% 15%;
+    --lime-glow: 0 0% 25%;
+    --dark: 0 0% 97%;
+    --dark-lighter: 0 0% 94%;
+    --dark-card: 0 0% 100%;
+
+    --gradient-primary: linear-gradient(135deg, hsl(0 0% 15%), hsl(0 0% 25%));
+    --gradient-dark: linear-gradient(180deg, hsl(0 0% 98%), hsl(0 0% 96%));
+    --gradient-glow: radial-gradient(circle at center, hsl(0 0% 15% / 0.05), transparent 70%);
+    --gradient-lime: var(--gradient-primary);
+
+    --shadow-primary: 0 0 40px hsl(0 0% 15% / 0.1);
+    --shadow-lime: var(--shadow-primary);
+    --shadow-card: 0 4px 20px hsl(0 0% 0% / 0.06);
+
+    --font-heading: 'Inter', sans-serif;
+    --font-body: 'Inter', sans-serif;
+
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 0 0% 20%;
+    --sidebar-primary: 0 0% 15%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 0 0% 94%;
+    --sidebar-accent-foreground: 0 0% 15%;
+    --sidebar-border: 0 0% 90%;
+    --sidebar-ring: 0 0% 15%;
+  }
 }
 
 @layer base {

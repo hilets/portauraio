@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowLeft, X, ArrowUpRight } from 'lucide-react';
+import { ArrowLeft, X, ArrowUpRight, Sun, Moon, LayoutGrid } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useTheme } from '@/contexts/ThemeContext';
 
 const navLinks = [
   { name: 'Home', href: '/' },
@@ -14,6 +15,7 @@ const navLinks = [
 const menuPages = [
   { name: 'Home', href: '/' },
   { name: 'Portfolio Design', href: '/portfolio-design' },
+  { name: 'Templates', href: '/templates' },
   { name: 'Resume Writing', href: '/resume-writing' },
   { name: 'About Us', href: '/about' },
   { name: 'Contact', href: '/contact' },
@@ -26,13 +28,13 @@ const Header = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const isHomePage = location.pathname === '/';
+  const { theme, toggleTheme } = useTheme();
 
   useEffect(() => {
     const handleScroll = () => {
       const featuresSection = document.getElementById('features');
       if (featuresSection) {
         const featuresTop = featuresSection.getBoundingClientRect().top;
-        // Show menu button only between hero scroll and features section
         setIsScrolled(window.scrollY > 80 && featuresTop > 200);
       } else {
         setIsScrolled(window.scrollY > 80);
@@ -55,7 +57,6 @@ const Header = () => {
     }
   }, [isMobileMenuOpen]);
 
-  // Close menu on route change
   useEffect(() => {
     setIsMenuOpen(false);
   }, [location.pathname]);
@@ -72,7 +73,19 @@ const Header = () => {
             transition={{ duration: 0.6, ease: [0.76, 0, 0.24, 1] }}
             className="fixed inset-0 z-[60] bg-background"
           >
-            <div className="absolute top-4 right-4 md:top-6 md:right-8">
+            <div className="absolute top-4 right-4 md:top-6 md:right-8 flex items-center gap-3">
+              {/* Theme Toggle */}
+              <motion.button
+                onClick={toggleTheme}
+                className="w-12 h-12 rounded-full bg-primary/10 border border-primary/30 flex items-center justify-center text-primary hover:bg-primary/20 transition-colors"
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+                title={theme === 'lime' ? 'Switch to Minimal' : 'Switch to Cyber'}
+              >
+                {theme === 'lime' ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+              </motion.button>
+
+              {/* Close */}
               <motion.button
                 onClick={() => setIsMenuOpen(false)}
                 className="w-12 h-12 rounded-full bg-primary/10 border border-primary/30 flex items-center justify-center text-primary hover:bg-primary/20 transition-colors"
@@ -102,6 +115,7 @@ const Header = () => {
                           : 'text-foreground/40 hover:text-foreground'
                       }`}
                     >
+                      {page.name === 'Templates' && <LayoutGrid className="w-6 h-6 md:w-8 md:h-8" />}
                       {page.name}
                       <ArrowUpRight className="w-5 h-5 md:w-7 md:h-7 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300" />
                     </a>
@@ -200,11 +214,11 @@ const Header = () => {
               ))}
             </nav>
 
-            {/* Desktop CTA / Menu Button - Morphing Animation */}
+            {/* Desktop CTA / Menu Button - Morphing Animation (BLUR FIXED) */}
             <div className="hidden md:flex items-center gap-4">
               <motion.button
                 onClick={() => isScrolled ? setIsMenuOpen(true) : navigate('/contact')}
-                className="relative rounded-full bg-primary flex items-center justify-center group overflow-hidden cursor-pointer"
+                className="relative rounded-full bg-primary flex items-center justify-center group cursor-pointer"
                 animate={{
                   width: isScrolled ? 52 : 170,
                   height: isScrolled ? 52 : 48,
@@ -229,16 +243,15 @@ const Header = () => {
                 />
                 <motion.div className="absolute inset-[2px] bg-primary rounded-full" />
 
-                {/* "Order Now" text */}
+                {/* "Order Now" text - NO BLUR */}
                 <motion.span
                   className="relative z-10 text-primary-foreground font-heading font-semibold tracking-wider text-base whitespace-nowrap"
                   animate={{
                     opacity: isScrolled ? 0 : 1,
-                    scale: isScrolled ? 0.3 : 1,
-                    filter: isScrolled ? 'blur(8px)' : 'blur(0px)',
+                    scale: isScrolled ? 0.5 : 1,
                   }}
                   transition={{
-                    duration: 0.8,
+                    duration: 0.5,
                     ease: [0.22, 1, 0.36, 1],
                     delay: isScrolled ? 0 : 0.4,
                   }}
@@ -247,30 +260,34 @@ const Header = () => {
                   Order Now
                 </motion.span>
 
-                {/* 2-line menu icon */}
+                {/* 3-dot menu icon */}
                 <motion.div
-                  className="absolute z-10 flex flex-col items-end gap-[6px]"
+                  className="absolute z-10 flex flex-col items-center gap-[5px]"
                   animate={{
                     opacity: isScrolled ? 1 : 0,
                     scale: isScrolled ? 1 : 0.3,
-                    rotate: isScrolled ? 0 : -180,
-                    filter: isScrolled ? 'blur(0px)' : 'blur(8px)',
+                    rotate: isScrolled ? 0 : -90,
                   }}
                   transition={{
-                    duration: 0.9,
+                    duration: 0.6,
                     ease: [0.22, 1, 0.36, 1],
                     delay: isScrolled ? 0.3 : 0,
                   }}
                 >
                   <motion.span
-                    className="block h-[2.5px] bg-primary-foreground rounded-full"
-                    animate={{ width: isScrolled ? 20 : 0 }}
-                    transition={{ duration: 0.7, delay: isScrolled ? 0.45 : 0, ease: [0.22, 1, 0.36, 1] }}
+                    className="block w-[5px] h-[5px] bg-primary-foreground rounded-full"
+                    animate={{ scale: isScrolled ? 1 : 0 }}
+                    transition={{ duration: 0.4, delay: isScrolled ? 0.4 : 0 }}
                   />
                   <motion.span
-                    className="block h-[2.5px] bg-primary-foreground/70 rounded-full group-hover:bg-primary-foreground transition-colors duration-300"
-                    animate={{ width: isScrolled ? 13 : 0 }}
-                    transition={{ duration: 0.7, delay: isScrolled ? 0.55 : 0, ease: [0.22, 1, 0.36, 1] }}
+                    className="block w-[5px] h-[5px] bg-primary-foreground rounded-full"
+                    animate={{ scale: isScrolled ? 1 : 0 }}
+                    transition={{ duration: 0.4, delay: isScrolled ? 0.5 : 0 }}
+                  />
+                  <motion.span
+                    className="block w-[5px] h-[5px] bg-primary-foreground rounded-full"
+                    animate={{ scale: isScrolled ? 1 : 0 }}
+                    transition={{ duration: 0.4, delay: isScrolled ? 0.6 : 0 }}
                   />
                 </motion.div>
               </motion.button>
@@ -280,7 +297,7 @@ const Header = () => {
             <div className="md:hidden">
               <motion.button
                 onClick={() => isScrolled ? setIsMenuOpen(true) : navigate('/contact')}
-                className="relative rounded-full bg-primary flex items-center justify-center group overflow-hidden"
+                className="relative rounded-full bg-primary flex items-center justify-center group"
                 animate={{
                   width: isScrolled ? 42 : 120,
                   height: isScrolled ? 42 : 36,
@@ -293,39 +310,43 @@ const Header = () => {
               >
                 <motion.div className="absolute inset-[1px] bg-primary rounded-full" />
 
-                {/* "Order Now" text */}
+                {/* "Order Now" text - NO BLUR */}
                 <motion.span
                   className="relative z-10 text-primary-foreground font-heading font-semibold tracking-wider text-sm whitespace-nowrap"
                   animate={{
                     opacity: isScrolled ? 0 : 1,
-                    scale: isScrolled ? 0.3 : 1,
-                    filter: isScrolled ? 'blur(6px)' : 'blur(0px)',
+                    scale: isScrolled ? 0.5 : 1,
                   }}
-                  transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: isScrolled ? 0 : 0.4 }}
+                  transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1], delay: isScrolled ? 0 : 0.4 }}
                   style={{ position: isScrolled ? 'absolute' : 'relative' }}
                 >
                   Order Now
                 </motion.span>
 
-                {/* 2-line menu icon */}
+                {/* 3-dot menu icon */}
                 <motion.div
-                  className="absolute z-10 flex flex-col items-end gap-[4px]"
+                  className="absolute z-10 flex flex-col items-center gap-[4px]"
                   animate={{
                     opacity: isScrolled ? 1 : 0,
                     scale: isScrolled ? 1 : 0.3,
-                    rotate: isScrolled ? 0 : -180,
+                    rotate: isScrolled ? 0 : -90,
                   }}
-                  transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1], delay: isScrolled ? 0.3 : 0 }}
+                  transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay: isScrolled ? 0.3 : 0 }}
                 >
                   <motion.span
-                    className="block h-[2px] bg-primary-foreground rounded-full"
-                    animate={{ width: isScrolled ? 16 : 0 }}
-                    transition={{ duration: 0.7, delay: isScrolled ? 0.45 : 0, ease: [0.22, 1, 0.36, 1] }}
+                    className="block w-[4px] h-[4px] bg-primary-foreground rounded-full"
+                    animate={{ scale: isScrolled ? 1 : 0 }}
+                    transition={{ duration: 0.4, delay: isScrolled ? 0.4 : 0 }}
                   />
                   <motion.span
-                    className="block h-[2px] bg-primary-foreground/70 rounded-full"
-                    animate={{ width: isScrolled ? 10 : 0 }}
-                    transition={{ duration: 0.7, delay: isScrolled ? 0.55 : 0, ease: [0.22, 1, 0.36, 1] }}
+                    className="block w-[4px] h-[4px] bg-primary-foreground rounded-full"
+                    animate={{ scale: isScrolled ? 1 : 0 }}
+                    transition={{ duration: 0.4, delay: isScrolled ? 0.5 : 0 }}
+                  />
+                  <motion.span
+                    className="block w-[4px] h-[4px] bg-primary-foreground rounded-full"
+                    animate={{ scale: isScrolled ? 1 : 0 }}
+                    transition={{ duration: 0.4, delay: isScrolled ? 0.6 : 0 }}
                   />
                 </motion.div>
               </motion.button>
