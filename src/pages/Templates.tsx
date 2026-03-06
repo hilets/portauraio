@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { ArrowRight, Eye, Sparkles, Star } from 'lucide-react';
+import { Eye, Sparkles, Star } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
 import Header from '@/components/Header';
@@ -205,12 +205,12 @@ const Templates = () => {
                   </p>
 
                   <Button
-                    variant="hero"
+                    variant="outline"
                     size="sm"
                     className="w-full gap-1.5 text-xs sm:text-sm h-8 sm:h-9"
                     onClick={() => navigate(`/checkout/${template.id}`)}
                   >
-                    Buy Now <ArrowRight className="w-3.5 h-3.5" />
+                    <Eye className="w-3.5 h-3.5" /> View
                   </Button>
                 </div>
               </motion.div>

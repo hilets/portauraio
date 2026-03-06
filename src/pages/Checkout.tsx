@@ -8,12 +8,12 @@ import Footer from '@/components/Footer';
 import CustomCursor from '@/components/CustomCursor';
 
 const templates: Record<string, { name: string; price: number; image: string }> = {
-  'ecom-fashion': { name: 'Fashion Store', price: 109, image: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=600&h=400&fit=crop' },
-  'ecom-electronics': { name: 'Tech Hub', price: 119, image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=600&h=400&fit=crop' },
-  'ecom-food': { name: 'Fresh Market', price: 100, image: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600&h=400&fit=crop' },
-  'ecom-beauty': { name: 'Glow Studio', price: 115, image: 'https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=600&h=400&fit=crop' },
-  'ecom-furniture': { name: 'Home Craft', price: 129, image: 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=600&h=400&fit=crop' },
-  'ecom-sports': { name: 'Active Gear', price: 105, image: 'https://images.unsplash.com/photo-1517649763962-0c623066013b?w=600&h=400&fit=crop' },
+  'portfolio-photographer': { name: 'Photographer Portfolio', price: 109, image: '/src/assets/template-photographer.jpg' },
+  'portfolio-uiux': { name: 'UI/UX Designer Portfolio', price: 119, image: '/src/assets/template-uiux.jpg' },
+  'portfolio-developer': { name: 'Developer Portfolio', price: 115, image: '/src/assets/template-developer.jpg' },
+  'portfolio-artist': { name: 'Creative Artist Portfolio', price: 100, image: '/src/assets/template-artist.jpg' },
+  'portfolio-videographer': { name: 'Videographer Portfolio', price: 129, image: '/src/assets/template-videographer.jpg' },
+  'portfolio-model': { name: 'Model Portfolio', price: 105, image: '/src/assets/template-model.jpg' },
 };
 
 const Checkout = () => {
