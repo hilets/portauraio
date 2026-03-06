@@ -8,14 +8,14 @@ import Index from "./pages/Index";
 import Contact from "./pages/Contact";
 import About from "./pages/About";
 import Careers from "./pages/Careers";
-import PortfolioDesign from "./pages/PortfolioDesign";
+
 import ResumeWriting from "./pages/ResumeWriting";
 import CareerConsulting from "./pages/CareerConsulting";
 import Privacy from "./pages/Privacy";
 import Terms from "./pages/Terms";
 import Cookies from "./pages/Cookies";
 import AdminPanel from "./pages/AdminPanel";
-import PortfolioExample from "./pages/PortfolioExample";
+
 import PortfolioSkills from "./pages/PortfolioSkills";
 import Templates from "./pages/Templates";
 import Checkout from "./pages/Checkout";
@@ -37,14 +37,14 @@ const App = () => (
             <Route path="/contact" element={<Contact />} />
             <Route path="/about" element={<About />} />
             <Route path="/careers" element={<Careers />} />
-            <Route path="/portfolio-design" element={<PortfolioDesign />} />
+            
             <Route path="/resume-writing" element={<ResumeWriting />} />
             <Route path="/career-consulting" element={<CareerConsulting />} />
             <Route path="/privacy" element={<Privacy />} />
             <Route path="/terms" element={<Terms />} />
             <Route path="/cookies" element={<Cookies />} />
             <Route path="/admin" element={<AdminPanel />} />
-            <Route path="/portfolio-example" element={<PortfolioExample />} />
+            
             <Route path="/portfolio-skills" element={<PortfolioSkills />} />
             <Route path="/templates" element={<Templates />} />
             <Route path="/checkout/:templateId" element={<Checkout />} />

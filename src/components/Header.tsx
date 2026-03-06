@@ -7,14 +7,13 @@ import { useTheme } from '@/contexts/ThemeContext';
 
 const navLinks = [
   { name: 'Home', href: '/' },
-  { name: 'Portfolio Design', href: '/portfolio-design' },
+  { name: 'Templates', href: '/templates' },
   { name: 'About Us', href: '/about' },
   { name: 'Contact', href: '/contact' },
 ];
 
 const menuPages = [
   { name: 'Home', href: '/' },
-  { name: 'Portfolio Design', href: '/portfolio-design' },
   { name: 'Templates', href: '/templates' },
   { name: 'Resume Writing', href: '/resume-writing' },
   { name: 'About Us', href: '/about' },
@@ -260,13 +259,12 @@ const Header = () => {
                   Order Now
                 </motion.span>
 
-                {/* 3-dot menu icon */}
+                {/* Interactive 3-line hamburger icon */}
                 <motion.div
-                  className="absolute z-10 flex flex-col items-center gap-[5px]"
+                  className="absolute z-10 flex flex-col items-center justify-center gap-[5px] w-6 h-6"
                   animate={{
                     opacity: isScrolled ? 1 : 0,
                     scale: isScrolled ? 1 : 0.3,
-                    rotate: isScrolled ? 0 : -90,
                   }}
                   transition={{
                     duration: 0.6,
@@ -275,19 +273,31 @@ const Header = () => {
                   }}
                 >
                   <motion.span
-                    className="block w-[5px] h-[5px] bg-primary-foreground rounded-full"
-                    animate={{ scale: isScrolled ? 1 : 0 }}
-                    transition={{ duration: 0.4, delay: isScrolled ? 0.4 : 0 }}
+                    className="block w-5 h-[2px] bg-primary-foreground rounded-full origin-center"
+                    animate={{
+                      rotate: isMenuOpen ? 45 : 0,
+                      y: isMenuOpen ? 7 : 0,
+                      width: isScrolled ? 20 : 0,
+                    }}
+                    transition={{ duration: 0.35, ease: [0.76, 0, 0.24, 1] }}
                   />
                   <motion.span
-                    className="block w-[5px] h-[5px] bg-primary-foreground rounded-full"
-                    animate={{ scale: isScrolled ? 1 : 0 }}
-                    transition={{ duration: 0.4, delay: isScrolled ? 0.5 : 0 }}
+                    className="block w-3.5 h-[2px] bg-primary-foreground rounded-full"
+                    animate={{
+                      opacity: isMenuOpen ? 0 : 1,
+                      scaleX: isMenuOpen ? 0 : 1,
+                      width: isScrolled ? 14 : 0,
+                    }}
+                    transition={{ duration: 0.25, ease: 'easeOut' }}
                   />
                   <motion.span
-                    className="block w-[5px] h-[5px] bg-primary-foreground rounded-full"
-                    animate={{ scale: isScrolled ? 1 : 0 }}
-                    transition={{ duration: 0.4, delay: isScrolled ? 0.6 : 0 }}
+                    className="block w-5 h-[2px] bg-primary-foreground rounded-full origin-center"
+                    animate={{
+                      rotate: isMenuOpen ? -45 : 0,
+                      y: isMenuOpen ? -7 : 0,
+                      width: isScrolled ? 20 : 0,
+                    }}
+                    transition={{ duration: 0.35, ease: [0.76, 0, 0.24, 1] }}
                   />
                 </motion.div>
               </motion.button>
@@ -323,30 +333,41 @@ const Header = () => {
                   Order Now
                 </motion.span>
 
-                {/* 3-dot menu icon */}
+                {/* Interactive 3-line hamburger icon */}
                 <motion.div
-                  className="absolute z-10 flex flex-col items-center gap-[4px]"
+                  className="absolute z-10 flex flex-col items-center justify-center gap-[4px] w-5 h-5"
                   animate={{
                     opacity: isScrolled ? 1 : 0,
                     scale: isScrolled ? 1 : 0.3,
-                    rotate: isScrolled ? 0 : -90,
                   }}
                   transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay: isScrolled ? 0.3 : 0 }}
                 >
                   <motion.span
-                    className="block w-[4px] h-[4px] bg-primary-foreground rounded-full"
-                    animate={{ scale: isScrolled ? 1 : 0 }}
-                    transition={{ duration: 0.4, delay: isScrolled ? 0.4 : 0 }}
+                    className="block w-4 h-[2px] bg-primary-foreground rounded-full origin-center"
+                    animate={{
+                      rotate: isMenuOpen ? 45 : 0,
+                      y: isMenuOpen ? 6 : 0,
+                      width: isScrolled ? 16 : 0,
+                    }}
+                    transition={{ duration: 0.35, ease: [0.76, 0, 0.24, 1] }}
                   />
                   <motion.span
-                    className="block w-[4px] h-[4px] bg-primary-foreground rounded-full"
-                    animate={{ scale: isScrolled ? 1 : 0 }}
-                    transition={{ duration: 0.4, delay: isScrolled ? 0.5 : 0 }}
+                    className="block w-3 h-[2px] bg-primary-foreground rounded-full"
+                    animate={{
+                      opacity: isMenuOpen ? 0 : 1,
+                      scaleX: isMenuOpen ? 0 : 1,
+                      width: isScrolled ? 12 : 0,
+                    }}
+                    transition={{ duration: 0.25, ease: 'easeOut' }}
                   />
                   <motion.span
-                    className="block w-[4px] h-[4px] bg-primary-foreground rounded-full"
-                    animate={{ scale: isScrolled ? 1 : 0 }}
-                    transition={{ duration: 0.4, delay: isScrolled ? 0.6 : 0 }}
+                    className="block w-4 h-[2px] bg-primary-foreground rounded-full origin-center"
+                    animate={{
+                      rotate: isMenuOpen ? -45 : 0,
+                      y: isMenuOpen ? -6 : 0,
+                      width: isScrolled ? 16 : 0,
+                    }}
+                    transition={{ duration: 0.35, ease: [0.76, 0, 0.24, 1] }}
                   />
                 </motion.div>
               </motion.button>
