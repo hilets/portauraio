@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { ArrowRight, Eye, ShoppingCart } from 'lucide-react';
+import { ArrowRight, Eye, Sparkles, Star } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
 import Header from '@/components/Header';
@@ -8,54 +8,73 @@ import ParticleBackground from '@/components/ParticleBackground';
 import CustomCursor from '@/components/CustomCursor';
 import ScrollToTop from '@/components/ScrollToTop';
 
+import templatePhotographer from '@/assets/template-photographer.jpg';
+import templateUiux from '@/assets/template-uiux.jpg';
+import templateDeveloper from '@/assets/template-developer.jpg';
+import templateArtist from '@/assets/template-artist.jpg';
+import templateVideographer from '@/assets/template-videographer.jpg';
+import templateModel from '@/assets/template-model.jpg';
+
 const templates = [
   {
-    id: 'ecom-fashion',
-    name: 'Fashion Store',
-    category: 'E-Commerce',
+    id: 'portfolio-photographer',
+    name: 'Photographer Portfolio',
+    category: 'Photography',
     price: 109,
-    image: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=600&h=400&fit=crop',
-    description: 'Modern fashion e-commerce with cart, wishlist & checkout flow.',
+    image: templatePhotographer,
+    description: 'Dark cinematic portfolio with full-screen galleries, lightbox & client proofing.',
+    rating: 4.9,
+    sales: 230,
   },
   {
-    id: 'ecom-electronics',
-    name: 'Tech Hub',
-    category: 'E-Commerce',
+    id: 'portfolio-uiux',
+    name: 'UI/UX Designer Portfolio',
+    category: 'Design',
     price: 119,
-    image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=600&h=400&fit=crop',
-    description: 'Electronics store with product comparison & review system.',
+    image: templateUiux,
+    description: 'Modern case study layout with interactive prototypes & gradient accents.',
+    rating: 4.8,
+    sales: 185,
   },
   {
-    id: 'ecom-food',
-    name: 'Fresh Market',
-    category: 'E-Commerce',
-    price: 100,
-    image: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600&h=400&fit=crop',
-    description: 'Food delivery platform with menu builder & order tracking.',
-  },
-  {
-    id: 'ecom-beauty',
-    name: 'Glow Studio',
-    category: 'E-Commerce',
+    id: 'portfolio-developer',
+    name: 'Developer Portfolio',
+    category: 'Development',
     price: 115,
-    image: 'https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=600&h=400&fit=crop',
-    description: 'Beauty & skincare store with shade finder & subscription box.',
+    image: templateDeveloper,
+    description: 'Futuristic dark theme with code snippets, project showcases & GitHub integration.',
+    rating: 4.9,
+    sales: 310,
   },
   {
-    id: 'ecom-furniture',
-    name: 'Home Craft',
-    category: 'E-Commerce',
+    id: 'portfolio-artist',
+    name: 'Creative Artist Portfolio',
+    category: 'Art & Illustration',
+    price: 100,
+    image: templateArtist,
+    description: 'Vibrant gallery portfolio with artwork showcase, exhibitions & commission form.',
+    rating: 4.7,
+    sales: 145,
+  },
+  {
+    id: 'portfolio-videographer',
+    name: 'Videographer Portfolio',
+    category: 'Video & Film',
     price: 129,
-    image: 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=600&h=400&fit=crop',
-    description: 'Furniture store with 3D preview & room planner.',
+    image: templateVideographer,
+    description: 'Cinematic portfolio with video reels, showreel player & client testimonials.',
+    rating: 4.8,
+    sales: 198,
   },
   {
-    id: 'ecom-sports',
-    name: 'Active Gear',
-    category: 'E-Commerce',
+    id: 'portfolio-model',
+    name: 'Model Portfolio',
+    category: 'Fashion & Modeling',
     price: 105,
-    image: 'https://images.unsplash.com/photo-1517649763962-0c623066013b?w=600&h=400&fit=crop',
-    description: 'Sports equipment store with size guide & team ordering.',
+    image: templateModel,
+    description: 'Elegant luxury portfolio with full-screen photos, comp card & booking system.',
+    rating: 4.9,
+    sales: 167,
   },
 ];
 
@@ -76,71 +95,122 @@ const Templates = () => {
             transition={{ duration: 0.6 }}
             className="text-center mb-16"
           >
-            <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/30 mb-6 text-sm text-primary font-medium">
-              <ShoppingCart className="w-4 h-4" />
-              Premium Templates
-            </span>
-            <h1 className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold mb-4">
-              E-Commerce <span className="text-gradient">Templates</span>
+            <motion.div
+              initial={{ scale: 0 }}
+              animate={{ scale: 1 }}
+              transition={{ type: 'spring', delay: 0.2 }}
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-primary/10 border border-primary/30 mb-6"
+            >
+              <Sparkles className="w-4 h-4 text-primary" />
+              <span className="text-sm text-primary font-heading font-semibold tracking-wider uppercase">
+                Premium Collection
+              </span>
+            </motion.div>
+
+            <h1 className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold mb-5 leading-tight">
+              Personal Portfolio{' '}
+              <span className="text-gradient">Templates</span>
             </h1>
-            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-              Production-ready e-commerce templates. Pick one, customize it, launch your store.
+            <p className="text-muted-foreground text-lg max-w-2xl mx-auto leading-relaxed">
+              Handcrafted, production-ready portfolio templates designed for creatives, 
+              developers & professionals. Pick your style, customize & launch.
             </p>
+
+            {/* Stats */}
+            <div className="flex items-center justify-center gap-8 mt-8">
+              {[
+                { label: 'Templates', value: '6+' },
+                { label: 'Happy Users', value: '1.2K+' },
+                { label: 'Avg Rating', value: '4.8★' },
+              ].map((stat, i) => (
+                <motion.div
+                  key={stat.label}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.4 + i * 0.1 }}
+                  className="text-center"
+                >
+                  <div className="text-xl font-heading font-bold text-primary">{stat.value}</div>
+                  <div className="text-xs text-muted-foreground">{stat.label}</div>
+                </motion.div>
+              ))}
+            </div>
           </motion.div>
 
-          {/* Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {/* Grid — 2 cols on mobile, 3 on desktop */}
+          <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-5 lg:gap-6">
             {templates.map((template, i) => (
               <motion.div
                 key={template.id}
-                initial={{ opacity: 0, y: 30 }}
+                initial={{ opacity: 0, y: 40 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: i * 0.1, duration: 0.5 }}
-                className="group relative rounded-2xl border border-border/50 bg-card/80 backdrop-blur-sm overflow-hidden hover:border-primary/40 transition-all duration-300"
+                transition={{ delay: i * 0.08, duration: 0.5 }}
+                className="group relative rounded-xl sm:rounded-2xl border border-border/50 bg-card/80 backdrop-blur-sm overflow-hidden hover:border-primary/50 transition-all duration-500 hover:shadow-[0_0_30px_hsl(var(--primary)_/_0.15)]"
               >
                 {/* Image */}
-                <div className="relative aspect-[3/2] overflow-hidden">
+                <div className="relative aspect-[4/3] overflow-hidden">
                   <img
                     src={template.image}
                     alt={template.name}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                     loading="lazy"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-card via-transparent to-transparent opacity-60" />
-                  
+                  {/* Gradient overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-card via-card/20 to-transparent opacity-80" />
+
                   {/* Price badge */}
-                  <div className="absolute top-4 right-4 px-3 py-1.5 rounded-full bg-primary text-primary-foreground text-sm font-heading font-bold">
+                  <div className="absolute top-2 right-2 sm:top-3 sm:right-3 px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-full bg-primary text-primary-foreground text-xs sm:text-sm font-heading font-bold shadow-lg">
                     ${template.price}
                   </div>
 
-                  {/* Preview overlay */}
-                  <div className="absolute inset-0 bg-background/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      className="gap-2"
-                      onClick={() => navigate(`/checkout/${template.id}`)}
+                  {/* Category badge */}
+                  <div className="absolute top-2 left-2 sm:top-3 sm:left-3 px-2 py-1 sm:px-2.5 rounded-full bg-background/70 backdrop-blur-md text-[10px] sm:text-xs text-foreground font-medium">
+                    {template.category}
+                  </div>
+
+                  {/* Hover overlay */}
+                  <div className="absolute inset-0 bg-background/70 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-all duration-400 flex items-center justify-center">
+                    <motion.div
+                      initial={{ scale: 0.8, opacity: 0 }}
+                      whileInView={{ scale: 1, opacity: 1 }}
+                      className="flex flex-col items-center gap-2"
                     >
-                      <Eye className="w-4 h-4" />
-                      Preview & Buy
-                    </Button>
+                      <Button
+                        variant="hero"
+                        size="sm"
+                        className="gap-2 text-xs sm:text-sm"
+                        onClick={() => navigate(`/checkout/${template.id}`)}
+                      >
+                        <Eye className="w-3.5 h-3.5" />
+                        Preview & Buy
+                      </Button>
+                    </motion.div>
                   </div>
                 </div>
 
                 {/* Info */}
-                <div className="p-5">
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="text-xs text-primary font-medium uppercase tracking-wider">{template.category}</span>
+                <div className="p-3 sm:p-4 lg:p-5">
+                  {/* Rating & sales */}
+                  <div className="flex items-center gap-1.5 mb-2">
+                    <Star className="w-3 h-3 sm:w-3.5 sm:h-3.5 fill-primary text-primary" />
+                    <span className="text-xs sm:text-sm font-semibold text-foreground">{template.rating}</span>
+                    <span className="text-[10px] sm:text-xs text-muted-foreground">({template.sales} sales)</span>
                   </div>
-                  <h3 className="font-heading text-lg font-bold mb-1">{template.name}</h3>
-                  <p className="text-muted-foreground text-sm mb-4">{template.description}</p>
+
+                  <h3 className="font-heading text-sm sm:text-base lg:text-lg font-bold mb-1 line-clamp-1">
+                    {template.name}
+                  </h3>
+                  <p className="text-muted-foreground text-xs sm:text-sm mb-3 sm:mb-4 line-clamp-2 leading-relaxed">
+                    {template.description}
+                  </p>
+
                   <Button
                     variant="hero"
                     size="sm"
-                    className="w-full gap-2"
+                    className="w-full gap-1.5 text-xs sm:text-sm h-8 sm:h-9"
                     onClick={() => navigate(`/checkout/${template.id}`)}
                   >
-                    Buy Now <ArrowRight className="w-4 h-4" />
+                    Buy Now <ArrowRight className="w-3.5 h-3.5" />
                   </Button>
                 </div>
               </motion.div>
