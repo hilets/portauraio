@@ -129,7 +129,7 @@ const Header = () => {
                 transition={{ delay: 0.5, duration: 0.4 }}
                 className="mt-8"
               >
-                <a href="/contact">
+                <a href="/order">
                   <Button variant="hero" size="xl" onClick={() => setIsMenuOpen(false)}>
                     Order Now
                   </Button>
@@ -216,7 +216,7 @@ const Header = () => {
             {/* Desktop CTA / Menu Button - Morphing Animation (BLUR FIXED) */}
             <div className="hidden md:flex items-center gap-4">
               <motion.button
-                onClick={() => isScrolled ? setIsMenuOpen(true) : navigate('/contact')}
+                onClick={() => isScrolled ? setIsMenuOpen(true) : navigate('/order')}
                 className="relative rounded-full bg-primary flex items-center justify-center group cursor-pointer"
                 animate={{
                   width: isScrolled ? 52 : 170,
@@ -306,7 +306,7 @@ const Header = () => {
             {/* Mobile: Morphing Order Now / Menu */}
             <div className="md:hidden">
               <motion.button
-                onClick={() => isScrolled ? setIsMenuOpen(true) : navigate('/contact')}
+                onClick={() => isScrolled ? setIsMenuOpen(true) : navigate('/order')}
                 className="relative rounded-full bg-primary flex items-center justify-center group"
                 animate={{
                   width: isScrolled ? 42 : 120,

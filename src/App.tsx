@@ -19,6 +19,7 @@ import AdminPanel from "./pages/AdminPanel";
 import PortfolioSkills from "./pages/PortfolioSkills";
 import Templates from "./pages/Templates";
 import Checkout from "./pages/Checkout";
+import OrderWizard from "./pages/OrderWizard";
 import NotFound from "./pages/NotFound";
 import ScrollToTopOnNavigate from "./components/ScrollToTopOnNavigate";
 
@@ -48,6 +49,8 @@ const App = () => (
             <Route path="/portfolio-skills" element={<PortfolioSkills />} />
             <Route path="/templates" element={<Templates />} />
             <Route path="/checkout/:templateId" element={<Checkout />} />
+            <Route path="/order" element={<OrderWizard />} />
+            <Route path="/order/:templateId" element={<OrderWizard />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
