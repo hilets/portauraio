@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowLeft, ArrowRight, Check, Palette, Type, User, Globe, Lock, Sparkles, Eye, X, Smartphone } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Check, Palette, Type, User, Globe, Lock, Sparkles, Eye, X, Smartphone, ExternalLink, Copy, CheckCheck } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useNavigate, useParams } from 'react-router-dom';
 import Header from '@/components/Header';
@@ -11,6 +11,7 @@ import ThemeSelector from '@/components/order/ThemeSelector';
 import ProfileForm from '@/components/order/ProfileForm';
 import DesignForm from '@/components/order/DesignForm';
 import ReviewStep from '@/components/order/ReviewStep';
+import { savePortfolio, type StoredPortfolio } from '@/lib/portfolioStore';
 
 export interface PortfolioData {
   theme: 'cyber-bento' | 'minimalist-zen' | 'dynamic-pro';
