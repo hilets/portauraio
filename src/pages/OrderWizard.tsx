@@ -60,6 +60,8 @@ const OrderWizard = () => {
   });
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [showMobilePreview, setShowMobilePreview] = useState(false);
+  const [savedPortfolio, setSavedPortfolio] = useState<StoredPortfolio | null>(null);
+  const [copied, setCopied] = useState(false);
 
   const updateData = useCallback((updates: Partial<PortfolioData>) => {
     setData(prev => ({ ...prev, ...updates }));
@@ -73,7 +75,17 @@ const OrderWizard = () => {
   };
 
   const handleSubmit = () => {
+    const stored = savePortfolio(data);
+    setSavedPortfolio(stored);
     setIsSubmitted(true);
+  };
+
+  const portfolioUrl = savedPortfolio ? `${window.location.origin}/p/${savedPortfolio.id}` : '';
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText(portfolioUrl);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
   };
 
   if (isSubmitted) {
