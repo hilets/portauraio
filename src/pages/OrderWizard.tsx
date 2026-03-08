@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowLeft, ArrowRight, Check, Palette, Type, User, Globe, Lock, Sparkles, Eye } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Check, Palette, Type, User, Globe, Lock, Sparkles, Eye, X, Smartphone } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useNavigate, useParams } from 'react-router-dom';
 import Header from '@/components/Header';
@@ -58,6 +58,7 @@ const OrderWizard = () => {
     return initial;
   });
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [showMobilePreview, setShowMobilePreview] = useState(false);
 
   const updateData = useCallback((updates: Partial<PortfolioData>) => {
     setData(prev => ({ ...prev, ...updates }));
@@ -218,7 +219,7 @@ const OrderWizard = () => {
               </div>
             </div>
 
-            {/* Right: Live Preview */}
+            {/* Right: Live Preview (Desktop) */}
             <div className="hidden xl:block sticky top-28">
               <div className="rounded-2xl border border-border/30 bg-card/50 backdrop-blur-sm overflow-hidden">
                 <div className="flex items-center gap-2 px-4 py-3 border-b border-border/30 bg-muted/30">
@@ -239,6 +240,77 @@ const OrderWizard = () => {
                 <Eye className="w-3 h-3" /> Live preview — changes update in real-time
               </p>
             </div>
+          </div>
+
+          {/* Mobile Live Preview - Floating Button + Slide-up Panel */}
+          <div className="xl:hidden">
+            {/* Floating preview toggle button */}
+            <AnimatePresence>
+              {!showMobilePreview && (
+                <motion.button
+                  initial={{ scale: 0, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  exit={{ scale: 0, opacity: 0 }}
+                  onClick={() => setShowMobilePreview(true)}
+                  className="fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full bg-primary text-primary-foreground shadow-lg shadow-primary/30 flex items-center justify-center"
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.9 }}
+                >
+                  <Smartphone className="w-5 h-5" />
+                </motion.button>
+              )}
+            </AnimatePresence>
+
+            {/* Slide-up preview panel */}
+            <AnimatePresence>
+              {showMobilePreview && (
+                <>
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    onClick={() => setShowMobilePreview(false)}
+                    className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm"
+                  />
+                  <motion.div
+                    initial={{ y: '100%' }}
+                    animate={{ y: 0 }}
+                    exit={{ y: '100%' }}
+                    transition={{ type: 'spring', damping: 30, stiffness: 300 }}
+                    className="fixed inset-x-0 bottom-0 z-50 max-h-[85vh] rounded-t-3xl border-t border-border/30 bg-background overflow-hidden flex flex-col"
+                  >
+                    {/* Panel header */}
+                    <div className="flex items-center justify-between px-4 py-3 border-b border-border/30 bg-muted/30 flex-shrink-0">
+                      <div className="flex items-center gap-2">
+                        <div className="flex gap-1.5">
+                          <div className="w-2.5 h-2.5 rounded-full bg-destructive/60" />
+                          <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/60" />
+                          <div className="w-2.5 h-2.5 rounded-full bg-green-500/60" />
+                        </div>
+                        <span className="text-[10px] text-muted-foreground font-mono truncate max-w-[200px]">
+                          {data.name ? `${data.name.toLowerCase().replace(/\s+/g, '-')}.portaura.dev` : 'your-portfolio.portaura.dev'}
+                        </span>
+                      </div>
+                      <button
+                        onClick={() => setShowMobilePreview(false)}
+                        className="w-8 h-8 rounded-full bg-muted flex items-center justify-center text-muted-foreground hover:text-foreground transition-colors"
+                      >
+                        <X className="w-4 h-4" />
+                      </button>
+                    </div>
+                    {/* Preview content */}
+                    <div className="flex-1 overflow-y-auto">
+                      <LivePreview data={data} />
+                    </div>
+                    <div className="px-4 py-2 border-t border-border/30 bg-muted/20 flex-shrink-0">
+                      <p className="text-[10px] text-muted-foreground text-center flex items-center justify-center gap-1">
+                        <Eye className="w-3 h-3" /> Live preview — changes update in real-time
+                      </p>
+                    </div>
+                  </motion.div>
+                </>
+              )}
+            </AnimatePresence>
           </div>
         </div>
       </main>
