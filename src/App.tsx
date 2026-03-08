@@ -20,6 +20,7 @@ import PortfolioSkills from "./pages/PortfolioSkills";
 import Templates from "./pages/Templates";
 import Checkout from "./pages/Checkout";
 import OrderWizard from "./pages/OrderWizard";
+import PortfolioView from "./pages/PortfolioView";
 import NotFound from "./pages/NotFound";
 import ScrollToTopOnNavigate from "./components/ScrollToTopOnNavigate";
 
@@ -51,6 +52,7 @@ const App = () => (
             <Route path="/checkout/:templateId" element={<Checkout />} />
             <Route path="/order" element={<OrderWizard />} />
             <Route path="/order/:templateId" element={<OrderWizard />} />
+            <Route path="/p/:id" element={<PortfolioView />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>

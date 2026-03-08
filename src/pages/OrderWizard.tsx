@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowLeft, ArrowRight, Check, Palette, Type, User, Globe, Lock, Sparkles, Eye, X, Smartphone } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Check, Palette, Type, User, Globe, Lock, Sparkles, Eye, X, Smartphone, ExternalLink, Copy, CheckCheck } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useNavigate, useParams } from 'react-router-dom';
 import Header from '@/components/Header';
@@ -11,6 +11,7 @@ import ThemeSelector from '@/components/order/ThemeSelector';
 import ProfileForm from '@/components/order/ProfileForm';
 import DesignForm from '@/components/order/DesignForm';
 import ReviewStep from '@/components/order/ReviewStep';
+import { savePortfolio, type StoredPortfolio } from '@/lib/portfolioStore';
 
 export interface PortfolioData {
   theme: 'cyber-bento' | 'minimalist-zen' | 'dynamic-pro';
@@ -59,6 +60,8 @@ const OrderWizard = () => {
   });
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [showMobilePreview, setShowMobilePreview] = useState(false);
+  const [savedPortfolio, setSavedPortfolio] = useState<StoredPortfolio | null>(null);
+  const [copied, setCopied] = useState(false);
 
   const updateData = useCallback((updates: Partial<PortfolioData>) => {
     setData(prev => ({ ...prev, ...updates }));
@@ -72,7 +75,17 @@ const OrderWizard = () => {
   };
 
   const handleSubmit = () => {
+    const stored = savePortfolio(data);
+    setSavedPortfolio(stored);
     setIsSubmitted(true);
+  };
+
+  const portfolioUrl = savedPortfolio ? `${window.location.origin}/p/${savedPortfolio.id}` : '';
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText(portfolioUrl);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
   };
 
   if (isSubmitted) {
@@ -80,7 +93,7 @@ const OrderWizard = () => {
       <div className="min-h-screen bg-background relative">
         <CustomCursor />
         <Header />
-        <main className="relative z-10 pt-32 pb-20">
+      <main className="relative z-10 pt-32 pb-20">
           <div className="container-custom max-w-2xl text-center">
             <motion.div
               initial={{ scale: 0 }}
@@ -96,7 +109,7 @@ const OrderWizard = () => {
               transition={{ delay: 0.4 }}
               className="font-heading text-4xl md:text-5xl font-bold mb-4"
             >
-              Order Confirmed! 🎉
+              Your Portfolio is Live! 🎉
             </motion.h1>
             <motion.p
               initial={{ opacity: 0 }}
@@ -104,17 +117,53 @@ const OrderWizard = () => {
               transition={{ delay: 0.6 }}
               className="text-muted-foreground text-lg mb-8"
             >
-              Your <span className="text-primary font-semibold">{data.name || 'Portfolio'}</span> is being crafted.
-              You'll get admin access at your email to customize everything later.
+              <span className="text-primary font-semibold">{data.name}'s</span> portfolio has been published.
+              Click the link below to see it live!
             </motion.p>
+
+            {/* Portfolio Link Card */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.7 }}
+              className="rounded-2xl border border-primary/30 bg-primary/5 backdrop-blur-sm p-6 mb-8 mx-auto max-w-lg"
+            >
+              <p className="text-xs uppercase tracking-widest text-muted-foreground mb-3">Your Portfolio Link</p>
+              <div className="flex items-center gap-2 bg-background/80 rounded-xl border border-border/50 p-3">
+                <code className="text-sm text-primary flex-1 truncate text-left">{portfolioUrl}</code>
+                <button
+                  onClick={handleCopy}
+                  className="flex-shrink-0 w-10 h-10 rounded-lg bg-primary/10 hover:bg-primary/20 flex items-center justify-center text-primary transition-colors"
+                >
+                  {copied ? <CheckCheck className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
+                </button>
+              </div>
+              {copied && (
+                <motion.p
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  className="text-xs text-primary mt-2"
+                >
+                  Link copied to clipboard!
+                </motion.p>
+              )}
+            </motion.div>
+
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ delay: 0.8 }}
-              className="flex gap-4 justify-center"
+              transition={{ delay: 0.9 }}
+              className="flex flex-col sm:flex-row gap-4 justify-center"
             >
-              <Button variant="hero" size="xl" onClick={() => navigate('/')}>Go Home</Button>
-              <Button variant="outline" size="lg" onClick={() => navigate('/templates')}>Browse Templates</Button>
+              <Button
+                variant="hero"
+                size="xl"
+                onClick={() => window.open(portfolioUrl, '_blank')}
+                className="gap-2"
+              >
+                <ExternalLink className="w-4 h-4" /> View Portfolio
+              </Button>
+              <Button variant="outline" size="lg" onClick={() => navigate('/')}>Go Home</Button>
             </motion.div>
           </div>
         </main>
