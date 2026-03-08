@@ -52,6 +52,7 @@ const App = () => (
             <Route path="/checkout/:templateId" element={<Checkout />} />
             <Route path="/order" element={<OrderWizard />} />
             <Route path="/order/:templateId" element={<OrderWizard />} />
+            <Route path="/p/:id" element={<PortfolioView />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
