@@ -256,7 +256,7 @@ const Header = () => {
                   }}
                   style={{ position: isScrolled ? 'absolute' : 'relative' }}
                 >
-                  Order Now
+                  Build Now
                 </motion.span>
 
                 {/* Interactive 3-line hamburger icon */}
