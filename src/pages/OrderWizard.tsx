@@ -170,7 +170,7 @@ const OrderWizard = () => {
               transition={{ delay: 0.9 }}
               className="flex flex-col sm:flex-row gap-4 justify-center"
             >
-              <Button variant="hero" size="xl" onClick={() => window.open(portfolioUrl, '_blank')} className="gap-2">
+              <Button variant="hero" size="xl" onClick={() => navigate(portfolioPath)} className="gap-2">
                 <ExternalLink className="w-4 h-4" /> View Portfolio
               </Button>
               <Button variant="outline" size="lg" onClick={() => navigate('/')}>Go Home</Button>
