@@ -7,11 +7,14 @@ interface Props {
 }
 
 const themeNames: Record<string, string> = {
-  'cyber-bento': 'The Aura Pro',
+  'aura-infinity': 'Aura Infinity X',
   'minimalist-zen': 'The Minimalist Zen',
   'dynamic-pro': 'The Dynamic Pro',
   'creative-studio': 'The Creative Studio',
   'executive': 'The Executive',
+  'editorial-flow': 'The Editorial Flow',
+  'bold-grid': 'The Bold Grid',
+  'cyber-bento': 'Aura Legacy',
 };
 
 const ReviewStep = ({ data }: Props) => {
