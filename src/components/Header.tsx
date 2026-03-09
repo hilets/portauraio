@@ -131,7 +131,7 @@ const Header = () => {
               >
                 <a href="/order">
                   <Button variant="hero" size="xl" onClick={() => setIsMenuOpen(false)}>
-                    Order Now
+                    Build Now
                   </Button>
                 </a>
               </motion.div>
@@ -256,7 +256,7 @@ const Header = () => {
                   }}
                   style={{ position: isScrolled ? 'absolute' : 'relative' }}
                 >
-                  Order Now
+                  Build Now
                 </motion.span>
 
                 {/* Interactive 3-line hamburger icon */}
@@ -330,7 +330,7 @@ const Header = () => {
                   transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1], delay: isScrolled ? 0 : 0.4 }}
                   style={{ position: isScrolled ? 'absolute' : 'relative' }}
                 >
-                  Order Now
+                  Build Now
                 </motion.span>
 
                 {/* Interactive 3-line hamburger icon */}

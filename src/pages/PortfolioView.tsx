@@ -785,6 +785,8 @@ const PortfolioView = () => {
       return <MinimalistZenPortfolio data={portfolio} />;
     case 'dynamic-pro':
       return <DynamicProPortfolio data={portfolio} />;
+    case 'creative-studio':
+    case 'executive':
     default:
       return <CyberBentoPortfolio data={portfolio} />;
   }
