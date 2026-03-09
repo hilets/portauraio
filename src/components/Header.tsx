@@ -330,7 +330,7 @@ const Header = () => {
                   transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1], delay: isScrolled ? 0 : 0.4 }}
                   style={{ position: isScrolled ? 'absolute' : 'relative' }}
                 >
-                  Order Now
+                  Build Now
                 </motion.span>
 
                 {/* Interactive 3-line hamburger icon */}
