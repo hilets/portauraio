@@ -4,6 +4,8 @@ import { useEffect, useState, useRef } from 'react';
 import { motion, useScroll, useSpring, useInView } from 'framer-motion';
 import { Github, Linkedin, Twitter, Instagram, Mail, Phone, ExternalLink, ArrowUpRight, ChevronDown, ArrowUp } from 'lucide-react';
 import type { StoredPortfolio } from '@/lib/portfolioStore';
+import auraHeroOne from '@/assets/theme-aura-infinity.jpg';
+import auraHeroTwo from '@/assets/theme-aura-infinity-alt.jpg';
 
 const getFontFamily = (font: string) => {
   switch (font) {
