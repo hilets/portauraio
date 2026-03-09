@@ -1,54 +1,22 @@
 import { motion } from 'framer-motion';
-import { Palette, User, Type, Globe, Lock, Check, AlertCircle } from 'lucide-react';
+import { User, Type, Globe, Lock, Check, AlertCircle } from 'lucide-react';
 import type { PortfolioData } from '@/pages/OrderWizard';
 
 interface Props {
   data: PortfolioData;
 }
 
-const themeNames: Record<string, string> = {
-  'aura-infinity': 'Aura Infinity X',
-  'minimalist-zen': 'The Minimalist Zen',
-  'dynamic-pro': 'The Dynamic Pro',
-  'creative-studio': 'The Creative Studio',
-  'executive': 'The Executive',
-  'editorial-flow': 'The Editorial Flow',
-  'bold-grid': 'The Bold Grid',
-  'cyber-bento': 'Aura Legacy',
-};
-
 const ReviewStep = ({ data }: Props) => {
-  const filledSocials = data.socialLinks.filter(l => l.url.trim());
+  const filledSocials = data.socialLinks.filter((l) => l.url.trim());
 
   return (
     <div>
       <h2 className="font-heading text-2xl sm:text-3xl font-bold mb-2">Review & Publish</h2>
-      <p className="text-muted-foreground mb-8">
-        Everything looks good? Hit publish to make your portfolio live!
-      </p>
+      <p className="text-muted-foreground mb-8">Everything looks good? Hit publish to make your portfolio live!</p>
 
       <div className="space-y-4">
-        {/* Theme */}
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.1 }}
-          className="rounded-xl border border-border/50 bg-card/50 p-4"
-        >
-          <div className="flex items-center gap-2 mb-2">
-            <Palette className="w-4 h-4 text-primary" />
-            <span className="text-xs text-muted-foreground uppercase tracking-wider font-medium">Template</span>
-          </div>
-          <p className="font-heading font-bold">{themeNames[data.theme] || data.theme}</p>
-        </motion.div>
-
         {/* Profile */}
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
-          className="rounded-xl border border-border/50 bg-card/50 p-4"
-        >
+        <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className="rounded-xl border border-border/50 bg-card/50 p-4">
           <div className="flex items-center gap-2 mb-3">
             <User className="w-4 h-4 text-primary" />
             <span className="text-xs text-muted-foreground uppercase tracking-wider font-medium">Profile</span>
@@ -80,12 +48,7 @@ const ReviewStep = ({ data }: Props) => {
         </motion.div>
 
         {/* Design */}
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3 }}
-          className="rounded-xl border border-border/50 bg-card/50 p-4"
-        >
+        <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="rounded-xl border border-border/50 bg-card/50 p-4">
           <div className="flex items-center gap-2 mb-3">
             <Type className="w-4 h-4 text-primary" />
             <span className="text-xs text-muted-foreground uppercase tracking-wider font-medium">Design</span>
@@ -102,12 +65,7 @@ const ReviewStep = ({ data }: Props) => {
 
         {/* Social Links */}
         {filledSocials.length > 0 && (
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4 }}
-            className="rounded-xl border border-border/50 bg-card/50 p-4"
-          >
+          <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }} className="rounded-xl border border-border/50 bg-card/50 p-4">
             <div className="flex items-center gap-2 mb-3">
               <Globe className="w-4 h-4 text-primary" />
               <span className="text-xs text-muted-foreground uppercase tracking-wider font-medium">Social Links</span>
@@ -125,31 +83,25 @@ const ReviewStep = ({ data }: Props) => {
         )}
 
         {/* Admin */}
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.5 }}
-          className="rounded-xl border border-border/50 bg-card/50 p-4"
-        >
+        <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }} className="rounded-xl border border-border/50 bg-card/50 p-4">
           <div className="flex items-center gap-2 mb-2">
             <Lock className="w-4 h-4 text-primary" />
             <span className="text-xs text-muted-foreground uppercase tracking-wider font-medium">Admin Access</span>
           </div>
           <p className="text-sm">
             {data.adminPassword ? (
-              <span className="flex items-center gap-1.5 text-green-400"><Check className="w-3.5 h-3.5" /> Password set</span>
+              <span className="flex items-center gap-1.5 text-green-400">
+                <Check className="w-3.5 h-3.5" /> Password set
+              </span>
             ) : (
-              <span className="flex items-center gap-1.5 text-muted-foreground"><AlertCircle className="w-3.5 h-3.5" /> No password — can be set later</span>
+              <span className="flex items-center gap-1.5 text-muted-foreground">
+                <AlertCircle className="w-3.5 h-3.5" /> No password — can be set later
+              </span>
             )}
           </p>
         </motion.div>
 
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.6 }}
-          className="text-xs text-muted-foreground/60 text-center pt-4"
-        >
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5 }} className="text-xs text-muted-foreground/60 text-center pt-4">
           All fields (except name) are optional and editable from the admin panel after publishing.
         </motion.div>
       </div>

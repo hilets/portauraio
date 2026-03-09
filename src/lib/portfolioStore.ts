@@ -14,7 +14,6 @@ const generateId = (name: string): string => {
     typeof crypto !== 'undefined' && 'randomUUID' in crypto
       ? crypto.randomUUID().slice(0, 6)
       : Math.random().toString(36).substring(2, 8);
-
   return `${slug || 'portfolio'}-${randomPart.toLowerCase()}`;
 };
 
@@ -38,22 +37,18 @@ const writeToLocalStorage = (portfolios: StoredPortfolio[]) => {
 
 export const savePortfolio = (data: PortfolioData): StoredPortfolio => {
   const fromStorage = readFromLocalStorage();
-
   const stored: StoredPortfolio = {
     ...data,
     id: generateId(data.name),
     createdAt: new Date().toISOString(),
   };
-
   const next = [...fromStorage, stored];
   const persisted = writeToLocalStorage(next);
-
   if (!persisted) {
     memoryPortfolios.push(stored);
   } else {
     memoryPortfolios.push(stored);
   }
-
   return stored;
 };
 
@@ -61,20 +56,17 @@ export const getPortfolio = (id: string): StoredPortfolio | null => {
   const local = readFromLocalStorage();
   const fromLocal = local.find((p) => p.id === id);
   if (fromLocal) return fromLocal;
-
   return memoryPortfolios.find((p) => p.id === id) || null;
 };
 
 export const getAllPortfolios = (): StoredPortfolio[] => {
   const local = readFromLocalStorage();
   if (local.length === 0) return [...memoryPortfolios];
-
   const merged = [...local];
   memoryPortfolios.forEach((portfolio) => {
     if (!merged.some((item) => item.id === portfolio.id)) {
       merged.push(portfolio);
     }
   });
-
   return merged;
 };
