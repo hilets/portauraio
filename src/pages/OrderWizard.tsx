@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowLeft, ArrowRight, Check, Palette, Type, User, Globe, Lock, Sparkles, Eye, X, Smartphone, ExternalLink, Copy, CheckCheck } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Check, Palette, Type, User, Eye, Sparkles, X, Copy, CheckCheck, ExternalLink } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useNavigate, useParams } from 'react-router-dom';
 import Header from '@/components/Header';
@@ -56,10 +56,11 @@ const OrderWizard = () => {
     const initial = { ...defaultData };
     if (templateId === 'minimalist-zen') initial.theme = 'minimalist-zen';
     else if (templateId === 'dynamic-pro') initial.theme = 'dynamic-pro';
+    else if (templateId === 'creative-studio') initial.theme = 'creative-studio';
+    else if (templateId === 'executive') initial.theme = 'executive';
     return initial;
   });
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const [showMobilePreview, setShowMobilePreview] = useState(false);
   const [savedPortfolio, setSavedPortfolio] = useState<StoredPortfolio | null>(null);
   const [copied, setCopied] = useState(false);
 
@@ -88,12 +89,13 @@ const OrderWizard = () => {
     setTimeout(() => setCopied(false), 2000);
   };
 
+  // Success screen
   if (isSubmitted) {
     return (
       <div className="min-h-screen bg-background relative">
         <CustomCursor />
         <Header />
-      <main className="relative z-10 pt-32 pb-20">
+        <main className="relative z-10 pt-32 pb-20">
           <div className="container-custom max-w-2xl text-center">
             <motion.div
               initial={{ scale: 0 }}
@@ -118,7 +120,6 @@ const OrderWizard = () => {
               className="text-muted-foreground text-lg mb-8"
             >
               <span className="text-primary font-semibold">{data.name}'s</span> portfolio has been published.
-              Click the link below to see it live!
             </motion.p>
 
             {/* Portfolio Link Card */}
@@ -139,11 +140,7 @@ const OrderWizard = () => {
                 </button>
               </div>
               {copied && (
-                <motion.p
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  className="text-xs text-primary mt-2"
-                >
+                <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-xs text-primary mt-2">
                   Link copied to clipboard!
                 </motion.p>
               )}
@@ -155,12 +152,7 @@ const OrderWizard = () => {
               transition={{ delay: 0.9 }}
               className="flex flex-col sm:flex-row gap-4 justify-center"
             >
-              <Button
-                variant="hero"
-                size="xl"
-                onClick={() => window.open(portfolioUrl, '_blank')}
-                className="gap-2"
-              >
+              <Button variant="hero" size="xl" onClick={() => window.open(portfolioUrl, '_blank')} className="gap-2">
                 <ExternalLink className="w-4 h-4" /> View Portfolio
               </Button>
               <Button variant="outline" size="lg" onClick={() => navigate('/')}>Go Home</Button>
@@ -177,189 +169,105 @@ const OrderWizard = () => {
       <CustomCursor />
       <Header />
       <main className="relative z-10 pt-28 pb-20">
-        <div className="container-custom">
+        <div className="container-custom max-w-2xl">
           {/* Back button */}
           <motion.button
             onClick={() => step > 1 ? setStep(step - 1) : navigate(-1)}
-            className="flex items-center gap-2 text-muted-foreground hover:text-foreground mb-6 transition-colors text-sm"
+            className="flex items-center gap-2 text-muted-foreground hover:text-foreground mb-4 transition-colors text-sm"
             whileHover={{ x: -4 }}
           >
             <ArrowLeft className="w-4 h-4" />
             {step > 1 ? 'Previous Step' : 'Back'}
           </motion.button>
 
-          {/* Step progress */}
-          <div className="flex items-center gap-1 sm:gap-3 mb-8">
-            {steps.map((s, i) => (
-              <div key={s.id} className="flex items-center gap-1 sm:gap-3">
-                <motion.button
-                  onClick={() => s.id < step && setStep(s.id)}
-                  className={`flex items-center gap-2 px-3 py-2 rounded-xl text-xs sm:text-sm font-medium transition-all ${
-                    step === s.id
-                      ? 'bg-primary text-primary-foreground shadow-lg'
-                      : step > s.id
-                      ? 'bg-primary/20 text-primary cursor-pointer'
-                      : 'bg-muted text-muted-foreground'
-                  }`}
-                  whileHover={s.id < step ? { scale: 1.05 } : {}}
-                  whileTap={s.id < step ? { scale: 0.95 } : {}}
-                >
-                  {step > s.id ? <Check className="w-3.5 h-3.5" /> : <s.icon className="w-3.5 h-3.5" />}
-                  <span className="hidden sm:inline">{s.label}</span>
-                </motion.button>
-                {i < steps.length - 1 && (
-                  <div className={`w-6 sm:w-10 h-0.5 rounded ${step > s.id ? 'bg-primary' : 'bg-muted'}`} />
-                )}
-              </div>
+          {/* Step progress bar - like reference */}
+          <div className="flex items-center gap-1 mb-2">
+            {steps.map((s) => (
+              <div
+                key={s.id}
+                className={`flex-1 h-1 rounded-full transition-all duration-500 ${
+                  step >= s.id ? 'bg-primary' : 'bg-muted'
+                }`}
+              />
             ))}
           </div>
-
-          {/* Main layout: Form + Live Preview */}
-          <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
-            {/* Left: Form */}
-            <div className="min-h-[500px]">
-              <AnimatePresence mode="wait">
-                {step === 1 && (
-                  <motion.div key="step1" initial={{ opacity: 0, x: -30 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 30 }} transition={{ duration: 0.3 }}>
-                    <ThemeSelector data={data} updateData={updateData} />
-                  </motion.div>
-                )}
-                {step === 2 && (
-                  <motion.div key="step2" initial={{ opacity: 0, x: -30 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 30 }} transition={{ duration: 0.3 }}>
-                    <ProfileForm data={data} updateData={updateData} />
-                  </motion.div>
-                )}
-                {step === 3 && (
-                  <motion.div key="step3" initial={{ opacity: 0, x: -30 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 30 }} transition={{ duration: 0.3 }}>
-                    <DesignForm data={data} updateData={updateData} />
-                  </motion.div>
-                )}
-                {step === 4 && (
-                  <motion.div key="step4" initial={{ opacity: 0, x: -30 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 30 }} transition={{ duration: 0.3 }}>
-                    <ReviewStep data={data} />
-                  </motion.div>
-                )}
-              </AnimatePresence>
-
-              {/* Navigation buttons */}
-              <div className="flex justify-between mt-8">
-                <Button
-                  variant="outline"
-                  onClick={() => setStep(Math.max(1, step - 1))}
-                  disabled={step === 1}
-                  className="gap-2"
-                >
-                  <ArrowLeft className="w-4 h-4" /> Back
-                </Button>
-                {step < 4 ? (
-                  <Button
-                    variant="hero"
-                    onClick={() => setStep(step + 1)}
-                    disabled={!canProceed()}
-                    className="gap-2"
-                  >
-                    Next <ArrowRight className="w-4 h-4" />
-                  </Button>
-                ) : (
-                  <Button variant="hero" size="xl" onClick={handleSubmit} className="gap-2">
-                    <Sparkles className="w-4 h-4" /> Confirm Order
-                  </Button>
-                )}
-              </div>
-            </div>
-
-            {/* Right: Live Preview (Desktop) */}
-            <div className="hidden xl:block sticky top-28">
-              <div className="rounded-2xl border border-border/30 bg-card/50 backdrop-blur-sm overflow-hidden">
-                <div className="flex items-center gap-2 px-4 py-3 border-b border-border/30 bg-muted/30">
-                  <div className="flex gap-1.5">
-                    <div className="w-3 h-3 rounded-full bg-destructive/60" />
-                    <div className="w-3 h-3 rounded-full bg-yellow-500/60" />
-                    <div className="w-3 h-3 rounded-full bg-green-500/60" />
-                  </div>
-                  <span className="text-xs text-muted-foreground ml-2 font-mono">
-                    {data.name ? `${data.name.toLowerCase().replace(/\s+/g, '-')}.portaura.dev` : 'your-portfolio.portaura.dev'}
-                  </span>
-                </div>
-                <div className="h-[600px] overflow-y-auto">
-                  <LivePreview data={data} />
-                </div>
-              </div>
-              <p className="text-xs text-muted-foreground text-center mt-3 flex items-center justify-center gap-1.5">
-                <Eye className="w-3 h-3" /> Live preview — changes update in real-time
-              </p>
-            </div>
+          <div className="flex items-center justify-between mb-6">
+            <p className="text-xs text-muted-foreground">Step {step}/{steps.length}</p>
+            <p className="text-xs text-muted-foreground">{steps[step - 1].label}</p>
           </div>
 
-          {/* Mobile Live Preview - Floating Button + Slide-up Panel */}
-          <div className="xl:hidden">
-            {/* Floating preview toggle button */}
-            <AnimatePresence>
-              {!showMobilePreview && (
-                <motion.button
-                  initial={{ scale: 0, opacity: 0 }}
-                  animate={{ scale: 1, opacity: 1 }}
-                  exit={{ scale: 0, opacity: 0 }}
-                  onClick={() => setShowMobilePreview(true)}
-                  className="fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full bg-primary text-primary-foreground shadow-lg shadow-primary/30 flex items-center justify-center"
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.9 }}
-                >
-                  <Smartphone className="w-5 h-5" />
-                </motion.button>
-              )}
-            </AnimatePresence>
+          {/* Live Preview at top - scrollable like reference */}
+          <motion.div
+            layout
+            className="rounded-2xl border border-border/30 bg-card/50 backdrop-blur-sm overflow-hidden mb-6"
+          >
+            <div className="flex items-center gap-2 px-4 py-2.5 border-b border-border/30 bg-muted/30">
+              <div className="flex gap-1.5">
+                <div className="w-2.5 h-2.5 rounded-full bg-destructive/60" />
+                <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/60" />
+                <div className="w-2.5 h-2.5 rounded-full bg-green-500/60" />
+              </div>
+              <span className="text-[10px] text-muted-foreground ml-2 font-mono truncate">
+                {data.name ? `${data.name.toLowerCase().replace(/\s+/g, '-')}.portaura.dev` : 'your-portfolio.portaura.dev'}
+              </span>
+            </div>
+            <div className="h-[280px] sm:h-[320px] overflow-y-auto">
+              <LivePreview data={data} />
+            </div>
+          </motion.div>
 
-            {/* Slide-up preview panel */}
-            <AnimatePresence>
-              {showMobilePreview && (
-                <>
-                  <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    onClick={() => setShowMobilePreview(false)}
-                    className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm"
-                  />
-                  <motion.div
-                    initial={{ y: '100%' }}
-                    animate={{ y: 0 }}
-                    exit={{ y: '100%' }}
-                    transition={{ type: 'spring', damping: 30, stiffness: 300 }}
-                    className="fixed inset-x-0 bottom-0 z-50 max-h-[85vh] rounded-t-3xl border-t border-border/30 bg-background overflow-hidden flex flex-col"
-                  >
-                    {/* Panel header */}
-                    <div className="flex items-center justify-between px-4 py-3 border-b border-border/30 bg-muted/30 flex-shrink-0">
-                      <div className="flex items-center gap-2">
-                        <div className="flex gap-1.5">
-                          <div className="w-2.5 h-2.5 rounded-full bg-destructive/60" />
-                          <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/60" />
-                          <div className="w-2.5 h-2.5 rounded-full bg-green-500/60" />
-                        </div>
-                        <span className="text-[10px] text-muted-foreground font-mono truncate max-w-[200px]">
-                          {data.name ? `${data.name.toLowerCase().replace(/\s+/g, '-')}.portaura.dev` : 'your-portfolio.portaura.dev'}
-                        </span>
-                      </div>
-                      <button
-                        onClick={() => setShowMobilePreview(false)}
-                        className="w-8 h-8 rounded-full bg-muted flex items-center justify-center text-muted-foreground hover:text-foreground transition-colors"
-                      >
-                        <X className="w-4 h-4" />
-                      </button>
-                    </div>
-                    {/* Preview content */}
-                    <div className="flex-1 overflow-y-auto">
-                      <LivePreview data={data} />
-                    </div>
-                    <div className="px-4 py-2 border-t border-border/30 bg-muted/20 flex-shrink-0">
-                      <p className="text-[10px] text-muted-foreground text-center flex items-center justify-center gap-1">
-                        <Eye className="w-3 h-3" /> Live preview — changes update in real-time
-                      </p>
-                    </div>
-                  </motion.div>
-                </>
-              )}
-            </AnimatePresence>
+          <p className="text-[10px] text-muted-foreground text-center mb-6 flex items-center justify-center gap-1">
+            <Eye className="w-3 h-3" /> Live preview — changes update in real-time
+          </p>
+
+          {/* Form content below preview */}
+          <AnimatePresence mode="wait">
+            {step === 1 && (
+              <motion.div key="step1" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ duration: 0.3 }}>
+                <ThemeSelector data={data} updateData={updateData} />
+              </motion.div>
+            )}
+            {step === 2 && (
+              <motion.div key="step2" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ duration: 0.3 }}>
+                <ProfileForm data={data} updateData={updateData} />
+              </motion.div>
+            )}
+            {step === 3 && (
+              <motion.div key="step3" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ duration: 0.3 }}>
+                <DesignForm data={data} updateData={updateData} />
+              </motion.div>
+            )}
+            {step === 4 && (
+              <motion.div key="step4" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ duration: 0.3 }}>
+                <ReviewStep data={data} />
+              </motion.div>
+            )}
+          </AnimatePresence>
+
+          {/* Navigation buttons */}
+          <div className="flex justify-between mt-8 pb-4">
+            <Button
+              variant="outline"
+              onClick={() => setStep(Math.max(1, step - 1))}
+              disabled={step === 1}
+              className="gap-2"
+            >
+              <ArrowLeft className="w-4 h-4" /> Back
+            </Button>
+            {step < 4 ? (
+              <Button
+                variant="hero"
+                onClick={() => setStep(step + 1)}
+                disabled={!canProceed()}
+                className="gap-2"
+              >
+                Next <ArrowRight className="w-4 h-4" />
+              </Button>
+            ) : (
+              <Button variant="hero" size="xl" onClick={handleSubmit} className="gap-2">
+                <Sparkles className="w-4 h-4" /> Publish Portfolio
+              </Button>
+            )}
           </div>
         </div>
       </main>

@@ -131,7 +131,7 @@ const Header = () => {
               >
                 <a href="/order">
                   <Button variant="hero" size="xl" onClick={() => setIsMenuOpen(false)}>
-                    Order Now
+                    Build Now
                   </Button>
                 </a>
               </motion.div>

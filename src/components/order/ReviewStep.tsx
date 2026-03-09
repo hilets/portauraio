@@ -6,10 +6,12 @@ interface Props {
   data: PortfolioData;
 }
 
-const themeNames = {
-  'cyber-bento': 'The Cyber-Bento',
+const themeNames: Record<string, string> = {
+  'cyber-bento': 'The Aura Pro',
   'minimalist-zen': 'The Minimalist Zen',
   'dynamic-pro': 'The Dynamic Pro',
+  'creative-studio': 'The Creative Studio',
+  'executive': 'The Executive',
 };
 
 const ReviewStep = ({ data }: Props) => {
@@ -17,9 +19,9 @@ const ReviewStep = ({ data }: Props) => {
 
   return (
     <div>
-      <h2 className="font-heading text-2xl sm:text-3xl font-bold mb-2">Review Your Order</h2>
+      <h2 className="font-heading text-2xl sm:text-3xl font-bold mb-2">Review & Publish</h2>
       <p className="text-muted-foreground mb-8">
-        Everything looks good? Hit confirm to start building your portfolio. You can always edit from the admin panel.
+        Everything looks good? Hit publish to make your portfolio live!
       </p>
 
       <div className="space-y-4">
@@ -32,9 +34,9 @@ const ReviewStep = ({ data }: Props) => {
         >
           <div className="flex items-center gap-2 mb-2">
             <Palette className="w-4 h-4 text-primary" />
-            <span className="text-xs text-muted-foreground uppercase tracking-wider font-medium">Theme</span>
+            <span className="text-xs text-muted-foreground uppercase tracking-wider font-medium">Template</span>
           </div>
-          <p className="font-heading font-bold">{themeNames[data.theme]}</p>
+          <p className="font-heading font-bold">{themeNames[data.theme] || data.theme}</p>
         </motion.div>
 
         {/* Profile */}
@@ -139,14 +141,13 @@ const ReviewStep = ({ data }: Props) => {
           </p>
         </motion.div>
 
-        {/* Info */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.6 }}
           className="text-xs text-muted-foreground/60 text-center pt-4"
         >
-          All fields (except name) are optional and editable from the admin panel after ordering.
+          All fields (except name) are optional and editable from the admin panel after publishing.
         </motion.div>
       </div>
     </div>
