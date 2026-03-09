@@ -14,7 +14,15 @@ import ReviewStep from '@/components/order/ReviewStep';
 import { savePortfolio, type StoredPortfolio } from '@/lib/portfolioStore';
 
 export interface PortfolioData {
-  theme: 'cyber-bento' | 'minimalist-zen' | 'dynamic-pro' | 'creative-studio' | 'executive';
+  theme:
+    | 'aura-infinity'
+    | 'minimalist-zen'
+    | 'dynamic-pro'
+    | 'creative-studio'
+    | 'executive'
+    | 'editorial-flow'
+    | 'bold-grid'
+    | 'cyber-bento';
   name: string;
   title: string;
   bio: string;
@@ -28,7 +36,7 @@ export interface PortfolioData {
 }
 
 const defaultData: PortfolioData = {
-  theme: 'cyber-bento',
+  theme: 'aura-infinity',
   name: '',
   title: '',
   bio: '',
@@ -54,15 +62,19 @@ const OrderWizard = () => {
   const [step, setStep] = useState(1);
   const [data, setData] = useState<PortfolioData>(() => {
     const initial = { ...defaultData };
-    if (templateId === 'minimalist-zen') initial.theme = 'minimalist-zen';
+    if (templateId === 'aura-infinity') initial.theme = 'aura-infinity';
+    else if (templateId === 'minimalist-zen') initial.theme = 'minimalist-zen';
     else if (templateId === 'dynamic-pro') initial.theme = 'dynamic-pro';
     else if (templateId === 'creative-studio') initial.theme = 'creative-studio';
     else if (templateId === 'executive') initial.theme = 'executive';
+    else if (templateId === 'editorial-flow') initial.theme = 'editorial-flow';
+    else if (templateId === 'bold-grid') initial.theme = 'bold-grid';
     return initial;
   });
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [savedPortfolio, setSavedPortfolio] = useState<StoredPortfolio | null>(null);
   const [copied, setCopied] = useState(false);
+  const [publishError, setPublishError] = useState('');
 
   const updateData = useCallback((updates: Partial<PortfolioData>) => {
     setData(prev => ({ ...prev, ...updates }));
@@ -76,12 +88,18 @@ const OrderWizard = () => {
   };
 
   const handleSubmit = () => {
-    const stored = savePortfolio(data);
-    setSavedPortfolio(stored);
-    setIsSubmitted(true);
+    try {
+      const stored = savePortfolio(data);
+      setSavedPortfolio(stored);
+      setPublishError('');
+      setIsSubmitted(true);
+    } catch {
+      setPublishError('Publish failed. Please try again.');
+    }
   };
 
-  const portfolioUrl = savedPortfolio ? `${window.location.origin}/p/${savedPortfolio.id}` : '';
+  const portfolioPath = savedPortfolio ? `/p/${savedPortfolio.id}` : '';
+  const portfolioUrl = savedPortfolio ? `${window.location.origin}${portfolioPath}` : '';
 
   const handleCopy = () => {
     navigator.clipboard.writeText(portfolioUrl);
@@ -152,7 +170,7 @@ const OrderWizard = () => {
               transition={{ delay: 0.9 }}
               className="flex flex-col sm:flex-row gap-4 justify-center"
             >
-              <Button variant="hero" size="xl" onClick={() => window.open(portfolioUrl, '_blank')} className="gap-2">
+              <Button variant="hero" size="xl" onClick={() => navigate(portfolioPath)} className="gap-2">
                 <ExternalLink className="w-4 h-4" /> View Portfolio
               </Button>
               <Button variant="outline" size="lg" onClick={() => navigate('/')}>Go Home</Button>
@@ -245,29 +263,34 @@ const OrderWizard = () => {
           </AnimatePresence>
 
           {/* Navigation buttons */}
-          <div className="flex justify-between mt-8 pb-4">
-            <Button
-              variant="outline"
-              onClick={() => setStep(Math.max(1, step - 1))}
-              disabled={step === 1}
-              className="gap-2"
-            >
-              <ArrowLeft className="w-4 h-4" /> Back
-            </Button>
-            {step < 4 ? (
+          <div className="mt-8 pb-4">
+            {publishError && (
+              <p className="text-sm text-destructive mb-3 text-center">{publishError}</p>
+            )}
+            <div className="flex justify-between">
               <Button
-                variant="hero"
-                onClick={() => setStep(step + 1)}
-                disabled={!canProceed()}
+                variant="outline"
+                onClick={() => setStep(Math.max(1, step - 1))}
+                disabled={step === 1}
                 className="gap-2"
               >
-                Next <ArrowRight className="w-4 h-4" />
+                <ArrowLeft className="w-4 h-4" /> Back
               </Button>
-            ) : (
-              <Button variant="hero" size="xl" onClick={handleSubmit} className="gap-2">
-                <Sparkles className="w-4 h-4" /> Publish Portfolio
-              </Button>
-            )}
+              {step < 4 ? (
+                <Button
+                  variant="hero"
+                  onClick={() => setStep(step + 1)}
+                  disabled={!canProceed()}
+                  className="gap-2"
+                >
+                  Next <ArrowRight className="w-4 h-4" />
+                </Button>
+              ) : (
+                <Button variant="hero" size="xl" onClick={handleSubmit} className="gap-2">
+                  <Sparkles className="w-4 h-4" /> Publish Portfolio
+                </Button>
+              )}
+            </div>
           </div>
         </div>
       </main>
