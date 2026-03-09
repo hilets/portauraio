@@ -263,29 +263,34 @@ const OrderWizard = () => {
           </AnimatePresence>
 
           {/* Navigation buttons */}
-          <div className="flex justify-between mt-8 pb-4">
-            <Button
-              variant="outline"
-              onClick={() => setStep(Math.max(1, step - 1))}
-              disabled={step === 1}
-              className="gap-2"
-            >
-              <ArrowLeft className="w-4 h-4" /> Back
-            </Button>
-            {step < 4 ? (
+          <div className="mt-8 pb-4">
+            {publishError && (
+              <p className="text-sm text-destructive mb-3 text-center">{publishError}</p>
+            )}
+            <div className="flex justify-between">
               <Button
-                variant="hero"
-                onClick={() => setStep(step + 1)}
-                disabled={!canProceed()}
+                variant="outline"
+                onClick={() => setStep(Math.max(1, step - 1))}
+                disabled={step === 1}
                 className="gap-2"
               >
-                Next <ArrowRight className="w-4 h-4" />
+                <ArrowLeft className="w-4 h-4" /> Back
               </Button>
-            ) : (
-              <Button variant="hero" size="xl" onClick={handleSubmit} className="gap-2">
-                <Sparkles className="w-4 h-4" /> Publish Portfolio
-              </Button>
-            )}
+              {step < 4 ? (
+                <Button
+                  variant="hero"
+                  onClick={() => setStep(step + 1)}
+                  disabled={!canProceed()}
+                  className="gap-2"
+                >
+                  Next <ArrowRight className="w-4 h-4" />
+                </Button>
+              ) : (
+                <Button variant="hero" size="xl" onClick={handleSubmit} className="gap-2">
+                  <Sparkles className="w-4 h-4" /> Publish Portfolio
+                </Button>
+              )}
+            </div>
           </div>
         </div>
       </main>
