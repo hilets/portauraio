@@ -14,7 +14,7 @@ import ReviewStep from '@/components/order/ReviewStep';
 import { savePortfolio, type StoredPortfolio } from '@/lib/portfolioStore';
 
 export interface PortfolioData {
-  theme: 'cyber-bento' | 'minimalist-zen' | 'dynamic-pro';
+  theme: 'cyber-bento' | 'minimalist-zen' | 'dynamic-pro' | 'creative-studio' | 'executive';
   name: string;
   title: string;
   bio: string;
