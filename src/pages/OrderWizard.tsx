@@ -14,7 +14,15 @@ import ReviewStep from '@/components/order/ReviewStep';
 import { savePortfolio, type StoredPortfolio } from '@/lib/portfolioStore';
 
 export interface PortfolioData {
-  theme: 'cyber-bento' | 'minimalist-zen' | 'dynamic-pro' | 'creative-studio' | 'executive';
+  theme:
+    | 'aura-infinity'
+    | 'minimalist-zen'
+    | 'dynamic-pro'
+    | 'creative-studio'
+    | 'executive'
+    | 'editorial-flow'
+    | 'bold-grid'
+    | 'cyber-bento';
   name: string;
   title: string;
   bio: string;
@@ -28,7 +36,7 @@ export interface PortfolioData {
 }
 
 const defaultData: PortfolioData = {
-  theme: 'cyber-bento',
+  theme: 'aura-infinity',
   name: '',
   title: '',
   bio: '',
@@ -54,15 +62,19 @@ const OrderWizard = () => {
   const [step, setStep] = useState(1);
   const [data, setData] = useState<PortfolioData>(() => {
     const initial = { ...defaultData };
-    if (templateId === 'minimalist-zen') initial.theme = 'minimalist-zen';
+    if (templateId === 'aura-infinity') initial.theme = 'aura-infinity';
+    else if (templateId === 'minimalist-zen') initial.theme = 'minimalist-zen';
     else if (templateId === 'dynamic-pro') initial.theme = 'dynamic-pro';
     else if (templateId === 'creative-studio') initial.theme = 'creative-studio';
     else if (templateId === 'executive') initial.theme = 'executive';
+    else if (templateId === 'editorial-flow') initial.theme = 'editorial-flow';
+    else if (templateId === 'bold-grid') initial.theme = 'bold-grid';
     return initial;
   });
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [savedPortfolio, setSavedPortfolio] = useState<StoredPortfolio | null>(null);
   const [copied, setCopied] = useState(false);
+  const [publishError, setPublishError] = useState('');
 
   const updateData = useCallback((updates: Partial<PortfolioData>) => {
     setData(prev => ({ ...prev, ...updates }));
@@ -76,12 +88,18 @@ const OrderWizard = () => {
   };
 
   const handleSubmit = () => {
-    const stored = savePortfolio(data);
-    setSavedPortfolio(stored);
-    setIsSubmitted(true);
+    try {
+      const stored = savePortfolio(data);
+      setSavedPortfolio(stored);
+      setPublishError('');
+      setIsSubmitted(true);
+    } catch {
+      setPublishError('Publish failed. Please try again.');
+    }
   };
 
-  const portfolioUrl = savedPortfolio ? `${window.location.origin}/p/${savedPortfolio.id}` : '';
+  const portfolioPath = savedPortfolio ? `/p/${savedPortfolio.id}` : '';
+  const portfolioUrl = savedPortfolio ? `${window.location.origin}${portfolioPath}` : '';
 
   const handleCopy = () => {
     navigator.clipboard.writeText(portfolioUrl);
