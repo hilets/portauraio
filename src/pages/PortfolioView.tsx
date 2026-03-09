@@ -149,231 +149,225 @@ const BackToTop = ({ color }: { color: string }) => {
 };
 
 // =============================================
-// CYBER BENTO THEME - Full Portfolio
+// AURA INFINITY THEME - Flagship Portfolio
 // =============================================
-const CyberBentoPortfolio = ({ data }: { data: StoredPortfolio }) => {
+const AuraInfinityPortfolio = ({ data }: { data: StoredPortfolio }) => {
   const c = data.primaryColor;
   const font = getFontFamily(data.font);
 
+  const portfolioPillars = [
+    'Hero Cinematic Intro',
+    'Case Study Storytelling',
+    'Service + Offer Sections',
+    'Client Trust Blocks',
+    'Big Work Showcase',
+    'Conversion CTA Flow',
+  ];
+
+  const professions = [
+    'Developers',
+    'Designers',
+    'Photographers',
+    'Videographers',
+    'Consultants',
+    'Founders',
+    'Artists',
+    'Marketers',
+  ];
+
   return (
-    <div className="min-h-screen" style={{ background: 'linear-gradient(135deg, #05050a, #0a0f1a, #060612)', fontFamily: font, cursor: 'none' }}>
+    <div className="min-h-screen" style={{ background: 'linear-gradient(140deg, #04060b 0%, #071120 55%, #04060c 100%)', fontFamily: font, cursor: 'none' }}>
       <PortfolioCursor color={c} />
       <ScrollProgress color={c} />
       <BackToTop color={c} />
 
-      {/* Hero Section */}
-      <section className="min-h-screen flex items-center justify-center relative px-4 sm:px-8">
-        {/* Background glow */}
+      <section className="min-h-screen flex items-center relative px-4 sm:px-8 pt-24">
         <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute top-1/4 left-1/4 w-96 h-96 rounded-full blur-[120px] opacity-20" style={{ background: c }} />
-          <div className="absolute bottom-1/4 right-1/4 w-64 h-64 rounded-full blur-[100px] opacity-10" style={{ background: c }} />
-        </div>
-
-        <div className="relative z-10 max-w-6xl w-full mx-auto">
-          <Reveal>
-            <div className="flex items-center gap-4 mb-8">
-              <motion.div
-                className="w-20 h-20 sm:w-24 sm:h-24 rounded-3xl flex items-center justify-center text-3xl sm:text-4xl font-black"
-                style={{ background: `linear-gradient(135deg, ${c}, ${c}80)`, color: '#000' }}
-                animate={{ rotate: [0, 3, 0, -3, 0] }}
-                transition={{ repeat: Infinity, duration: 6, ease: 'easeInOut' }}
-              >
-                {data.name.charAt(0).toUpperCase()}
-              </motion.div>
-              <div>
-                <motion.div
-                  className="text-xs uppercase tracking-[0.3em] mb-2"
-                  style={{ color: `${c}90` }}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.3 }}
-                >
-                  Portfolio
-                </motion.div>
-                <h1 className="text-4xl sm:text-6xl md:text-7xl font-black text-white leading-none">
-                  {data.name}
-                </h1>
-              </div>
-            </div>
-          </Reveal>
-
-          <Reveal delay={0.2}>
-            <p className="text-xl sm:text-2xl font-medium mb-4" style={{ color: c }}>
-              {data.title || 'Creative Professional'}
-            </p>
-          </Reveal>
-
-          <Reveal delay={0.3}>
-            <p className="text-gray-400 text-base sm:text-lg max-w-2xl leading-relaxed mb-10">
-              {data.bio || 'Crafting digital experiences that push the boundaries of creativity and technology.'}
-            </p>
-          </Reveal>
-
-          <Reveal delay={0.4}>
-            <div className="flex flex-wrap gap-3">
-              <MagneticButton
-                className="px-8 py-4 rounded-2xl text-sm font-bold tracking-wide transition-all"
-                style={{ background: c, color: '#000' }}
-              >
-                Get In Touch
-              </MagneticButton>
-              <MagneticButton
-                className="px-8 py-4 rounded-2xl text-sm font-bold tracking-wide border"
-                style={{ borderColor: `${c}40`, color: c, background: `${c}08` }}
-              >
-                View Projects
-              </MagneticButton>
-            </div>
-          </Reveal>
-
-          {/* Scroll indicator */}
           <motion.div
-            className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
-            animate={{ y: [0, 8, 0] }}
-            transition={{ repeat: Infinity, duration: 2 }}
-          >
-            <span className="text-[10px] uppercase tracking-widest text-gray-500">Scroll</span>
-            <ChevronDown className="w-4 h-4 text-gray-500" />
-          </motion.div>
+            className="absolute -top-16 -left-12 w-72 h-72 rounded-full blur-[90px] opacity-25"
+            style={{ background: c }}
+            animate={{ x: [0, 20, 0], y: [0, -12, 0] }}
+            transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
+          />
+          <motion.div
+            className="absolute bottom-0 right-0 w-80 h-80 rounded-full blur-[100px] opacity-20"
+            style={{ background: c }}
+            animate={{ x: [0, -24, 0], y: [0, 16, 0] }}
+            transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut' }}
+          />
         </div>
-      </section>
 
-      {/* Bento Grid Section */}
-      <section className="px-4 sm:px-8 py-20 max-w-6xl mx-auto">
-        <Reveal>
-          <p className="text-xs uppercase tracking-[0.3em] mb-8" style={{ color: `${c}80` }}>About Me</p>
-        </Reveal>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <Reveal delay={0.1} className="md:col-span-2">
-            <div className="rounded-3xl p-8 border h-full" style={{ background: `${c}04`, borderColor: `${c}15`, boxShadow: `inset 0 1px 0 ${c}10, 0 0 60px ${c}05` }}>
-              <p className="text-xs uppercase tracking-widest mb-4" style={{ color: `${c}70` }}>Bio</p>
-              <p className="text-gray-300 leading-relaxed text-lg">
-                {data.bio || 'A passionate creator dedicated to building innovative digital solutions. With an eye for design and a love for clean code, I bring ideas to life.'}
+        <div className="relative z-10 max-w-7xl mx-auto w-full grid lg:grid-cols-2 gap-10 items-center">
+          <div>
+            <Reveal>
+              <p className="text-[11px] uppercase tracking-[0.35em] mb-4" style={{ color: `${c}c7` }}>
+                Aura Infinity X
               </p>
-            </div>
-          </Reveal>
-
-          <Reveal delay={0.2}>
-            <div className="rounded-3xl p-8 border flex flex-col justify-center items-center text-center" style={{ background: `linear-gradient(135deg, ${c}12, ${c}04)`, borderColor: `${c}15` }}>
-              <motion.p
-                className="text-5xl font-black text-white mb-2"
-                initial={{ scale: 0 }}
-                whileInView={{ scale: 1 }}
-                transition={{ type: 'spring', delay: 0.3 }}
-                viewport={{ once: true }}
-              >
-                12+
-              </motion.p>
-              <p className="text-xs text-gray-500 uppercase tracking-wider">Projects Completed</p>
-            </div>
-          </Reveal>
-
-          <Reveal delay={0.3}>
-            <div className="rounded-3xl p-8 border" style={{ background: `${c}04`, borderColor: `${c}15` }}>
-              <p className="text-xs uppercase tracking-widest mb-4" style={{ color: `${c}70` }}>Skills</p>
-              <div className="flex flex-wrap gap-2">
-                {['Design', 'Development', 'Strategy', 'Branding', 'UI/UX'].map(s => (
-                  <span key={s} className="px-3 py-1.5 rounded-full text-xs border" style={{ borderColor: `${c}25`, color: `${c}cc` }}>
-                    {s}
-                  </span>
-                ))}
+            </Reveal>
+            <Reveal delay={0.1}>
+              <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black text-white leading-[0.9] mb-5">
+                {data.name || 'Your Name'}
+              </h1>
+            </Reveal>
+            <Reveal delay={0.2}>
+              <p className="text-lg sm:text-2xl font-semibold mb-4" style={{ color: c }}>
+                {data.title || 'Interactive Professional Portfolio Website'}
+              </p>
+            </Reveal>
+            <Reveal delay={0.3}>
+              <p className="text-sm sm:text-base text-gray-400 leading-relaxed max-w-xl mb-8">
+                {data.bio || 'A full-scale modern portfolio engineered to impress at first glance and convert visitors into clients with high-end visuals, interactive sections, and storytelling flow.'}
+              </p>
+            </Reveal>
+            <Reveal delay={0.4}>
+              <div className="flex flex-wrap gap-3">
+                <MagneticButton className="px-8 py-4 rounded-2xl font-semibold" style={{ background: c, color: '#03070e' }}>
+                  Start a Project
+                </MagneticButton>
+                <MagneticButton className="px-8 py-4 rounded-2xl border font-semibold" style={{ borderColor: `${c}55`, color: c, background: `${c}10` }}>
+                  View Case Studies
+                </MagneticButton>
               </div>
-            </div>
-          </Reveal>
+            </Reveal>
+          </div>
 
-          <Reveal delay={0.4} className="md:col-span-2">
-            <div className="rounded-3xl p-8 border" style={{ background: `${c}04`, borderColor: `${c}15` }}>
-              <p className="text-xs uppercase tracking-widest mb-4" style={{ color: `${c}70` }}>Experience</p>
-              <div className="space-y-4">
-                {['Senior Designer at Studio X', 'Lead Developer at TechCo', 'Freelance Creative Director'].map((exp, i) => (
-                  <motion.div
-                    key={exp}
-                    className="flex items-center justify-between py-3 border-b"
-                    style={{ borderColor: `${c}10` }}
-                    initial={{ opacity: 0, x: -20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    transition={{ delay: i * 0.1 }}
-                    viewport={{ once: true }}
-                  >
-                    <span className="text-gray-300">{exp}</span>
-                    <span className="text-xs text-gray-600">{2024 - i}</span>
-                  </motion.div>
-                ))}
-              </div>
-            </div>
+          <Reveal delay={0.25} className="relative">
+            <motion.div
+              className="rounded-3xl overflow-hidden border shadow-2xl"
+              style={{ borderColor: `${c}35`, boxShadow: `0 20px 80px ${c}22` }}
+              whileHover={{ rotateX: 2, rotateY: -4, y: -4 }}
+              transition={{ duration: 0.4 }}
+            >
+              <img src={auraHeroOne} alt="Aura Infinity website hero preview" className="w-full h-[300px] sm:h-[420px] object-cover" />
+            </motion.div>
+            <motion.div
+              className="absolute -bottom-8 -left-5 sm:-left-8 w-44 sm:w-56 rounded-2xl overflow-hidden border shadow-2xl"
+              style={{ borderColor: `${c}40` }}
+              initial={{ opacity: 0, y: 16, rotate: -4 }}
+              animate={{ opacity: 1, y: 0, rotate: -3 }}
+              transition={{ delay: 0.5 }}
+            >
+              <img src={auraHeroTwo} alt="Aura Infinity interaction section preview" className="w-full h-28 sm:h-36 object-cover" />
+            </motion.div>
           </Reveal>
         </div>
+
+        <motion.div
+          className="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
+          animate={{ y: [0, 8, 0] }}
+          transition={{ repeat: Infinity, duration: 2.2 }}
+        >
+          <span className="text-[10px] uppercase tracking-widest text-gray-500">Scroll</span>
+          <ChevronDown className="w-4 h-4 text-gray-500" />
+        </motion.div>
       </section>
 
-      {/* Projects Section */}
-      <section className="px-4 sm:px-8 py-20 max-w-6xl mx-auto">
+      <section className="px-4 sm:px-8 py-20 max-w-7xl mx-auto">
         <Reveal>
-          <p className="text-xs uppercase tracking-[0.3em] mb-2" style={{ color: `${c}80` }}>Featured Work</p>
-          <h2 className="text-3xl sm:text-5xl font-black text-white mb-12">Selected Projects</h2>
+          <p className="text-xs uppercase tracking-[0.28em] mb-4" style={{ color: `${c}b8` }}>Website Architecture</p>
+          <h2 className="text-3xl sm:text-5xl font-black text-white mb-10">Built to Feel Premium at Every Scroll</h2>
         </Reveal>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {[
-            { name: 'Project Alpha', desc: 'Brand identity & web design', year: '2024' },
-            { name: 'Design System', desc: 'Component library & tokens', year: '2024' },
-            { name: 'Mobile App', desc: 'iOS & Android application', year: '2023' },
-            { name: 'E-Commerce', desc: 'Full-stack web platform', year: '2023' },
-          ].map((p, i) => (
-            <Reveal key={p.name} delay={i * 0.1}>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {portfolioPillars.map((pillar, index) => (
+            <Reveal key={pillar} delay={index * 0.06}>
               <motion.div
-                className="group rounded-3xl p-8 border relative overflow-hidden"
-                style={{ background: `${c}04`, borderColor: `${c}12` }}
-                whileHover={{ y: -4, borderColor: `${c}40` }}
-                transition={{ duration: 0.3 }}
+                className="rounded-2xl border p-5 h-full"
+                style={{ borderColor: `${c}25`, background: `${c}08` }}
+                whileHover={{ y: -4, rotateX: 2, rotateY: -2 }}
+                transition={{ duration: 0.25 }}
               >
-                <div className="absolute top-0 left-0 w-full h-1 opacity-0 group-hover:opacity-100 transition-opacity" style={{ background: `linear-gradient(90deg, ${c}, transparent)` }} />
-                <div className="aspect-video rounded-2xl mb-6 flex items-center justify-center" style={{ background: `linear-gradient(135deg, ${c}12, ${c}05)` }}>
-                  <span className="text-4xl font-black" style={{ color: `${c}30` }}>{String(i + 1).padStart(2, '0')}</span>
-                </div>
-                <div className="flex items-start justify-between">
-                  <div>
-                    <h3 className="text-xl font-bold text-white mb-1">{p.name}</h3>
-                    <p className="text-sm text-gray-500">{p.desc}</p>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <span className="text-xs text-gray-600">{p.year}</span>
-                    <ArrowUpRight className="w-5 h-5 group-hover:rotate-0 -rotate-45 transition-transform" style={{ color: c }} />
-                  </div>
-                </div>
+                <p className="text-[10px] uppercase tracking-[0.22em] mb-2" style={{ color: `${c}d2` }}>
+                  Section {String(index + 1).padStart(2, '0')}
+                </p>
+                <h3 className="text-lg font-bold text-white mb-2">{pillar}</h3>
+                <p className="text-sm text-gray-400">Designed for strong first impression + easy conversion.</p>
               </motion.div>
             </Reveal>
           ))}
         </div>
       </section>
 
-      {/* Contact / Footer */}
-      <section className="px-4 sm:px-8 py-20 max-w-6xl mx-auto">
+      <section className="px-4 sm:px-8 py-20 max-w-7xl mx-auto">
         <Reveal>
-          <div className="rounded-3xl p-10 sm:p-16 border text-center" style={{ background: `linear-gradient(135deg, ${c}08, ${c}03)`, borderColor: `${c}15` }}>
-            <p className="text-xs uppercase tracking-[0.3em] mb-4" style={{ color: `${c}80` }}>Let's Connect</p>
-            <h2 className="text-3xl sm:text-5xl font-black text-white mb-6">
-              Ready to work<br />together?
-            </h2>
+          <p className="text-xs uppercase tracking-[0.28em] mb-3" style={{ color: `${c}b8` }}>Portfolio Showcase</p>
+          <h2 className="text-3xl sm:text-5xl font-black text-white mb-10">Big Visual Blocks, Strong Storytelling</h2>
+        </Reveal>
+
+        <div className="grid lg:grid-cols-12 gap-4">
+          <Reveal className="lg:col-span-7">
+            <motion.div className="rounded-3xl overflow-hidden border h-full" style={{ borderColor: `${c}30` }} whileHover={{ y: -3 }}>
+              <img src={auraHeroTwo} alt="Large case-study visual for premium portfolio" className="w-full h-full min-h-[280px] object-cover" />
+            </motion.div>
+          </Reveal>
+          <Reveal delay={0.1} className="lg:col-span-5">
+            <div className="rounded-3xl border p-6 h-full flex flex-col" style={{ borderColor: `${c}30`, background: `${c}08` }}>
+              <p className="text-[10px] uppercase tracking-[0.3em] mb-3" style={{ color: `${c}d2` }}>Case Study Flow</p>
+              <div className="space-y-2 mb-6">
+                {['Challenge', 'Solution', 'Impact', 'Client Result'].map((item, i) => (
+                  <motion.div
+                    key={item}
+                    className="flex items-center justify-between py-2 border-b"
+                    style={{ borderColor: `${c}18` }}
+                    initial={{ opacity: 0, x: -14 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    transition={{ delay: i * 0.08 }}
+                    viewport={{ once: true }}
+                  >
+                    <span className="text-sm text-gray-300">{item}</span>
+                    <ArrowUpRight className="w-4 h-4" style={{ color: c }} />
+                  </motion.div>
+                ))}
+              </div>
+              <MagneticButton className="mt-auto px-6 py-3 rounded-xl font-semibold" style={{ background: c, color: '#03101a' }}>
+                Explore Full Portfolio
+              </MagneticButton>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
+      <section className="px-4 sm:px-8 py-20 max-w-7xl mx-auto">
+        <Reveal>
+          <p className="text-xs uppercase tracking-[0.28em] mb-3" style={{ color: `${c}b8` }}>For Every Profession</p>
+          <h2 className="text-3xl sm:text-5xl font-black text-white mb-8">Universal Template, Premium Execution</h2>
+        </Reveal>
+        <div className="flex flex-wrap gap-2">
+          {professions.map((profession, index) => (
+            <Reveal key={profession} delay={index * 0.03}>
+              <span className="px-4 py-2 rounded-full border text-sm" style={{ borderColor: `${c}35`, color: `${c}e8`, background: `${c}0f` }}>
+                {profession}
+              </span>
+            </Reveal>
+          ))}
+        </div>
+      </section>
+
+      <section className="px-4 sm:px-8 py-20 max-w-7xl mx-auto">
+        <Reveal>
+          <div className="rounded-3xl border p-10 sm:p-16 text-center" style={{ borderColor: `${c}30`, background: `linear-gradient(135deg, ${c}16, ${c}05)` }}>
+            <p className="text-xs uppercase tracking-[0.3em] mb-4" style={{ color: `${c}c7` }}>Let's Connect</p>
+            <h2 className="text-4xl sm:text-6xl font-black text-white mb-6">Ready to turn visitors into clients?</h2>
             {data.email && (
               <MagneticButton
-                className="px-10 py-5 rounded-2xl text-base font-bold tracking-wide mb-8"
-                style={{ background: c, color: '#000' }}
-                onClick={() => window.location.href = `mailto:${data.email}`}
+                className="px-10 py-5 rounded-2xl text-base font-bold"
+                style={{ background: c, color: '#021018' }}
+                onClick={() => {
+                  window.location.href = `mailto:${data.email}`;
+                }}
               >
                 <Mail className="w-5 h-5 inline mr-2" />
                 {data.email}
               </MagneticButton>
             )}
-            {data.phone && <p className="text-gray-500 mb-6">{data.phone}</p>}
-            <div className="flex justify-center gap-4 mt-6">
-              {data.socialLinks.filter(l => l.url.trim()).map((link, i) => {
+            <div className="flex justify-center gap-3 mt-8">
+              {data.socialLinks.filter((link) => link.url.trim()).map((link, i) => {
                 const Icon = getSocialIcon(link.platform);
                 return (
                   <MagneticButton
                     key={i}
-                    className="w-12 h-12 rounded-xl border flex items-center justify-center transition-colors"
-                    style={{ borderColor: `${c}25`, color: `${c}cc` }}
+                    className="w-12 h-12 rounded-xl border flex items-center justify-center"
+                    style={{ borderColor: `${c}35`, color: c }}
                     onClick={() => window.open(link.url, '_blank')}
                   >
                     <Icon className="w-5 h-5" />
@@ -382,12 +376,6 @@ const CyberBentoPortfolio = ({ data }: { data: StoredPortfolio }) => {
               })}
             </div>
           </div>
-        </Reveal>
-
-        <Reveal delay={0.2}>
-          <p className="text-center text-xs text-gray-600 mt-12">
-            © {new Date().getFullYear()} {data.name}. Built with <span style={{ color: c }}>Portaura</span>
-          </p>
         </Reveal>
       </section>
     </div>
