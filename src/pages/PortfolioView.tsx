@@ -775,10 +775,14 @@ const PortfolioView = () => {
       return <MinimalistZenPortfolio data={portfolio} />;
     case 'dynamic-pro':
       return <DynamicProPortfolio data={portfolio} />;
+    case 'aura-infinity':
     case 'creative-studio':
     case 'executive':
+    case 'editorial-flow':
+    case 'bold-grid':
+    case 'cyber-bento':
     default:
-      return <CyberBentoPortfolio data={portfolio} />;
+      return <AuraInfinityPortfolio data={portfolio} />;
   }
 };
 
