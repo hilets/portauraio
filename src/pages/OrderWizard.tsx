@@ -1,28 +1,18 @@
 import { useState, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowLeft, ArrowRight, Check, Palette, Type, User, Eye, Sparkles, X, Copy, CheckCheck, ExternalLink } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Type, User, Eye, Sparkles, Copy, CheckCheck, ExternalLink } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import CustomCursor from '@/components/CustomCursor';
 import LivePreview from '@/components/order/LivePreview';
-import ThemeSelector from '@/components/order/ThemeSelector';
 import ProfileForm from '@/components/order/ProfileForm';
 import DesignForm from '@/components/order/DesignForm';
 import ReviewStep from '@/components/order/ReviewStep';
 import { savePortfolio, type StoredPortfolio } from '@/lib/portfolioStore';
 
 export interface PortfolioData {
-  theme:
-    | 'aura-infinity'
-    | 'minimalist-zen'
-    | 'dynamic-pro'
-    | 'creative-studio'
-    | 'executive'
-    | 'editorial-flow'
-    | 'bold-grid'
-    | 'cyber-bento';
   name: string;
   title: string;
   bio: string;
@@ -36,13 +26,16 @@ export interface PortfolioData {
 }
 
 const defaultData: PortfolioData = {
-  theme: 'aura-infinity',
   name: '',
   title: '',
   bio: '',
   email: '',
   phone: '',
-  socialLinks: [{ platform: 'GitHub', url: '' }, { platform: 'LinkedIn', url: '' }, { platform: 'Twitter', url: '' }],
+  socialLinks: [
+    { platform: 'GitHub', url: '' },
+    { platform: 'LinkedIn', url: '' },
+    { platform: 'Twitter', url: '' },
+  ],
   adminPassword: '',
   primaryColor: '#00e5ff',
   font: 'Inter',
@@ -50,40 +43,26 @@ const defaultData: PortfolioData = {
 };
 
 const steps = [
-  { id: 1, label: 'Theme', icon: Palette },
-  { id: 2, label: 'Profile', icon: User },
-  { id: 3, label: 'Design', icon: Type },
-  { id: 4, label: 'Review', icon: Eye },
+  { id: 1, label: 'Profile', icon: User },
+  { id: 2, label: 'Design', icon: Type },
+  { id: 3, label: 'Review', icon: Eye },
 ];
 
 const OrderWizard = () => {
   const navigate = useNavigate();
-  const { templateId } = useParams();
   const [step, setStep] = useState(1);
-  const [data, setData] = useState<PortfolioData>(() => {
-    const initial = { ...defaultData };
-    if (templateId === 'aura-infinity') initial.theme = 'aura-infinity';
-    else if (templateId === 'minimalist-zen') initial.theme = 'minimalist-zen';
-    else if (templateId === 'dynamic-pro') initial.theme = 'dynamic-pro';
-    else if (templateId === 'creative-studio') initial.theme = 'creative-studio';
-    else if (templateId === 'executive') initial.theme = 'executive';
-    else if (templateId === 'editorial-flow') initial.theme = 'editorial-flow';
-    else if (templateId === 'bold-grid') initial.theme = 'bold-grid';
-    return initial;
-  });
+  const [data, setData] = useState<PortfolioData>({ ...defaultData });
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [savedPortfolio, setSavedPortfolio] = useState<StoredPortfolio | null>(null);
   const [copied, setCopied] = useState(false);
   const [publishError, setPublishError] = useState('');
 
   const updateData = useCallback((updates: Partial<PortfolioData>) => {
-    setData(prev => ({ ...prev, ...updates }));
+    setData((prev) => ({ ...prev, ...updates }));
   }, []);
 
   const canProceed = () => {
-    if (step === 1) return true;
-    if (step === 2) return data.name.trim().length > 0;
-    if (step === 3) return true;
+    if (step === 1) return data.name.trim().length > 0;
     return true;
   };
 
@@ -107,7 +86,6 @@ const OrderWizard = () => {
     setTimeout(() => setCopied(false), 2000);
   };
 
-  // Success screen
   if (isSubmitted) {
     return (
       <div className="min-h-screen bg-background relative">
@@ -140,7 +118,6 @@ const OrderWizard = () => {
               <span className="text-primary font-semibold">{data.name}'s</span> portfolio has been published.
             </motion.p>
 
-            {/* Portfolio Link Card */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -173,7 +150,9 @@ const OrderWizard = () => {
               <Button variant="hero" size="xl" onClick={() => navigate(portfolioPath)} className="gap-2">
                 <ExternalLink className="w-4 h-4" /> View Portfolio
               </Button>
-              <Button variant="outline" size="lg" onClick={() => navigate('/')}>Go Home</Button>
+              <Button variant="outline" size="lg" onClick={() => navigate('/')}>
+                Go Home
+              </Button>
             </motion.div>
           </div>
         </main>
@@ -188,9 +167,9 @@ const OrderWizard = () => {
       <Header />
       <main className="relative z-10 pt-28 pb-20">
         <div className="container-custom max-w-2xl">
-          {/* Back button */}
+          {/* Back */}
           <motion.button
-            onClick={() => step > 1 ? setStep(step - 1) : navigate(-1)}
+            onClick={() => (step > 1 ? setStep(step - 1) : navigate(-1))}
             className="flex items-center gap-2 text-muted-foreground hover:text-foreground mb-4 transition-colors text-sm"
             whileHover={{ x: -4 }}
           >
@@ -198,27 +177,24 @@ const OrderWizard = () => {
             {step > 1 ? 'Previous Step' : 'Back'}
           </motion.button>
 
-          {/* Step progress bar - like reference */}
+          {/* Progress */}
           <div className="flex items-center gap-1 mb-2">
             {steps.map((s) => (
               <div
                 key={s.id}
-                className={`flex-1 h-1 rounded-full transition-all duration-500 ${
-                  step >= s.id ? 'bg-primary' : 'bg-muted'
-                }`}
+                className={`flex-1 h-1 rounded-full transition-all duration-500 ${step >= s.id ? 'bg-primary' : 'bg-muted'}`}
               />
             ))}
           </div>
           <div className="flex items-center justify-between mb-6">
-            <p className="text-xs text-muted-foreground">Step {step}/{steps.length}</p>
+            <p className="text-xs text-muted-foreground">
+              Step {step}/{steps.length}
+            </p>
             <p className="text-xs text-muted-foreground">{steps[step - 1].label}</p>
           </div>
 
-          {/* Live Preview at top - scrollable like reference */}
-          <motion.div
-            layout
-            className="rounded-2xl border border-border/30 bg-card/50 backdrop-blur-sm overflow-hidden mb-6"
-          >
+          {/* Live Preview */}
+          <motion.div layout className="rounded-2xl border border-border/30 bg-card/50 backdrop-blur-sm overflow-hidden mb-6">
             <div className="flex items-center gap-2 px-4 py-2.5 border-b border-border/30 bg-muted/30">
               <div className="flex gap-1.5">
                 <div className="w-2.5 h-2.5 rounded-full bg-destructive/60" />
@@ -229,7 +205,7 @@ const OrderWizard = () => {
                 {data.name ? `${data.name.toLowerCase().replace(/\s+/g, '-')}.portaura.dev` : 'your-portfolio.portaura.dev'}
               </span>
             </div>
-            <div className="h-[280px] sm:h-[320px] overflow-y-auto">
+            <div className="h-[300px] sm:h-[360px] overflow-y-auto">
               <LivePreview data={data} />
             </div>
           </motion.div>
@@ -238,51 +214,34 @@ const OrderWizard = () => {
             <Eye className="w-3 h-3" /> Live preview — changes update in real-time
           </p>
 
-          {/* Form content below preview */}
+          {/* Form */}
           <AnimatePresence mode="wait">
             {step === 1 && (
-              <motion.div key="step1" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ duration: 0.3 }}>
-                <ThemeSelector data={data} updateData={updateData} />
-              </motion.div>
-            )}
-            {step === 2 && (
-              <motion.div key="step2" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ duration: 0.3 }}>
+              <motion.div key="s1" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ duration: 0.3 }}>
                 <ProfileForm data={data} updateData={updateData} />
               </motion.div>
             )}
-            {step === 3 && (
-              <motion.div key="step3" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ duration: 0.3 }}>
+            {step === 2 && (
+              <motion.div key="s2" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ duration: 0.3 }}>
                 <DesignForm data={data} updateData={updateData} />
               </motion.div>
             )}
-            {step === 4 && (
-              <motion.div key="step4" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ duration: 0.3 }}>
+            {step === 3 && (
+              <motion.div key="s3" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ duration: 0.3 }}>
                 <ReviewStep data={data} />
               </motion.div>
             )}
           </AnimatePresence>
 
-          {/* Navigation buttons */}
+          {/* Nav */}
           <div className="mt-8 pb-4">
-            {publishError && (
-              <p className="text-sm text-destructive mb-3 text-center">{publishError}</p>
-            )}
+            {publishError && <p className="text-sm text-destructive mb-3 text-center">{publishError}</p>}
             <div className="flex justify-between">
-              <Button
-                variant="outline"
-                onClick={() => setStep(Math.max(1, step - 1))}
-                disabled={step === 1}
-                className="gap-2"
-              >
+              <Button variant="outline" onClick={() => setStep(Math.max(1, step - 1))} disabled={step === 1} className="gap-2">
                 <ArrowLeft className="w-4 h-4" /> Back
               </Button>
-              {step < 4 ? (
-                <Button
-                  variant="hero"
-                  onClick={() => setStep(step + 1)}
-                  disabled={!canProceed()}
-                  className="gap-2"
-                >
+              {step < 3 ? (
+                <Button variant="hero" onClick={() => setStep(step + 1)} disabled={!canProceed()} className="gap-2">
                   Next <ArrowRight className="w-4 h-4" />
                 </Button>
               ) : (
