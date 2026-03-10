@@ -24,6 +24,7 @@ export interface PortfolioData {
   primaryColor: string;
   font: 'Inter' | 'Playfair Display' | 'JetBrains Mono';
   profileImage: string;
+  template: 'aura-infinity' | 'quantum-studio';
 }
 
 const defaultData: PortfolioData = {
@@ -41,6 +42,7 @@ const defaultData: PortfolioData = {
   primaryColor: '#00e5ff',
   font: 'Inter',
   profileImage: '',
+  template: 'aura-infinity',
 };
 
 const steps = [
@@ -95,44 +97,26 @@ const OrderWizard = () => {
         <Header />
         <main className="relative z-10 pt-32 pb-20">
           <div className="container-custom max-w-2xl text-center">
-            <motion.div
-              initial={{ scale: 0 }}
-              animate={{ scale: 1 }}
-              transition={{ type: 'spring', delay: 0.2 }}
-              className="w-24 h-24 rounded-full bg-primary/10 border-2 border-primary flex items-center justify-center mx-auto mb-8"
-            >
+            <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ type: 'spring', delay: 0.2 }}
+              className="w-24 h-24 rounded-full bg-primary/10 border-2 border-primary flex items-center justify-center mx-auto mb-8">
               <Sparkles className="w-12 h-12 text-primary" />
             </motion.div>
-            <motion.h1
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4 }}
-              className="font-heading text-4xl md:text-5xl font-bold mb-4"
-            >
+            <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }}
+              className="font-heading text-4xl md:text-5xl font-bold mb-4">
               Your Portfolio is Live! 🎉
             </motion.h1>
-            <motion.p
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.6 }}
-              className="text-muted-foreground text-lg mb-8"
-            >
+            <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.6 }}
+              className="text-muted-foreground text-lg mb-8">
               <span className="text-primary font-semibold">{data.name}'s</span> portfolio has been published.
             </motion.p>
 
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.7 }}
-              className="rounded-2xl border border-primary/30 bg-primary/5 backdrop-blur-sm p-6 mb-8 mx-auto max-w-lg"
-            >
+            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.7 }}
+              className="rounded-2xl border border-primary/30 bg-primary/5 backdrop-blur-sm p-6 mb-8 mx-auto max-w-lg">
               <p className="text-xs uppercase tracking-widest text-muted-foreground mb-3">Your Portfolio Link</p>
               <div className="flex items-center gap-2 bg-background/80 rounded-xl border border-border/50 p-3">
                 <code className="text-sm text-primary flex-1 truncate text-left">{portfolioUrl}</code>
-                <button
-                  onClick={handleCopy}
-                  className="flex-shrink-0 w-10 h-10 rounded-lg bg-primary/10 hover:bg-primary/20 flex items-center justify-center text-primary transition-colors"
-                >
+                <button onClick={handleCopy}
+                  className="flex-shrink-0 w-10 h-10 rounded-lg bg-primary/10 hover:bg-primary/20 flex items-center justify-center text-primary transition-colors">
                   {copied ? <CheckCheck className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
                 </button>
               </div>
@@ -143,18 +127,12 @@ const OrderWizard = () => {
               )}
             </motion.div>
 
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.9 }}
-              className="flex flex-col sm:flex-row gap-4 justify-center"
-            >
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.9 }}
+              className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button variant="hero" size="xl" onClick={() => navigate(portfolioPath)} className="gap-2">
                 <ExternalLink className="w-4 h-4" /> View Portfolio
               </Button>
-              <Button variant="outline" size="lg" onClick={() => navigate('/')}>
-                Go Home
-              </Button>
+              <Button variant="outline" size="lg" onClick={() => navigate('/')}>Go Home</Button>
             </motion.div>
           </div>
         </main>
@@ -170,11 +148,8 @@ const OrderWizard = () => {
       <main className="relative z-10 pt-28 pb-20">
         <div className="container-custom max-w-2xl">
           {/* Back */}
-          <motion.button
-            onClick={() => (step > 1 ? setStep(step - 1) : navigate(-1))}
-            className="flex items-center gap-2 text-muted-foreground hover:text-foreground mb-4 transition-colors text-sm"
-            whileHover={{ x: -4 }}
-          >
+          <motion.button onClick={() => (step > 1 ? setStep(step - 1) : navigate(-1))}
+            className="flex items-center gap-2 text-muted-foreground hover:text-foreground mb-4 transition-colors text-sm" whileHover={{ x: -4 }}>
             <ArrowLeft className="w-4 h-4" />
             {step > 1 ? 'Previous Step' : 'Back'}
           </motion.button>
@@ -182,16 +157,11 @@ const OrderWizard = () => {
           {/* Progress */}
           <div className="flex items-center gap-1 mb-2">
             {steps.map((s) => (
-              <div
-                key={s.id}
-                className={`flex-1 h-1 rounded-full transition-all duration-500 ${step >= s.id ? 'bg-primary' : 'bg-muted'}`}
-              />
+              <div key={s.id} className={`flex-1 h-1 rounded-full transition-all duration-500 ${step >= s.id ? 'bg-primary' : 'bg-muted'}`} />
             ))}
           </div>
           <div className="flex items-center justify-between mb-6">
-            <p className="text-xs text-muted-foreground">
-              Step {step}/{steps.length}
-            </p>
+            <p className="text-xs text-muted-foreground">Step {step}/{steps.length}</p>
             <p className="text-xs text-muted-foreground">{steps[step - 1].label}</p>
           </div>
 
@@ -220,7 +190,7 @@ const OrderWizard = () => {
           <AnimatePresence mode="wait">
             {step === 1 && (
               <motion.div key="s1" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ duration: 0.3 }}>
-                <ThemeShowcase />
+                <ThemeShowcase data={data} updateData={updateData} />
               </motion.div>
             )}
             {step === 2 && (

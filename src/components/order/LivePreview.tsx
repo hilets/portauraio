@@ -15,6 +15,7 @@ const LivePreview = ({ data }: Props) => (
     socialLinks={data.socialLinks}
     primaryColor={data.primaryColor}
     font={data.font}
+    template={data.template}
     compact
   />
 );
