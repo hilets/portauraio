@@ -220,16 +220,21 @@ const OrderWizard = () => {
           <AnimatePresence mode="wait">
             {step === 1 && (
               <motion.div key="s1" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ duration: 0.3 }}>
-                <ProfileForm data={data} updateData={updateData} />
+                <ThemeShowcase />
               </motion.div>
             )}
             {step === 2 && (
               <motion.div key="s2" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ duration: 0.3 }}>
-                <DesignForm data={data} updateData={updateData} />
+                <ProfileForm data={data} updateData={updateData} />
               </motion.div>
             )}
             {step === 3 && (
               <motion.div key="s3" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ duration: 0.3 }}>
+                <DesignForm data={data} updateData={updateData} />
+              </motion.div>
+            )}
+            {step === 4 && (
+              <motion.div key="s4" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ duration: 0.3 }}>
                 <ReviewStep data={data} />
               </motion.div>
             )}
