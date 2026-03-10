@@ -10,6 +10,7 @@ import LivePreview from '@/components/order/LivePreview';
 import ProfileForm from '@/components/order/ProfileForm';
 import DesignForm from '@/components/order/DesignForm';
 import ReviewStep from '@/components/order/ReviewStep';
+import ThemeShowcase from '@/components/order/ThemeShowcase';
 import { savePortfolio, type StoredPortfolio } from '@/lib/portfolioStore';
 
 export interface PortfolioData {
@@ -43,9 +44,10 @@ const defaultData: PortfolioData = {
 };
 
 const steps = [
-  { id: 1, label: 'Profile', icon: User },
-  { id: 2, label: 'Design', icon: Type },
-  { id: 3, label: 'Review', icon: Eye },
+  { id: 1, label: 'Template', icon: Sparkles },
+  { id: 2, label: 'Profile', icon: User },
+  { id: 3, label: 'Design', icon: Type },
+  { id: 4, label: 'Review', icon: Eye },
 ];
 
 const OrderWizard = () => {
@@ -62,7 +64,7 @@ const OrderWizard = () => {
   }, []);
 
   const canProceed = () => {
-    if (step === 1) return data.name.trim().length > 0;
+    if (step === 2) return data.name.trim().length > 0;
     return true;
   };
 
@@ -218,16 +220,21 @@ const OrderWizard = () => {
           <AnimatePresence mode="wait">
             {step === 1 && (
               <motion.div key="s1" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ duration: 0.3 }}>
-                <ProfileForm data={data} updateData={updateData} />
+                <ThemeShowcase />
               </motion.div>
             )}
             {step === 2 && (
               <motion.div key="s2" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ duration: 0.3 }}>
-                <DesignForm data={data} updateData={updateData} />
+                <ProfileForm data={data} updateData={updateData} />
               </motion.div>
             )}
             {step === 3 && (
               <motion.div key="s3" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ duration: 0.3 }}>
+                <DesignForm data={data} updateData={updateData} />
+              </motion.div>
+            )}
+            {step === 4 && (
+              <motion.div key="s4" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ duration: 0.3 }}>
                 <ReviewStep data={data} />
               </motion.div>
             )}
@@ -240,7 +247,7 @@ const OrderWizard = () => {
               <Button variant="outline" onClick={() => setStep(Math.max(1, step - 1))} disabled={step === 1} className="gap-2">
                 <ArrowLeft className="w-4 h-4" /> Back
               </Button>
-              {step < 3 ? (
+              {step < 4 ? (
                 <Button variant="hero" onClick={() => setStep(step + 1)} disabled={!canProceed()} className="gap-2">
                   Next <ArrowRight className="w-4 h-4" />
                 </Button>
