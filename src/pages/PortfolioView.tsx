@@ -18,7 +18,6 @@ const PortfolioView = () => {
     else setNotFound(true);
   }, [id]);
 
-  // Load fonts
   useEffect(() => {
     if (!portfolio) return;
     const links: HTMLLinkElement[] = [];
@@ -69,6 +68,7 @@ const PortfolioView = () => {
       socialLinks={portfolio.socialLinks}
       primaryColor={portfolio.primaryColor}
       font={portfolio.font}
+      template={(portfolio as any).template || 'aura-infinity'}
     />
   );
 };
