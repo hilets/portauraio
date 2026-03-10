@@ -10,6 +10,7 @@ import LivePreview from '@/components/order/LivePreview';
 import ProfileForm from '@/components/order/ProfileForm';
 import DesignForm from '@/components/order/DesignForm';
 import ReviewStep from '@/components/order/ReviewStep';
+import ThemeShowcase from '@/components/order/ThemeShowcase';
 import { savePortfolio, type StoredPortfolio } from '@/lib/portfolioStore';
 
 export interface PortfolioData {
