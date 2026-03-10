@@ -247,7 +247,7 @@ const OrderWizard = () => {
               <Button variant="outline" onClick={() => setStep(Math.max(1, step - 1))} disabled={step === 1} className="gap-2">
                 <ArrowLeft className="w-4 h-4" /> Back
               </Button>
-              {step < 3 ? (
+              {step < 4 ? (
                 <Button variant="hero" onClick={() => setStep(step + 1)} disabled={!canProceed()} className="gap-2">
                   Next <ArrowRight className="w-4 h-4" />
                 </Button>
