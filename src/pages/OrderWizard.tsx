@@ -64,7 +64,7 @@ const OrderWizard = () => {
   }, []);
 
   const canProceed = () => {
-    if (step === 1) return data.name.trim().length > 0;
+    if (step === 2) return data.name.trim().length > 0;
     return true;
   };
 
