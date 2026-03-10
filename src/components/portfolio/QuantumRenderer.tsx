@@ -34,7 +34,6 @@ const AnimatedLine = ({ color, className = '' }: { color: string; className?: st
     <div ref={ref} className={`overflow-hidden ${className}`}>
       <motion.div
         className="h-px w-full"
-        style={{ background: `linear-gradient(90deg, ${color}, ${color}40)` }}
         initial={{ scaleX: 0 }}
         animate={isInView ? { scaleX: 1 } : {}}
         transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
