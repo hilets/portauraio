@@ -44,9 +44,10 @@ const defaultData: PortfolioData = {
 };
 
 const steps = [
-  { id: 1, label: 'Profile', icon: User },
-  { id: 2, label: 'Design', icon: Type },
-  { id: 3, label: 'Review', icon: Eye },
+  { id: 1, label: 'Template', icon: Sparkles },
+  { id: 2, label: 'Profile', icon: User },
+  { id: 3, label: 'Design', icon: Type },
+  { id: 4, label: 'Review', icon: Eye },
 ];
 
 const OrderWizard = () => {
