@@ -154,15 +154,35 @@ const OrderWizard = () => {
             {step > 1 ? 'Previous Step' : 'Back'}
           </motion.button>
 
-          {/* Progress */}
-          <div className="flex items-center gap-1 mb-2">
-            {steps.map((s) => (
-              <div key={s.id} className={`flex-1 h-1 rounded-full transition-all duration-500 ${step >= s.id ? 'bg-primary' : 'bg-muted'}`} />
-            ))}
-          </div>
-          <div className="flex items-center justify-between mb-6">
-            <p className="text-xs text-muted-foreground">Step {step}/{steps.length}</p>
-            <p className="text-xs text-muted-foreground">{steps[step - 1].label}</p>
+          {/* Step Indicators */}
+          <div className="flex items-center justify-between mb-8">
+            {steps.map((s, i) => {
+              const Icon = s.icon;
+              const isActive = step === s.id;
+              const isDone = step > s.id;
+              return (
+                <div key={s.id} className="flex items-center flex-1">
+                  <button
+                    onClick={() => { if (isDone) setStep(s.id); }}
+                    className={`flex flex-col items-center gap-1.5 transition-all duration-300 ${isDone ? 'cursor-pointer' : 'cursor-default'}`}
+                  >
+                    <div className={`w-9 h-9 sm:w-10 sm:h-10 rounded-xl flex items-center justify-center transition-all duration-300 ${
+                      isActive ? 'bg-primary text-primary-foreground shadow-[0_0_20px_hsl(var(--primary)_/_0.4)] scale-110'
+                      : isDone ? 'bg-primary/20 text-primary'
+                      : 'bg-muted/50 text-muted-foreground'
+                    }`}>
+                      <Icon className="w-4 h-4" />
+                    </div>
+                    <span className={`text-[10px] sm:text-xs font-medium transition-colors ${
+                      isActive ? 'text-primary' : isDone ? 'text-foreground' : 'text-muted-foreground'
+                    }`}>{s.label}</span>
+                  </button>
+                  {i < steps.length - 1 && (
+                    <div className={`flex-1 h-[2px] mx-2 rounded-full transition-all duration-500 ${step > s.id ? 'bg-primary' : 'bg-muted/30'}`} />
+                  )}
+                </div>
+              );
+            })}
           </div>
 
           {/* Live Preview */}
