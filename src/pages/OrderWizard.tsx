@@ -197,7 +197,7 @@ const OrderWizard = () => {
                 {data.name ? `${data.name.toLowerCase().replace(/\s+/g, '-')}.portaura.dev` : 'your-portfolio.portaura.dev'}
               </span>
             </div>
-            <div className="h-[300px] sm:h-[360px] overflow-y-auto">
+            <div className="h-[300px] sm:h-[360px] overflow-hidden">
               <LivePreview data={data} />
             </div>
           </motion.div>
