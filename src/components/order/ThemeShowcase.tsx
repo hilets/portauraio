@@ -60,28 +60,29 @@ const ThemeShowcase = ({ data, updateData }: Props) => {
               whileHover={{ scale: 1.01 }}
               whileTap={{ scale: 0.995 }}
             >
-              {/* Live mini preview */}
+              {/* Scaled full preview */}
               <div className="relative h-[200px] sm:h-[240px] overflow-hidden">
-                <div className="w-full h-full overflow-y-auto pointer-events-none">
-                  <PortfolioRenderer
-                    name={data.name || 'Alex Morgan'}
-                    title={data.title || 'Creative Designer'}
-                    bio={data.bio || 'Crafting exceptional digital experiences.'}
-                    email={data.email || 'hello@studio.com'}
-                    phone=""
-                    socialLinks={data.socialLinks}
-                    primaryColor={data.primaryColor}
-                    font={data.font}
-                    template={tpl.id}
-                    compact
-                  />
+                <div className="absolute inset-0 overflow-hidden pointer-events-none">
+                  <div className="w-[1280px] origin-top-left" style={{ transform: 'scale(0.35)' }}>
+                    <PortfolioRenderer
+                      name={data.name || 'Alex Morgan'}
+                      title={data.title || 'Creative Designer'}
+                      bio={data.bio || 'Crafting exceptional digital experiences.'}
+                      email={data.email || 'hello@studio.com'}
+                      phone=""
+                      socialLinks={data.socialLinks}
+                      primaryColor={data.primaryColor}
+                      font={data.font}
+                      template={tpl.id}
+                    />
+                  </div>
                 </div>
                 <div className="absolute inset-0 bg-gradient-to-t from-card via-transparent to-transparent pointer-events-none" />
-                <div className="absolute top-3 left-3 flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary text-primary-foreground text-xs font-bold">
+                <div className="absolute top-3 left-3 flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary text-primary-foreground text-xs font-bold z-10">
                   <Sparkles className="w-3 h-3" /> {tpl.badge}
                 </div>
                 {isSelected && (
-                  <div className="absolute top-3 right-3">
+                  <div className="absolute top-3 right-3 z-10">
                     <motion.div
                       className="w-7 h-7 rounded-full bg-primary flex items-center justify-center"
                       layoutId="theme-selected"
