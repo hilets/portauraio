@@ -1,31 +1,34 @@
 import { motion } from 'framer-motion';
 import { Check, Sparkles, Box, MousePointer2, Layers, Zap, Type, Palette } from 'lucide-react';
-import PortfolioRenderer from '@/components/portfolio/PortfolioRenderer';
 import type { PortfolioData } from '@/pages/OrderWizard';
 
 const templates = [
   {
     id: 'aura-infinity' as const,
     name: 'Aura Infinity',
-    tagline: 'Dark luxury with Three.js 3D effects & glassmorphism',
+    tagline: 'Dark luxury with 3D effects & glassmorphism',
     badge: 'Flagship',
+    bg: 'linear-gradient(135deg, #060912 0%, #0a1628 40%, #061220 100%)',
+    accent: '#00e5ff',
     features: [
-      { icon: Box, text: '3D Interactive Hero' },
-      { icon: MousePointer2, text: 'Magnetic Buttons' },
-      { icon: Layers, text: 'Glassmorphism Cards' },
-      { icon: Zap, text: 'Smooth Scroll Effects' },
+      { icon: Box, text: '3D Hero' },
+      { icon: MousePointer2, text: 'Magnetic Btns' },
+      { icon: Layers, text: 'Glassmorphism' },
+      { icon: Zap, text: 'Scroll FX' },
     ],
   },
   {
     id: 'quantum-studio' as const,
     name: 'Quantum Studio',
-    tagline: 'Editorial minimalism with cinematic text reveals & fluid motion',
+    tagline: 'Editorial minimalism with cinematic reveals',
     badge: 'Premium',
+    bg: 'linear-gradient(135deg, #0a0a0a 0%, #141414 40%, #0d0d0d 100%)',
+    accent: '#00e5ff',
     features: [
-      { icon: Type, text: 'Animated Text Reveals' },
-      { icon: Palette, text: 'Editorial Layout' },
-      { icon: Zap, text: 'Scroll-Driven Motion' },
-      { icon: MousePointer2, text: 'Interactive Hover Effects' },
+      { icon: Type, text: 'Text Reveals' },
+      { icon: Palette, text: 'Editorial' },
+      { icon: Zap, text: 'Scroll Motion' },
+      { icon: MousePointer2, text: 'Hover FX' },
     ],
   },
 ];
@@ -41,71 +44,67 @@ const ThemeShowcase = ({ data, updateData }: Props) => {
   return (
     <div>
       <h2 className="font-heading text-2xl sm:text-3xl font-bold mb-2">Choose Your Template</h2>
-      <p className="text-muted-foreground mb-6">
-        Select a premium template for your portfolio. Both are fully interactive with live preview.
+      <p className="text-muted-foreground mb-6 text-sm">
+        Select a premium template for your portfolio.
       </p>
 
-      <div className="space-y-4">
+      <div className="grid grid-cols-2 gap-3">
         {templates.map((tpl) => {
           const isSelected = selected === tpl.id;
           return (
             <motion.button
               key={tpl.id}
               onClick={() => updateData({ template: tpl.id })}
-              className={`w-full text-left rounded-2xl border-2 overflow-hidden transition-all ${
+              className={`text-left rounded-xl border-2 overflow-hidden transition-all ${
                 isSelected
-                  ? 'border-primary shadow-[0_0_30px_hsl(var(--primary)_/_0.15)]'
-                  : 'border-border/50 hover:border-primary/30'
+                  ? 'border-primary shadow-[0_0_24px_hsl(var(--primary)_/_0.2)]'
+                  : 'border-border/40 hover:border-primary/30'
               }`}
-              whileHover={{ scale: 1.01 }}
-              whileTap={{ scale: 0.995 }}
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
             >
-              {/* Scaled full preview */}
-              <div className="relative h-[200px] sm:h-[240px] overflow-hidden">
-                <div className="absolute inset-0 overflow-hidden pointer-events-none">
-                  <div className="w-[1280px] origin-top-left" style={{ transform: 'scale(0.35)' }}>
-                    <PortfolioRenderer
-                      name={data.name || 'Alex Morgan'}
-                      title={data.title || 'Creative Designer'}
-                      bio={data.bio || 'Crafting exceptional digital experiences.'}
-                      email={data.email || 'hello@studio.com'}
-                      phone=""
-                      socialLinks={data.socialLinks}
-                      primaryColor={data.primaryColor}
-                      font={data.font}
-                      template={tpl.id}
-                    />
-                  </div>
+              {/* Colored preview area */}
+              <div
+                className="relative h-24 sm:h-28 flex items-end p-3"
+                style={{ background: tpl.bg }}
+              >
+                {/* Decorative accent elements */}
+                <div className="absolute top-3 right-3 w-12 h-12 rounded-full opacity-20 blur-lg" style={{ background: tpl.accent }} />
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-16 h-16 rounded-2xl border opacity-10 rotate-12" style={{ borderColor: tpl.accent }} />
+
+                <div className="absolute top-2 left-2 flex items-center gap-1 px-2 py-1 rounded-full text-[9px] font-bold z-10"
+                  style={{ background: tpl.accent, color: '#050a14' }}>
+                  <Sparkles className="w-2.5 h-2.5" /> {tpl.badge}
                 </div>
-                <div className="absolute inset-0 bg-gradient-to-t from-card via-transparent to-transparent pointer-events-none" />
-                <div className="absolute top-3 left-3 flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary text-primary-foreground text-xs font-bold z-10">
-                  <Sparkles className="w-3 h-3" /> {tpl.badge}
-                </div>
+
                 {isSelected && (
-                  <div className="absolute top-3 right-3 z-10">
-                    <motion.div
-                      className="w-7 h-7 rounded-full bg-primary flex items-center justify-center"
-                      layoutId="theme-selected"
-                    >
-                      <Check className="w-4 h-4 text-primary-foreground" />
-                    </motion.div>
-                  </div>
+                  <motion.div
+                    className="absolute top-2 right-2 w-5 h-5 rounded-full flex items-center justify-center z-10"
+                    style={{ background: tpl.accent }}
+                    layoutId="theme-check"
+                  >
+                    <Check className="w-3 h-3" style={{ color: '#050a14' }} />
+                  </motion.div>
                 )}
+
+                {/* Template name overlay */}
+                <div className="relative z-10">
+                  <p className="text-white text-sm font-bold leading-tight">{tpl.name}</p>
+                </div>
               </div>
 
-              {/* Info */}
-              <div className="p-4 sm:p-5">
-                <h3 className="font-heading text-lg font-bold mb-1">{tpl.name}</h3>
-                <p className="text-muted-foreground text-sm mb-4">{tpl.tagline}</p>
-                <div className="grid grid-cols-2 gap-2">
+              {/* Features */}
+              <div className="p-2.5 space-y-1.5">
+                <p className="text-muted-foreground text-[10px] leading-snug">{tpl.tagline}</p>
+                <div className="flex flex-wrap gap-1">
                   {tpl.features.map((f) => (
-                    <div
+                    <span
                       key={f.text}
-                      className="flex items-center gap-2 px-3 py-2 rounded-xl border border-border/30 bg-muted/20"
+                      className="flex items-center gap-1 px-1.5 py-0.5 rounded-md text-[9px] border border-border/30 text-muted-foreground"
                     >
-                      <f.icon className="w-3.5 h-3.5 text-primary flex-shrink-0" />
-                      <span className="text-xs text-foreground">{f.text}</span>
-                    </div>
+                      <f.icon className="w-2.5 h-2.5 text-primary" />
+                      {f.text}
+                    </span>
                   ))}
                 </div>
               </div>

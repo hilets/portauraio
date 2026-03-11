@@ -155,55 +155,53 @@ const OrderWizard = () => {
           </motion.button>
 
           {/* Step Indicators */}
-          <div className="flex items-center justify-between mb-8">
-            {steps.map((s, i) => {
+          <div className="flex items-center gap-0 mb-8 bg-muted/20 rounded-2xl p-1.5 border border-border/20">
+            {steps.map((s) => {
               const Icon = s.icon;
               const isActive = step === s.id;
               const isDone = step > s.id;
               return (
-                <div key={s.id} className="flex items-center flex-1">
-                  <button
-                    onClick={() => { if (isDone) setStep(s.id); }}
-                    className={`flex flex-col items-center gap-1.5 transition-all duration-300 ${isDone ? 'cursor-pointer' : 'cursor-default'}`}
-                  >
-                    <div className={`w-9 h-9 sm:w-10 sm:h-10 rounded-xl flex items-center justify-center transition-all duration-300 ${
-                      isActive ? 'bg-primary text-primary-foreground shadow-[0_0_20px_hsl(var(--primary)_/_0.4)] scale-110'
-                      : isDone ? 'bg-primary/20 text-primary'
-                      : 'bg-muted/50 text-muted-foreground'
-                    }`}>
-                      <Icon className="w-4 h-4" />
-                    </div>
-                    <span className={`text-[10px] sm:text-xs font-medium transition-colors ${
-                      isActive ? 'text-primary' : isDone ? 'text-foreground' : 'text-muted-foreground'
-                    }`}>{s.label}</span>
-                  </button>
-                  {i < steps.length - 1 && (
-                    <div className={`flex-1 h-[2px] mx-2 rounded-full transition-all duration-500 ${step > s.id ? 'bg-primary' : 'bg-muted/30'}`} />
+                <button
+                  key={s.id}
+                  onClick={() => { if (isDone) setStep(s.id); }}
+                  className={`flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-xl text-xs font-medium transition-all duration-300 ${
+                    isActive
+                      ? 'bg-primary text-primary-foreground shadow-lg shadow-primary/25'
+                      : isDone
+                        ? 'text-primary hover:bg-primary/10 cursor-pointer'
+                        : 'text-muted-foreground cursor-default'
+                  }`}
+                >
+                  {isDone ? (
+                    <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12" /></svg>
+                  ) : (
+                    <Icon className="w-3.5 h-3.5" />
                   )}
-                </div>
+                  <span className="hidden sm:inline">{s.label}</span>
+                </button>
               );
             })}
           </div>
 
           {/* Live Preview */}
-          <motion.div layout className="rounded-2xl border border-border/30 bg-card/50 backdrop-blur-sm overflow-hidden mb-6">
-            <div className="flex items-center gap-2 px-4 py-2.5 border-b border-border/30 bg-muted/30">
+          <motion.div layout className="rounded-2xl border border-border/30 bg-card/50 backdrop-blur-sm overflow-hidden mb-4">
+            <div className="flex items-center gap-2 px-4 py-2 border-b border-border/30 bg-muted/30">
               <div className="flex gap-1.5">
-                <div className="w-2.5 h-2.5 rounded-full bg-destructive/60" />
-                <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/60" />
-                <div className="w-2.5 h-2.5 rounded-full bg-green-500/60" />
+                <div className="w-2 h-2 rounded-full bg-destructive/60" />
+                <div className="w-2 h-2 rounded-full bg-yellow-500/60" />
+                <div className="w-2 h-2 rounded-full bg-green-500/60" />
               </div>
               <span className="text-[10px] text-muted-foreground ml-2 font-mono truncate">
                 {data.name ? `${data.name.toLowerCase().replace(/\s+/g, '-')}.portaura.dev` : 'your-portfolio.portaura.dev'}
               </span>
             </div>
-            <div className="h-[300px] sm:h-[360px] overflow-hidden">
+            <div className="h-[280px] sm:h-[340px] overflow-y-auto overflow-x-hidden">
               <LivePreview data={data} />
             </div>
           </motion.div>
 
           <p className="text-[10px] text-muted-foreground text-center mb-6 flex items-center justify-center gap-1">
-            <Eye className="w-3 h-3" /> Live preview — changes update in real-time
+            <Eye className="w-3 h-3" /> Live preview — scroll to explore
           </p>
 
           {/* Form */}
