@@ -61,10 +61,10 @@ const OrderWizard = () => {
   const [copied, setCopied] = useState(false);
   const [publishError, setPublishError] = useState('');
 
-  // Scroll to top when step changes
+  // Scroll to top when step changes or on publish
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
-  }, [step]);
+  }, [step, isSubmitted]);
 
   const updateData = useCallback((updates: Partial<PortfolioData>) => {
     setData((prev) => ({ ...prev, ...updates }));

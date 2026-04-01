@@ -21,7 +21,7 @@ export const useTheme = () => {
 export const ThemeProvider = ({ children }: { children: ReactNode }) => {
   const [theme, setTheme] = useState<Theme>(() => {
     const saved = localStorage.getItem('portaura-theme');
-    return (saved === 'minimal' ? 'minimal' : 'lime') as Theme;
+    return (saved === 'lime' ? 'lime' : 'minimal') as Theme;
   });
 
   useEffect(() => {
