@@ -4,7 +4,6 @@ import WhyPortfolioSection from '@/components/WhyPortfolioSection';
 import FeaturesSection from '@/components/FeaturesSection';
 import BeforeAfterSection from '@/components/BeforeAfterSection';
 import WorkflowSection from '@/components/WorkflowSection';
-import PortfolioShowcase from '@/components/PortfolioShowcase';
 import CTASection from '@/components/CTASection';
 import Footer from '@/components/Footer';
 import ParticleBackground from '@/components/ParticleBackground';
@@ -23,7 +22,6 @@ const Index = () => {
         <BeforeAfterSection />
         <FeaturesSection />
         <WorkflowSection />
-        <PortfolioShowcase />
         <CTASection />
       </main>
       <Footer />

@@ -1,6 +1,6 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowLeft, ArrowRight, Type, User, Eye, Sparkles, Copy, CheckCheck, ExternalLink } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Type, User, Eye, Sparkles, Copy, CheckCheck, ExternalLink, Check } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
 import Header from '@/components/Header';
@@ -60,6 +60,11 @@ const OrderWizard = () => {
   const [savedPortfolio, setSavedPortfolio] = useState<StoredPortfolio | null>(null);
   const [copied, setCopied] = useState(false);
   const [publishError, setPublishError] = useState('');
+
+  // Scroll to top when step changes
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [step]);
 
   const updateData = useCallback((updates: Partial<PortfolioData>) => {
     setData((prev) => ({ ...prev, ...updates }));
@@ -147,38 +152,42 @@ const OrderWizard = () => {
       <Header />
       <main className="relative z-10 pt-28 pb-20">
         <div className="container-custom max-w-2xl">
-          {/* Back */}
-          <motion.button onClick={() => (step > 1 ? setStep(step - 1) : navigate(-1))}
-            className="flex items-center gap-2 text-muted-foreground hover:text-foreground mb-4 transition-colors text-sm" whileHover={{ x: -4 }}>
-            <ArrowLeft className="w-4 h-4" />
-            {step > 1 ? 'Previous Step' : 'Back'}
-          </motion.button>
-
-          {/* Step Indicators */}
-          <div className="flex items-center gap-0 mb-8 bg-muted/20 rounded-2xl p-1.5 border border-border/20">
-            {steps.map((s) => {
+          {/* Step Indicators - Clean numbered steps */}
+          <div className="flex items-center justify-between mb-8 px-2">
+            {steps.map((s, i) => {
               const Icon = s.icon;
               const isActive = step === s.id;
               const isDone = step > s.id;
               return (
-                <button
-                  key={s.id}
-                  onClick={() => { if (isDone) setStep(s.id); }}
-                  className={`flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-xl text-xs font-medium transition-all duration-300 ${
-                    isActive
-                      ? 'bg-primary text-primary-foreground shadow-lg shadow-primary/25'
-                      : isDone
-                        ? 'text-primary hover:bg-primary/10 cursor-pointer'
-                        : 'text-muted-foreground cursor-default'
-                  }`}
-                >
-                  {isDone ? (
-                    <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12" /></svg>
-                  ) : (
-                    <Icon className="w-3.5 h-3.5" />
+                <div key={s.id} className="flex items-center flex-1">
+                  <button
+                    onClick={() => { if (isDone) setStep(s.id); }}
+                    className={`flex flex-col items-center gap-1.5 transition-all duration-300 ${isDone ? 'cursor-pointer' : 'cursor-default'}`}
+                  >
+                    <div className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold transition-all duration-300 ${
+                      isActive
+                        ? 'bg-primary text-primary-foreground shadow-lg shadow-primary/30 scale-110'
+                        : isDone
+                          ? 'bg-primary/20 text-primary border-2 border-primary/40'
+                          : 'bg-muted/30 text-muted-foreground border border-border/50'
+                    }`}>
+                      {isDone ? <Check className="w-4 h-4" /> : <Icon className="w-4 h-4" />}
+                    </div>
+                    <span className={`text-[11px] font-medium transition-colors ${
+                      isActive ? 'text-primary' : isDone ? 'text-primary/70' : 'text-muted-foreground'
+                    }`}>
+                      {s.label}
+                    </span>
+                  </button>
+                  {/* Connector line */}
+                  {i < steps.length - 1 && (
+                    <div className="flex-1 h-px mx-2 mt-[-18px]">
+                      <div className={`h-full transition-colors duration-300 ${
+                        step > s.id ? 'bg-primary/40' : 'bg-border/30'
+                      }`} />
+                    </div>
                   )}
-                  <span className="hidden sm:inline">{s.label}</span>
-                </button>
+                </div>
               );
             })}
           </div>
@@ -232,8 +241,8 @@ const OrderWizard = () => {
           <div className="mt-8 pb-4">
             {publishError && <p className="text-sm text-destructive mb-3 text-center">{publishError}</p>}
             <div className="flex justify-between">
-              <Button variant="outline" onClick={() => setStep(Math.max(1, step - 1))} disabled={step === 1} className="gap-2">
-                <ArrowLeft className="w-4 h-4" /> Back
+              <Button variant="outline" onClick={() => step > 1 ? setStep(step - 1) : navigate(-1)} className="gap-2">
+                <ArrowLeft className="w-4 h-4" /> {step > 1 ? 'Back' : 'Home'}
               </Button>
               {step < 4 ? (
                 <Button variant="hero" onClick={() => setStep(step + 1)} disabled={!canProceed()} className="gap-2">

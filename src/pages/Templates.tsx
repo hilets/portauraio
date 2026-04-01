@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Eye, Sparkles, Star, Zap, Layers, MousePointer2, Box, Palette, Monitor, Type, ArrowRight } from 'lucide-react';
+import { Sparkles, Star, Zap, Layers, MousePointer2, Box, Palette, Monitor, Type, ArrowRight, ShoppingCart, Check } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
 import Header from '@/components/Header';
@@ -7,16 +7,19 @@ import Footer from '@/components/Footer';
 import ParticleBackground from '@/components/ParticleBackground';
 import CustomCursor from '@/components/CustomCursor';
 import ScrollToTop from '@/components/ScrollToTop';
-import PortfolioRenderer from '@/components/portfolio/PortfolioRenderer';
 
 const templates = [
   {
     id: 'aura-infinity' as const,
     name: 'Aura Infinity',
     badge: 'Flagship',
+    price: 'Free',
+    originalPrice: '$49',
     rating: '4.9',
-    users: '1,200+',
-    description: 'A futuristic dark-luxury portfolio featuring interactive Three.js 3D backgrounds, magnetic hover effects, bento-grid layouts, animated timelines, glassmorphism testimonials, and a cinematic contact section.',
+    reviews: '1,200+',
+    description: 'Futuristic dark-luxury portfolio with interactive 3D backgrounds, magnetic hover effects, bento-grid layouts, and glassmorphism UI.',
+    bg: 'linear-gradient(135deg, #060912 0%, #0a1628 40%, #061220 100%)',
+    accent: '#00e5ff',
     features: [
       { icon: Box, label: 'Three.js 3D Hero' },
       { icon: MousePointer2, label: 'Magnetic Buttons' },
@@ -25,14 +28,19 @@ const templates = [
       { icon: Palette, label: 'Custom Colors' },
       { icon: Monitor, label: 'Fully Responsive' },
     ],
+    highlights: ['3D Interactive Background', 'Bento Grid Layout', 'Animated Timeline', 'Cinematic Contact'],
   },
   {
     id: 'quantum-studio' as const,
     name: 'Quantum Studio',
     badge: 'Premium',
+    price: 'Free',
+    originalPrice: '$39',
     rating: '4.8',
-    users: '850+',
-    description: 'An editorial masterpiece with cinematic text reveals, scroll-driven animations, skill progress bars, staggered project listings, and a sophisticated contact form. Built for creative professionals who demand elegance.',
+    reviews: '850+',
+    description: 'Editorial masterpiece with cinematic text reveals, scroll-driven animations, skill progress bars, and staggered project listings.',
+    bg: 'linear-gradient(135deg, #0a0a0a 0%, #141414 40%, #0d0d0d 100%)',
+    accent: '#00e5ff',
     features: [
       { icon: Type, label: 'Text Reveal Animation' },
       { icon: Zap, label: 'Scroll-Driven Motion' },
@@ -41,6 +49,7 @@ const templates = [
       { icon: Layers, label: 'Stagger Animations' },
       { icon: Monitor, label: 'Fully Responsive' },
     ],
+    highlights: ['Cinematic Text Reveals', 'Parallax Scaling', 'Skill Progress Bars', 'Sophisticated Forms'],
   },
 ];
 
@@ -74,78 +83,107 @@ const Templates = () => {
             </p>
           </motion.div>
 
-          {/* Template Cards */}
-          <div className="space-y-12">
+          {/* Template Cards - E-commerce style */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {templates.map((tpl, idx) => (
               <motion.div
                 key={tpl.id}
-                initial={{ opacity: 0, y: 50 }}
+                initial={{ opacity: 0, y: 40 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.3 + idx * 0.2, duration: 0.6 }}
-                className="group relative rounded-2xl border border-border/50 bg-card/80 backdrop-blur-sm overflow-hidden hover:border-primary/50 transition-all duration-500 hover:shadow-[0_0_60px_hsl(var(--primary)_/_0.15)]"
+                transition={{ delay: 0.3 + idx * 0.15, duration: 0.6 }}
+                className="group relative rounded-2xl border border-border/50 bg-card/80 backdrop-blur-sm overflow-hidden hover:border-primary/50 transition-all duration-500 hover:shadow-[0_0_40px_hsl(var(--primary)_/_0.12)] flex flex-col"
               >
-                {/* Live Preview */}
-                <div className="relative aspect-video overflow-hidden">
-                  <div className="w-full h-full overflow-hidden">
-                    <PortfolioRenderer
-                      name="Alex Morgan"
-                      title="Creative Designer & Developer"
-                      bio="Crafting exceptional digital experiences that push boundaries."
-                      email="hello@alexmorgan.dev"
-                      phone=""
-                      socialLinks={[{ platform: 'GitHub', url: '#' }, { platform: 'LinkedIn', url: '#' }]}
-                      primaryColor="#00e5ff"
-                      font="Inter"
-                      template={tpl.id}
-                      compact
-                    />
-                  </div>
-                  <div className="absolute inset-0 bg-gradient-to-t from-card via-card/30 to-transparent opacity-60 pointer-events-none" />
-
-                  <div className="absolute top-4 left-4 flex gap-2">
-                    <div className="px-3 py-1.5 rounded-full bg-primary text-primary-foreground text-sm font-heading font-bold shadow-lg">
-                      FREE
-                    </div>
-                    <div className="px-3 py-1.5 rounded-full bg-background/70 backdrop-blur-md text-xs text-foreground font-medium flex items-center gap-1">
-                      <Star className="w-3 h-3 fill-primary text-primary" /> {tpl.badge}
+                {/* Template Preview - gradient bg */}
+                <div className="relative h-48 sm:h-56 overflow-hidden" style={{ background: tpl.bg }}>
+                  {/* Decorative elements */}
+                  <div className="absolute top-6 right-6 w-20 h-20 rounded-full opacity-20 blur-2xl" style={{ background: tpl.accent }} />
+                  <div className="absolute bottom-4 left-4 w-28 h-28 rounded-3xl border opacity-10 rotate-12" style={{ borderColor: tpl.accent }} />
+                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-12 h-12 rounded-xl opacity-15" style={{ background: tpl.accent, filter: 'blur(20px)' }} />
+                  
+                  {/* Mock UI elements */}
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="text-center px-6">
+                      <motion.div className="w-8 h-8 rounded-lg mx-auto mb-3 flex items-center justify-center"
+                        style={{ background: `${tpl.accent}30`, border: `1px solid ${tpl.accent}50` }}
+                        animate={{ rotate: [0, 5, -5, 0] }}
+                        transition={{ repeat: Infinity, duration: 6, ease: 'easeInOut' }}>
+                        <div className="w-3 h-3 rounded-sm" style={{ background: tpl.accent }} />
+                      </motion.div>
+                      <p className="text-white text-lg font-bold mb-1">{tpl.name}</p>
+                      <p className="text-[11px]" style={{ color: `${tpl.accent}bb` }}>{tpl.badge} Template</p>
                     </div>
                   </div>
 
-                  <div className="absolute inset-0 bg-background/60 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-all duration-400 flex items-center justify-center">
-                    <Button variant="hero" size="lg" className="gap-2" onClick={() => navigate('/order')}>
-                      <Sparkles className="w-4 h-4" /> Use This Template
-                    </Button>
+                  {/* Badges */}
+                  <div className="absolute top-3 left-3 flex gap-2">
+                    <div className="px-2.5 py-1 rounded-full text-[10px] font-bold shadow-lg"
+                      style={{ background: tpl.accent, color: '#050a14' }}>
+                      <Sparkles className="w-2.5 h-2.5 inline mr-1" />{tpl.badge}
+                    </div>
+                  </div>
+
+                  {/* Rating badge */}
+                  <div className="absolute top-3 right-3 px-2 py-1 rounded-full bg-black/50 backdrop-blur-sm text-[10px] text-white flex items-center gap-1">
+                    <Star className="w-2.5 h-2.5 fill-yellow-400 text-yellow-400" /> {tpl.rating}
                   </div>
                 </div>
 
-                {/* Info */}
-                <div className="p-6 sm:p-8">
-                  <div className="flex items-center gap-2 mb-3">
-                    <Star className="w-4 h-4 fill-primary text-primary" />
-                    <span className="text-sm font-semibold text-foreground">{tpl.rating}</span>
-                    <span className="text-xs text-muted-foreground">({tpl.users} portfolios created)</span>
+                {/* Product Info */}
+                <div className="p-5 flex-1 flex flex-col">
+                  {/* Name & Price */}
+                  <div className="flex items-start justify-between mb-3">
+                    <div>
+                      <h3 className="font-heading text-xl font-bold text-foreground">{tpl.name}</h3>
+                      <p className="text-xs text-muted-foreground mt-0.5">{tpl.reviews} portfolios created</p>
+                    </div>
+                    <div className="text-right">
+                      <p className="text-lg font-bold text-primary">{tpl.price}</p>
+                      <p className="text-[10px] text-muted-foreground line-through">{tpl.originalPrice}</p>
+                    </div>
                   </div>
 
-                  <h2 className="font-heading text-2xl sm:text-3xl font-bold mb-3">{tpl.name}</h2>
-                  <p className="text-muted-foreground text-sm sm:text-base mb-6 leading-relaxed max-w-2xl">{tpl.description}</p>
+                  {/* Description */}
+                  <p className="text-sm text-muted-foreground leading-relaxed mb-4">{tpl.description}</p>
 
-                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 mb-6">
-                    {tpl.features.map((f, i) => (
-                      <motion.div key={f.label} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5 + i * 0.05 }}
-                        className="flex items-center gap-2 px-3 py-2 rounded-xl border border-border/30 bg-muted/20">
-                        <f.icon className="w-4 h-4 text-primary flex-shrink-0" />
-                        <span className="text-xs sm:text-sm text-foreground">{f.label}</span>
-                      </motion.div>
+                  {/* Highlights */}
+                  <div className="space-y-1.5 mb-4">
+                    {tpl.highlights.map((h) => (
+                      <div key={h} className="flex items-center gap-2 text-xs text-foreground">
+                        <Check className="w-3.5 h-3.5 text-primary flex-shrink-0" />
+                        {h}
+                      </div>
                     ))}
                   </div>
 
-                  <Button variant="hero" size="xl" className="w-full sm:w-auto gap-2" onClick={() => navigate('/order')}>
-                    <Sparkles className="w-4 h-4" /> Start Building — Free
-                  </Button>
+                  {/* Features */}
+                  <div className="flex flex-wrap gap-1.5 mb-5">
+                    {tpl.features.slice(0, 4).map((f) => (
+                      <span key={f.label} className="flex items-center gap-1 px-2 py-1 rounded-lg text-[10px] border border-border/30 text-muted-foreground bg-muted/10">
+                        <f.icon className="w-3 h-3 text-primary" />
+                        {f.label}
+                      </span>
+                    ))}
+                  </div>
+
+                  {/* CTA */}
+                  <div className="mt-auto">
+                    <Button variant="hero" className="w-full gap-2" onClick={() => navigate('/order')}>
+                      <ShoppingCart className="w-4 h-4" /> Build Now — Free
+                    </Button>
+                  </div>
                 </div>
               </motion.div>
             ))}
           </div>
+
+          {/* Bottom CTA */}
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.8 }}
+            className="text-center mt-16">
+            <p className="text-muted-foreground text-sm mb-4">Can't decide? Start building and switch templates anytime.</p>
+            <Button variant="outline" size="lg" className="gap-2" onClick={() => navigate('/order')}>
+              Start Building <ArrowRight className="w-4 h-4" />
+            </Button>
+          </motion.div>
         </div>
       </main>
       <Footer />
