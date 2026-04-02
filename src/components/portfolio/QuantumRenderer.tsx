@@ -2,11 +2,14 @@ import { useRef, useState } from 'react';
 import { motion, useScroll, useTransform, useInView } from 'framer-motion';
 import { ArrowUpRight, ArrowRight, ArrowUp, Mail, Phone, MapPin, Star, Quote } from 'lucide-react';
 import { Cursor, ScrollBar, BackToTop, MagneticBtn, getSocialIcon, getFontFamily } from './PortfolioHelpers';
+import { usePreviewMode } from '@/contexts/PreviewModeContext';
 
 /* ---- Animated text reveal ---- */
 const TextReveal = ({ text, className = '', delay = 0 }: { text: string; className?: string; delay?: number }) => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-50px' });
+  const isPreview = usePreviewMode();
+  const visible = isPreview || isInView;
   const words = text.split(' ');
   return (
     <span ref={ref} className={className}>
@@ -14,9 +17,9 @@ const TextReveal = ({ text, className = '', delay = 0 }: { text: string; classNa
         <span key={i} className="inline-block overflow-hidden mr-[0.3em]">
           <motion.span
             className="inline-block"
-            initial={{ y: '110%', rotate: 3 }}
-            animate={isInView ? { y: 0, rotate: 0 } : {}}
-            transition={{ duration: 0.6, delay: delay + i * 0.05, ease: [0.22, 1, 0.36, 1] }}
+            initial={isPreview ? { y: 0, rotate: 0 } : { y: '110%', rotate: 3 }}
+            animate={visible ? { y: 0, rotate: 0 } : {}}
+            transition={{ duration: 0.6, delay: isPreview ? 0 : delay + i * 0.05, ease: [0.22, 1, 0.36, 1] }}
           >
             {word}
           </motion.span>
@@ -30,12 +33,14 @@ const TextReveal = ({ text, className = '', delay = 0 }: { text: string; classNa
 const AnimatedLine = ({ color, className = '' }: { color: string; className?: string }) => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true });
+  const isPreview = usePreviewMode();
+  const visible = isPreview || isInView;
   return (
     <div ref={ref} className={`overflow-hidden ${className}`}>
       <motion.div
         className="h-px w-full"
-        initial={{ scaleX: 0 }}
-        animate={isInView ? { scaleX: 1 } : {}}
+        initial={isPreview ? { scaleX: 1 } : { scaleX: 0 }}
+        animate={visible ? { scaleX: 1 } : {}}
         transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
         style={{ background: color, transformOrigin: 'left' }}
       />
@@ -47,13 +52,15 @@ const AnimatedLine = ({ color, className = '' }: { color: string; className?: st
 const Stagger = ({ children, className = '' }: { children: React.ReactNode; className?: string }) => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-40px' });
+  const isPreview = usePreviewMode();
+  const visible = isPreview || isInView;
   return (
     <motion.div
       ref={ref}
       className={className}
-      initial="hidden"
-      animate={isInView ? 'visible' : 'hidden'}
-      variants={{ visible: { transition: { staggerChildren: 0.08 } } }}
+      initial={isPreview ? 'visible' : 'hidden'}
+      animate={visible ? 'visible' : 'hidden'}
+      variants={{ visible: { transition: { staggerChildren: isPreview ? 0 : 0.08 } } }}
     >
       {children}
     </motion.div>

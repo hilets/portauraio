@@ -1,17 +1,20 @@
 import { useRef, useState, useEffect } from 'react';
 import { motion, useScroll, useSpring, useInView } from 'framer-motion';
 import { Github, Linkedin, Twitter, Instagram, Mail, Phone, ExternalLink, ArrowUp } from 'lucide-react';
+import { usePreviewMode } from '@/contexts/PreviewModeContext';
 
 /* ---- Reveal on scroll ---- */
 export const Reveal = ({ children, delay = 0, className = '' }: { children: React.ReactNode; delay?: number; className?: string }) => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-60px' });
+  const isPreview = usePreviewMode();
+  const visible = isPreview || isInView;
   return (
     <motion.div
       ref={ref}
-      initial={{ opacity: 0, y: 40 }}
-      animate={isInView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.7, delay, ease: [0.22, 1, 0.36, 1] }}
+      initial={isPreview ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
+      animate={visible ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.7, delay: isPreview ? 0 : delay, ease: [0.22, 1, 0.36, 1] }}
       className={className}
     >
       {children}
