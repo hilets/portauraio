@@ -50,6 +50,7 @@ const App = () => (
             
             <Route path="/portfolio-skills" element={<PortfolioSkills />} />
             <Route path="/templates" element={<Templates />} />
+            <Route path="/templates/:id" element={<TemplateSales />} />
             <Route path="/checkout/:templateId" element={<Checkout />} />
             <Route path="/order" element={<OrderWizard />} />
             <Route path="/p/:id" element={<PortfolioView />} />
