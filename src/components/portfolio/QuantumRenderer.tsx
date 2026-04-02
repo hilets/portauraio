@@ -8,6 +8,8 @@ import { usePreviewMode } from '@/contexts/PreviewModeContext';
 const TextReveal = ({ text, className = '', delay = 0 }: { text: string; className?: string; delay?: number }) => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-50px' });
+  const isPreview = usePreviewMode();
+  const visible = isPreview || isInView;
   const words = text.split(' ');
   return (
     <span ref={ref} className={className}>
@@ -15,9 +17,9 @@ const TextReveal = ({ text, className = '', delay = 0 }: { text: string; classNa
         <span key={i} className="inline-block overflow-hidden mr-[0.3em]">
           <motion.span
             className="inline-block"
-            initial={{ y: '110%', rotate: 3 }}
-            animate={isInView ? { y: 0, rotate: 0 } : {}}
-            transition={{ duration: 0.6, delay: delay + i * 0.05, ease: [0.22, 1, 0.36, 1] }}
+            initial={isPreview ? { y: 0, rotate: 0 } : { y: '110%', rotate: 3 }}
+            animate={visible ? { y: 0, rotate: 0 } : {}}
+            transition={{ duration: 0.6, delay: isPreview ? 0 : delay + i * 0.05, ease: [0.22, 1, 0.36, 1] }}
           >
             {word}
           </motion.span>
