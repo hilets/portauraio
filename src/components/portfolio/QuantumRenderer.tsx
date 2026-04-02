@@ -2,6 +2,7 @@ import { useRef, useState } from 'react';
 import { motion, useScroll, useTransform, useInView } from 'framer-motion';
 import { ArrowUpRight, ArrowRight, ArrowUp, Mail, Phone, MapPin, Star, Quote } from 'lucide-react';
 import { Cursor, ScrollBar, BackToTop, MagneticBtn, getSocialIcon, getFontFamily } from './PortfolioHelpers';
+import { usePreviewMode } from '@/contexts/PreviewModeContext';
 
 /* ---- Animated text reveal ---- */
 const TextReveal = ({ text, className = '', delay = 0 }: { text: string; className?: string; delay?: number }) => {
