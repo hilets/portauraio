@@ -33,12 +33,14 @@ const TextReveal = ({ text, className = '', delay = 0 }: { text: string; classNa
 const AnimatedLine = ({ color, className = '' }: { color: string; className?: string }) => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true });
+  const isPreview = usePreviewMode();
+  const visible = isPreview || isInView;
   return (
     <div ref={ref} className={`overflow-hidden ${className}`}>
       <motion.div
         className="h-px w-full"
-        initial={{ scaleX: 0 }}
-        animate={isInView ? { scaleX: 1 } : {}}
+        initial={isPreview ? { scaleX: 1 } : { scaleX: 0 }}
+        animate={visible ? { scaleX: 1 } : {}}
         transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
         style={{ background: color, transformOrigin: 'left' }}
       />
@@ -50,13 +52,15 @@ const AnimatedLine = ({ color, className = '' }: { color: string; className?: st
 const Stagger = ({ children, className = '' }: { children: React.ReactNode; className?: string }) => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-40px' });
+  const isPreview = usePreviewMode();
+  const visible = isPreview || isInView;
   return (
     <motion.div
       ref={ref}
       className={className}
-      initial="hidden"
-      animate={isInView ? 'visible' : 'hidden'}
-      variants={{ visible: { transition: { staggerChildren: 0.08 } } }}
+      initial={isPreview ? 'visible' : 'hidden'}
+      animate={visible ? 'visible' : 'hidden'}
+      variants={{ visible: { transition: { staggerChildren: isPreview ? 0 : 0.08 } } }}
     >
       {children}
     </motion.div>
