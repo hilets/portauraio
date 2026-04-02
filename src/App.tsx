@@ -18,6 +18,7 @@ import AdminPanel from "./pages/AdminPanel";
 
 import PortfolioSkills from "./pages/PortfolioSkills";
 import Templates from "./pages/Templates";
+import TemplateSales from "./pages/TemplateSales";
 import Checkout from "./pages/Checkout";
 import OrderWizard from "./pages/OrderWizard";
 import PortfolioView from "./pages/PortfolioView";
