@@ -329,10 +329,11 @@ const Header = () => {
             {/* Mobile: Morphing Order Now / Menu */}
             <div className="md:hidden">
               <motion.button
-                onClick={() => isScrolled ? setIsMenuOpen(true) : navigate('/templates')}
-                className="relative rounded-full bg-primary flex items-center justify-center group"
+                onClick={handleBuildClick}
+                disabled={isBuilding}
+                className="relative rounded-full bg-primary flex items-center justify-center group disabled:opacity-90"
                 animate={{
-                  width: isScrolled ? 42 : 120,
+                  width: isScrolled ? 42 : (isBuilding ? 140 : 120),
                   height: isScrolled ? 42 : 36,
                 }}
                 transition={{
