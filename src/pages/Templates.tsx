@@ -102,8 +102,8 @@ const Templates = () => {
                     <span className="text-[9px] sm:text-[10px] text-muted-foreground line-through">{tpl.originalPrice}</span>
                   </div>
                   <Button variant="hero" size="sm" className="w-full mt-2 text-[10px] sm:text-xs h-7 sm:h-8 gap-1"
-                    onClick={(e) => { e.stopPropagation(); navigate('/order'); }}>
-                    <ShoppingCart className="w-3 h-3" /> Build Now
+                    onClick={(e) => { e.stopPropagation(); navigate(`/templates/${tpl.id}`); }}>
+                    <ShoppingCart className="w-3 h-3" /> Buy Now
                   </Button>
                 </div>
               </motion.div>
