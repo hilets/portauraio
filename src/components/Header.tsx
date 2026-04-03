@@ -270,7 +270,16 @@ const Header = () => {
                   }}
                   style={{ position: isScrolled ? 'absolute' : 'relative' }}
                 >
-                  Build Now
+                  {isBuilding ? (
+                    <span className="flex items-center gap-2">
+                      <motion.span
+                        className="w-4 h-4 border-2 border-primary-foreground/30 border-t-primary-foreground rounded-full"
+                        animate={{ rotate: 360 }}
+                        transition={{ repeat: Infinity, duration: 0.8, ease: 'linear' }}
+                      />
+                      Building...
+                    </span>
+                  ) : 'Build Now'}
                 </motion.span>
 
                 {/* Interactive 3-line hamburger icon */}
