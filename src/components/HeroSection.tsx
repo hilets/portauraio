@@ -74,7 +74,7 @@ const HeroSection = () => {
             className="flex flex-col sm:flex-row gap-3 sm:gap-4 mb-10 md:mb-0"
           >
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.98 }}>
-              <Button variant="hero" size="xl" className="group w-full sm:w-auto">
+              <Button variant="hero" size="xl" className="group w-full sm:w-auto" onClick={() => navigate('/templates')}>
                 <span className="flex items-center gap-2">
                   Start Your Journey
                   <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-200" />
