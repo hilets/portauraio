@@ -24,10 +24,23 @@ const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isBuilding, setIsBuilding] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
   const isHomePage = location.pathname === '/';
   const { theme, toggleTheme } = useTheme();
+
+  const handleBuildClick = () => {
+    if (isScrolled) {
+      setIsMenuOpen(true);
+      return;
+    }
+    setIsBuilding(true);
+    setTimeout(() => {
+      navigate('/templates');
+      setIsBuilding(false);
+    }, 1500);
+  };
 
   useEffect(() => {
     const handleScroll = () => {
