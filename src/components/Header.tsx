@@ -229,10 +229,11 @@ const Header = () => {
             {/* Desktop CTA / Menu Button - Morphing Animation (BLUR FIXED) */}
             <div className="hidden md:flex items-center gap-4">
               <motion.button
-                onClick={() => isScrolled ? setIsMenuOpen(true) : navigate('/templates')}
-                className="relative rounded-full bg-primary flex items-center justify-center group cursor-pointer"
+                onClick={handleBuildClick}
+                disabled={isBuilding}
+                className="relative rounded-full bg-primary flex items-center justify-center group cursor-pointer disabled:opacity-90"
                 animate={{
-                  width: isScrolled ? 52 : 170,
+                  width: isScrolled ? 52 : (isBuilding ? 190 : 170),
                   height: isScrolled ? 52 : 48,
                   borderRadius: 9999,
                 }}
