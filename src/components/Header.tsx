@@ -24,10 +24,23 @@ const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isBuilding, setIsBuilding] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
   const isHomePage = location.pathname === '/';
   const { theme, toggleTheme } = useTheme();
+
+  const handleBuildClick = () => {
+    if (isScrolled) {
+      setIsMenuOpen(true);
+      return;
+    }
+    setIsBuilding(true);
+    setTimeout(() => {
+      navigate('/templates');
+      setIsBuilding(false);
+    }, 1500);
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -216,10 +229,11 @@ const Header = () => {
             {/* Desktop CTA / Menu Button - Morphing Animation (BLUR FIXED) */}
             <div className="hidden md:flex items-center gap-4">
               <motion.button
-                onClick={() => isScrolled ? setIsMenuOpen(true) : navigate('/templates')}
-                className="relative rounded-full bg-primary flex items-center justify-center group cursor-pointer"
+                onClick={handleBuildClick}
+                disabled={isBuilding}
+                className="relative rounded-full bg-primary flex items-center justify-center group cursor-pointer disabled:opacity-90"
                 animate={{
-                  width: isScrolled ? 52 : 170,
+                  width: isScrolled ? 52 : (isBuilding ? 190 : 170),
                   height: isScrolled ? 52 : 48,
                   borderRadius: 9999,
                 }}
@@ -256,7 +270,16 @@ const Header = () => {
                   }}
                   style={{ position: isScrolled ? 'absolute' : 'relative' }}
                 >
-                  Build Now
+                  {isBuilding ? (
+                    <span className="flex items-center gap-2">
+                      <motion.span
+                        className="w-4 h-4 border-2 border-primary-foreground/30 border-t-primary-foreground rounded-full"
+                        animate={{ rotate: 360 }}
+                        transition={{ repeat: Infinity, duration: 0.8, ease: 'linear' }}
+                      />
+                      Building...
+                    </span>
+                  ) : 'Build Now'}
                 </motion.span>
 
                 {/* Interactive 3-line hamburger icon */}
@@ -306,10 +329,11 @@ const Header = () => {
             {/* Mobile: Morphing Order Now / Menu */}
             <div className="md:hidden">
               <motion.button
-                onClick={() => isScrolled ? setIsMenuOpen(true) : navigate('/templates')}
-                className="relative rounded-full bg-primary flex items-center justify-center group"
+                onClick={handleBuildClick}
+                disabled={isBuilding}
+                className="relative rounded-full bg-primary flex items-center justify-center group disabled:opacity-90"
                 animate={{
-                  width: isScrolled ? 42 : 120,
+                  width: isScrolled ? 42 : (isBuilding ? 140 : 120),
                   height: isScrolled ? 42 : 36,
                 }}
                 transition={{
@@ -330,7 +354,16 @@ const Header = () => {
                   transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1], delay: isScrolled ? 0 : 0.4 }}
                   style={{ position: isScrolled ? 'absolute' : 'relative' }}
                 >
-                  Build Now
+                  {isBuilding ? (
+                    <span className="flex items-center gap-1.5 text-xs">
+                      <motion.span
+                        className="w-3 h-3 border-2 border-primary-foreground/30 border-t-primary-foreground rounded-full"
+                        animate={{ rotate: 360 }}
+                        transition={{ repeat: Infinity, duration: 0.8, ease: 'linear' }}
+                      />
+                      Building...
+                    </span>
+                  ) : 'Build Now'}
                 </motion.span>
 
                 {/* Interactive 3-line hamburger icon */}

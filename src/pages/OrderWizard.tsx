@@ -2,7 +2,7 @@ import { useState, useCallback, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowLeft, ArrowRight, Type, User, Eye, Sparkles, Copy, CheckCheck, ExternalLink, Check } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import CustomCursor from '@/components/CustomCursor';
@@ -10,7 +10,6 @@ import LivePreview from '@/components/order/LivePreview';
 import ProfileForm from '@/components/order/ProfileForm';
 import DesignForm from '@/components/order/DesignForm';
 import ReviewStep from '@/components/order/ReviewStep';
-import ThemeShowcase from '@/components/order/ThemeShowcase';
 import { savePortfolio, type StoredPortfolio } from '@/lib/portfolioStore';
 
 export interface PortfolioData {
@@ -46,22 +45,24 @@ const defaultData: PortfolioData = {
 };
 
 const steps = [
-  { id: 1, label: 'Template', icon: Sparkles },
-  { id: 2, label: 'Profile', icon: User },
-  { id: 3, label: 'Design', icon: Type },
-  { id: 4, label: 'Review', icon: Eye },
+  { id: 1, label: 'Profile', icon: User },
+  { id: 2, label: 'Design', icon: Type },
+  { id: 3, label: 'Review', icon: Eye },
 ];
 
 const OrderWizard = () => {
   const navigate = useNavigate();
+  const { templateId } = useParams<{ templateId?: string }>();
   const [step, setStep] = useState(1);
-  const [data, setData] = useState<PortfolioData>({ ...defaultData });
+  const [data, setData] = useState<PortfolioData>(() => ({
+    ...defaultData,
+    template: (templateId === 'quantum-studio' ? 'quantum-studio' : 'aura-infinity') as PortfolioData['template'],
+  }));
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [savedPortfolio, setSavedPortfolio] = useState<StoredPortfolio | null>(null);
   const [copied, setCopied] = useState(false);
   const [publishError, setPublishError] = useState('');
 
-  // Scroll to top when step changes or on publish
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, [step, isSubmitted]);
@@ -71,7 +72,7 @@ const OrderWizard = () => {
   }, []);
 
   const canProceed = () => {
-    if (step === 2) return data.name.trim().length > 0;
+    if (step === 1) return data.name.trim().length > 0;
     return true;
   };
 
@@ -152,7 +153,7 @@ const OrderWizard = () => {
       <Header />
       <main className="relative z-10 pt-28 pb-20">
         <div className="container-custom max-w-2xl">
-          {/* Step Indicators - Clean numbered steps */}
+          {/* Step Indicators */}
           <div className="flex items-center justify-between mb-8 px-2">
             {steps.map((s, i) => {
               const Icon = s.icon;
@@ -179,7 +180,6 @@ const OrderWizard = () => {
                       {s.label}
                     </span>
                   </button>
-                  {/* Connector line */}
                   {i < steps.length - 1 && (
                     <div className="flex-1 h-px mx-2 mt-[-18px]">
                       <div className={`h-full transition-colors duration-300 ${
@@ -217,21 +217,16 @@ const OrderWizard = () => {
           <AnimatePresence mode="wait">
             {step === 1 && (
               <motion.div key="s1" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ duration: 0.3 }}>
-                <ThemeShowcase data={data} updateData={updateData} />
+                <ProfileForm data={data} updateData={updateData} />
               </motion.div>
             )}
             {step === 2 && (
               <motion.div key="s2" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ duration: 0.3 }}>
-                <ProfileForm data={data} updateData={updateData} />
+                <DesignForm data={data} updateData={updateData} />
               </motion.div>
             )}
             {step === 3 && (
               <motion.div key="s3" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ duration: 0.3 }}>
-                <DesignForm data={data} updateData={updateData} />
-              </motion.div>
-            )}
-            {step === 4 && (
-              <motion.div key="s4" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ duration: 0.3 }}>
                 <ReviewStep data={data} />
               </motion.div>
             )}
@@ -244,7 +239,7 @@ const OrderWizard = () => {
               <Button variant="outline" onClick={() => step > 1 ? setStep(step - 1) : navigate(-1)} className="gap-2">
                 <ArrowLeft className="w-4 h-4" /> {step > 1 ? 'Back' : 'Home'}
               </Button>
-              {step < 4 ? (
+              {step < 3 ? (
                 <Button variant="hero" onClick={() => setStep(step + 1)} disabled={!canProceed()} className="gap-2">
                   Next <ArrowRight className="w-4 h-4" />
                 </Button>

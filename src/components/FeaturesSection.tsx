@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import { useInView } from 'framer-motion';
 import { useRef } from 'react';
 import { Palette, Zap, Shield, Users, Settings, Star } from 'lucide-react';
@@ -44,26 +44,45 @@ const features = [
   },
 ];
 
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.08,
-    },
-  },
-};
+const StackedCard = ({ feature, index }: { feature: typeof features[0]; index: number }) => {
+  const cardRef = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: cardRef,
+    offset: ['start end', 'center center'],
+  });
 
-const itemVariants = {
-  hidden: { opacity: 0, y: 30 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.5,
-      ease: 'easeOut' as const,
-    },
-  },
+  const y = useTransform(scrollYProgress, [0, 1], [120 + index * 20, 0]);
+  const opacity = useTransform(scrollYProgress, [0, 0.3, 1], [0, 0.6, 1]);
+  const scale = useTransform(scrollYProgress, [0, 1], [0.85, 1]);
+  const rotate = useTransform(scrollYProgress, [0, 1], [index % 2 === 0 ? 3 : -3, 0]);
+
+  return (
+    <motion.div
+      ref={cardRef}
+      style={{ y, opacity, scale, rotate }}
+    >
+      <GlowingCard className="p-8 rounded-3xl bg-card border border-border/50 h-full relative">
+        <motion.div
+          className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${feature.gradient} flex items-center justify-center mb-6 relative group`}
+          whileHover={{ scale: 1.05 }}
+          transition={{ duration: 0.3 }}
+        >
+          <feature.icon className="w-8 h-8 text-primary relative z-10" />
+        </motion.div>
+
+        <div className="absolute top-6 right-6 font-heading text-6xl font-bold text-primary/5">
+          {String(index + 1).padStart(2, '0')}
+        </div>
+
+        <h3 className="font-heading text-xl font-bold mb-3 group-hover:text-primary transition-colors duration-300">
+          {feature.title}
+        </h3>
+        <p className="text-muted-foreground leading-relaxed">
+          {feature.description}
+        </p>
+      </GlowingCard>
+    </motion.div>
+  );
 };
 
 const FeaturesSection = () => {
@@ -73,18 +92,16 @@ const FeaturesSection = () => {
   return (
     <SmoothSection id="features" className="section-padding relative overflow-hidden">
       <div ref={ref}>
-        {/* Background Gradient */}
         <div className="absolute inset-0 bg-gradient-to-b from-card/50 via-transparent to-card/50" />
-        
+
         <div className="container-custom relative z-10">
-          {/* Section Header */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, ease: 'easeOut' }}
             className="text-center mb-16"
           >
-            <motion.span 
+            <motion.span
               className="text-primary font-medium text-sm tracking-widest uppercase mb-4 block"
               initial={{ opacity: 0 }}
               animate={isInView ? { opacity: 1 } : {}}
@@ -100,40 +117,11 @@ const FeaturesSection = () => {
             </p>
           </motion.div>
 
-          {/* Features Grid */}
-          <motion.div
-            variants={containerVariants}
-            initial="hidden"
-            animate={isInView ? 'visible' : 'hidden'}
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-          >
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {features.map((feature, index) => (
-              <motion.div key={feature.title} variants={itemVariants}>
-                <GlowingCard className="p-8 rounded-3xl bg-card border border-border/50 h-full">
-                  {/* Icon with gradient background */}
-                  <motion.div 
-                    className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${feature.gradient} flex items-center justify-center mb-6 relative group`}
-                    whileHover={{ scale: 1.05 }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    <feature.icon className="w-8 h-8 text-primary relative z-10" />
-                  </motion.div>
-
-                  {/* Number indicator */}
-                  <div className="absolute top-6 right-6 font-heading text-6xl font-bold text-primary/5">
-                    {String(index + 1).padStart(2, '0')}
-                  </div>
-
-                  <h3 className="font-heading text-xl font-bold mb-3 group-hover:text-primary transition-colors duration-300">
-                    {feature.title}
-                  </h3>
-                  <p className="text-muted-foreground leading-relaxed">
-                    {feature.description}
-                  </p>
-                </GlowingCard>
-              </motion.div>
+              <StackedCard key={feature.title} feature={feature} index={index} />
             ))}
-          </motion.div>
+          </div>
         </div>
       </div>
     </SmoothSection>
