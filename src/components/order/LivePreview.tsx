@@ -34,6 +34,7 @@ const LivePreview = ({ data }: Props) => {
           style={{
             width: INNER_WIDTH,
             transform: `scale(${SCALE})`,
+            overflowX: 'hidden',
           }}
         >
           <PortfolioRenderer
