@@ -6,11 +6,13 @@ import afterImage from '@/assets/after-portfolio.jpg';
 import { Check, X, MousePointerClick } from 'lucide-react';
 import SmoothSection from './SmoothSection';
 import { Button } from '@/components/ui/button';
+import { useNavigate } from 'react-router-dom';
 
 const BeforeAfterSection = () => {
   const ref = useRef(null);
   const containerRef = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-80px' });
+  const navigate = useNavigate();
   const [sliderPosition, setSliderPosition] = useState(50);
   const [isDragging, setIsDragging] = useState(false);
 
@@ -199,7 +201,7 @@ const BeforeAfterSection = () => {
             className="flex justify-center mt-12"
           >
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.98 }}>
-              <Button variant="hero" size="xl" className="group relative overflow-hidden">
+              <Button variant="hero" size="xl" className="group relative overflow-hidden" onClick={() => navigate('/templates')}>
                 <motion.span
                   className="absolute inset-0 bg-gradient-to-r from-primary/0 via-white/20 to-primary/0"
                   initial={{ x: '-100%' }}

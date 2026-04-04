@@ -8,12 +8,10 @@ import CTASection from '@/components/CTASection';
 import Footer from '@/components/Footer';
 import ParticleBackground from '@/components/ParticleBackground';
 import ScrollToTop from '@/components/ScrollToTop';
-import CustomCursor from '@/components/CustomCursor';
 
 const Index = () => {
   return (
     <div className="min-h-screen bg-background relative">
-      <CustomCursor />
       <ParticleBackground />
       <Header />
       <main className="relative z-10">
