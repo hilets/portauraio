@@ -37,7 +37,7 @@ const Header = () => {
     }
     setIsBuilding(true);
     setTimeout(() => {
-      navigate('/templates');
+      navigate('/order');
       setIsBuilding(false);
     }, 1500);
   };
