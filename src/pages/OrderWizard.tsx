@@ -1,15 +1,13 @@
 import { useState, useCallback, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowLeft, ArrowRight, Type, User, Eye, Sparkles, Copy, CheckCheck, ExternalLink, Check } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Link2, Eye, Sparkles, Copy, CheckCheck, ExternalLink, Check } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
-import CustomCursor from '@/components/CustomCursor';
 import LivePreview from '@/components/order/LivePreview';
-import ProfileForm from '@/components/order/ProfileForm';
-import DesignForm from '@/components/order/DesignForm';
-import ReviewStep from '@/components/order/ReviewStep';
+import SocialLinksStep from '@/components/order/SocialLinksStep';
+import PreviewPublishStep from '@/components/order/PreviewPublishStep';
 import { savePortfolio, type StoredPortfolio } from '@/lib/portfolioStore';
 
 export interface PortfolioData {
@@ -36,6 +34,8 @@ const defaultData: PortfolioData = {
     { platform: 'GitHub', url: '' },
     { platform: 'LinkedIn', url: '' },
     { platform: 'Twitter', url: '' },
+    { platform: 'Instagram', url: '' },
+    { platform: 'Dribbble', url: '' },
   ],
   adminPassword: '',
   primaryColor: '#00e5ff',
@@ -45,19 +45,14 @@ const defaultData: PortfolioData = {
 };
 
 const steps = [
-  { id: 1, label: 'Profile', icon: User },
-  { id: 2, label: 'Design', icon: Type },
-  { id: 3, label: 'Review', icon: Eye },
+  { id: 1, label: 'Your Links', icon: Link2 },
+  { id: 2, label: 'Preview & Publish', icon: Eye },
 ];
 
 const OrderWizard = () => {
   const navigate = useNavigate();
-  const { templateId } = useParams<{ templateId?: string }>();
   const [step, setStep] = useState(1);
-  const [data, setData] = useState<PortfolioData>(() => ({
-    ...defaultData,
-    template: (templateId === 'quantum-studio' ? 'quantum-studio' : 'aura-infinity') as PortfolioData['template'],
-  }));
+  const [data, setData] = useState<PortfolioData>({ ...defaultData });
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [savedPortfolio, setSavedPortfolio] = useState<StoredPortfolio | null>(null);
   const [copied, setCopied] = useState(false);
@@ -72,7 +67,10 @@ const OrderWizard = () => {
   }, []);
 
   const canProceed = () => {
-    if (step === 1) return data.name.trim().length > 0;
+    if (step === 1) {
+      const hasAnyLink = data.socialLinks.some((l) => l.url.trim().length > 0);
+      return data.name.trim().length > 0 && hasAnyLink;
+    }
     return true;
   };
 
@@ -99,7 +97,6 @@ const OrderWizard = () => {
   if (isSubmitted) {
     return (
       <div className="min-h-screen bg-background relative">
-        <CustomCursor />
         <Header />
         <main className="relative z-10 pt-32 pb-20">
           <div className="container-custom max-w-2xl text-center">
@@ -115,7 +112,6 @@ const OrderWizard = () => {
               className="text-muted-foreground text-lg mb-8">
               <span className="text-primary font-semibold">{data.name}'s</span> portfolio has been published.
             </motion.p>
-
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.7 }}
               className="rounded-2xl border border-primary/30 bg-primary/5 backdrop-blur-sm p-6 mb-8 mx-auto max-w-lg">
               <p className="text-xs uppercase tracking-widest text-muted-foreground mb-3">Your Portfolio Link</p>
@@ -132,7 +128,6 @@ const OrderWizard = () => {
                 </motion.p>
               )}
             </motion.div>
-
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.9 }}
               className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button variant="hero" size="xl" onClick={() => navigate(portfolioPath)} className="gap-2">
@@ -149,18 +144,17 @@ const OrderWizard = () => {
 
   return (
     <div className="min-h-screen bg-background relative">
-      <CustomCursor />
       <Header />
       <main className="relative z-10 pt-28 pb-20">
         <div className="container-custom max-w-2xl">
           {/* Step Indicators */}
-          <div className="flex items-center justify-between mb-8 px-2">
+          <div className="flex items-center justify-center mb-8 px-2">
             {steps.map((s, i) => {
               const Icon = s.icon;
               const isActive = step === s.id;
               const isDone = step > s.id;
               return (
-                <div key={s.id} className="flex items-center flex-1">
+                <div key={s.id} className="flex items-center">
                   <button
                     onClick={() => { if (isDone) setStep(s.id); }}
                     className={`flex flex-col items-center gap-1.5 transition-all duration-300 ${isDone ? 'cursor-pointer' : 'cursor-default'}`}
@@ -181,7 +175,7 @@ const OrderWizard = () => {
                     </span>
                   </button>
                   {i < steps.length - 1 && (
-                    <div className="flex-1 h-px mx-2 mt-[-18px]">
+                    <div className="w-16 sm:w-24 h-px mx-3 mt-[-18px]">
                       <div className={`h-full transition-colors duration-300 ${
                         step > s.id ? 'bg-primary/40' : 'bg-border/30'
                       }`} />
@@ -217,17 +211,12 @@ const OrderWizard = () => {
           <AnimatePresence mode="wait">
             {step === 1 && (
               <motion.div key="s1" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ duration: 0.3 }}>
-                <ProfileForm data={data} updateData={updateData} />
+                <SocialLinksStep data={data} updateData={updateData} />
               </motion.div>
             )}
             {step === 2 && (
               <motion.div key="s2" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ duration: 0.3 }}>
-                <DesignForm data={data} updateData={updateData} />
-              </motion.div>
-            )}
-            {step === 3 && (
-              <motion.div key="s3" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ duration: 0.3 }}>
-                <ReviewStep data={data} />
+                <PreviewPublishStep data={data} updateData={updateData} />
               </motion.div>
             )}
           </AnimatePresence>
@@ -239,7 +228,7 @@ const OrderWizard = () => {
               <Button variant="outline" onClick={() => step > 1 ? setStep(step - 1) : navigate(-1)} className="gap-2">
                 <ArrowLeft className="w-4 h-4" /> {step > 1 ? 'Back' : 'Home'}
               </Button>
-              {step < 3 ? (
+              {step < 2 ? (
                 <Button variant="hero" onClick={() => setStep(step + 1)} disabled={!canProceed()} className="gap-2">
                   Next <ArrowRight className="w-4 h-4" />
                 </Button>
