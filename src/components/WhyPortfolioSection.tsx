@@ -74,9 +74,9 @@ const WhyPortfolioSection = () => {
 
           {/* Paragraph */}
           <p className="text-muted-foreground text-lg md:text-xl max-w-3xl mx-auto leading-relaxed">
-            In today's competitive landscape, talent alone isn't enough. You need a professional portfolio 
-            that captures attention, tells your story, and converts visitors into opportunities. 
-            <span className="text-foreground font-medium"> We make that happen.</span>
+            In today's competitive landscape, talent alone isn't enough. Paste your social links and 
+            let us transform them into a professional portfolio that captures attention and opens doors. 
+            <span className="text-foreground font-medium"> Just your links. That's all we need.</span>
           </p>
         </motion.div>
 
