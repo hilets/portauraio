@@ -1,34 +1,34 @@
 import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
-import { MessageSquare, Palette, Code, Rocket } from 'lucide-react';
+import { Link2, Palette, Eye, Rocket } from 'lucide-react';
 
 const steps = [
   {
     number: '01',
-    icon: MessageSquare,
-    title: 'Share Your Story',
-    description: 'Tell us about yourself, your achievements, and your goals. We listen carefully to understand your unique journey.',
+    icon: Link2,
+    title: 'Paste Your Links',
+    description: 'Drop your GitHub, LinkedIn, Twitter, or any social media link. That\'s your starting point.',
     color: 'from-blue-500 to-cyan-500',
   },
   {
     number: '02',
     icon: Palette,
-    title: 'Design Magic',
-    description: 'Our creative team crafts a stunning visual design that perfectly represents your personal brand.',
+    title: 'Customize',
+    description: 'Pick a template, choose colors and fonts. Make your portfolio uniquely yours.',
     color: 'from-purple-500 to-pink-500',
   },
   {
     number: '03',
-    icon: Code,
-    title: 'Development',
-    description: 'Our engineers bring the design to life with clean, responsive, and fast-loading code.',
+    icon: Eye,
+    title: 'Preview Live',
+    description: 'See your portfolio come to life in real-time as you build it. No guessing.',
     color: 'from-orange-500 to-yellow-500',
   },
   {
     number: '04',
     icon: Rocket,
-    title: 'Launch & Shine',
-    description: 'Your portfolio goes live! We help you share it with the world and make a lasting impression.',
+    title: 'Publish & Share',
+    description: 'Hit publish and share your stunning portfolio link with the world.',
     color: 'from-primary to-lime-glow',
   },
 ];
@@ -53,10 +53,10 @@ const WorkflowSection = () => {
               How It Works
             </span>
             <h2 className="font-heading text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
-              OUR <span className="text-gradient">WORKFLOW</span>
+              LINKS TO <span className="text-gradient">PORTFOLIO</span>
             </h2>
             <p className="text-muted-foreground max-w-2xl mx-auto text-lg">
-              A simple, streamlined process designed to deliver exceptional results.
+              Four simple steps from your social profiles to a stunning portfolio.
             </p>
           </motion.div>
 
@@ -70,18 +70,12 @@ const WorkflowSection = () => {
                 transition={{ duration: 0.4, delay: index * 0.1 }}
                 className="group p-8 rounded-3xl bg-card border border-border/50 hover:border-primary/50 transition-colors duration-300 h-full"
               >
-                <div className="font-heading text-5xl font-bold text-primary/10 mb-4">
-                  {step.number}
-                </div>
+                <div className="font-heading text-5xl font-bold text-primary/10 mb-4">{step.number}</div>
                 <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${step.color} flex items-center justify-center mb-6 shadow-lg`}>
                   <step.icon className="w-7 h-7 text-white" />
                 </div>
-                <h3 className="font-heading text-xl font-bold mb-3 group-hover:text-primary transition-colors duration-300">
-                  {step.title}
-                </h3>
-                <p className="text-muted-foreground text-sm leading-relaxed">
-                  {step.description}
-                </p>
+                <h3 className="font-heading text-xl font-bold mb-3 group-hover:text-primary transition-colors duration-300">{step.title}</h3>
+                <p className="text-muted-foreground text-sm leading-relaxed">{step.description}</p>
               </motion.div>
             ))}
           </div>
@@ -102,9 +96,7 @@ const WorkflowSection = () => {
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-3 mb-2">
                       <span className="font-heading text-xl font-bold text-primary/30">{step.number}</span>
-                      <h3 className="font-heading text-base md:text-lg font-bold group-hover:text-primary transition-colors duration-300">
-                        {step.title}
-                      </h3>
+                      <h3 className="font-heading text-base md:text-lg font-bold group-hover:text-primary transition-colors duration-300">{step.title}</h3>
                     </div>
                     <p className="text-muted-foreground text-sm leading-relaxed">{step.description}</p>
                   </div>

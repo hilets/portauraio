@@ -1,18 +1,18 @@
 import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
-import { Palette, Zap, Shield, Users, Settings, Star } from 'lucide-react';
+import { Link2, Zap, Shield, Palette, Settings, Star } from 'lucide-react';
 
 const features = [
   {
-    icon: Palette,
-    title: 'Custom Design',
-    description: 'Every portfolio is uniquely crafted to reflect your personal brand and style.',
-    gradient: 'from-pink-500/20 to-purple-500/20',
+    icon: Link2,
+    title: 'Paste & Build',
+    description: 'Just drop your social media links — GitHub, LinkedIn, Twitter — and your portfolio builds itself.',
+    gradient: 'from-blue-500/20 to-cyan-500/20',
   },
   {
     icon: Zap,
-    title: 'Lightning Fast',
-    description: 'Get your professional portfolio delivered within 24-48 hours.',
+    title: 'Ready in Minutes',
+    description: 'No waiting. Your professional portfolio is live instantly after pasting your links.',
     gradient: 'from-yellow-500/20 to-orange-500/20',
   },
   {
@@ -22,15 +22,15 @@ const features = [
     gradient: 'from-blue-500/20 to-cyan-500/20',
   },
   {
-    icon: Users,
-    title: 'Expert Team',
-    description: 'Our skilled engineers and designers bring years of experience.',
-    gradient: 'from-green-500/20 to-emerald-500/20',
+    icon: Palette,
+    title: 'Fully Customizable',
+    description: 'Choose templates, colors, and fonts. Make it truly yours with zero design skills.',
+    gradient: 'from-pink-500/20 to-purple-500/20',
   },
   {
     icon: Settings,
     title: 'Admin Panel',
-    description: "Full control over your portfolio with an intuitive dashboard to update content anytime.",
+    description: 'Full control over your portfolio with an intuitive dashboard to update content anytime.',
     gradient: 'from-violet-500/20 to-indigo-500/20',
   },
   {
@@ -64,7 +64,7 @@ const FeaturesSection = () => {
               WHAT WE <span className="text-primary">DELIVER</span>
             </h2>
             <p className="text-muted-foreground max-w-2xl mx-auto text-lg">
-              We combine creativity with technical excellence to deliver portfolios that truly stand out.
+              From social links to stunning portfolio — here's what makes us different.
             </p>
           </motion.div>
 
@@ -80,11 +80,9 @@ const FeaturesSection = () => {
                 <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${feature.gradient} flex items-center justify-center mb-6`}>
                   <feature.icon className="w-8 h-8 text-primary" />
                 </div>
-
                 <div className="absolute top-6 right-6 font-heading text-6xl font-bold text-primary/5">
                   {String(index + 1).padStart(2, '0')}
                 </div>
-
                 <h3 className="font-heading text-xl font-bold mb-3 group-hover:text-primary transition-colors duration-300">
                   {feature.title}
                 </h3>
