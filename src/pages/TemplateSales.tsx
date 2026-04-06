@@ -152,7 +152,7 @@ const TemplateSales = () => {
               <p className="text-muted-foreground leading-relaxed mb-6">{tpl.description}</p>
 
               {/* CTA */}
-              <Button variant="hero" size="xl" className="w-full gap-2 mb-6" onClick={() => navigate(`/order/${id}`)}>
+              <Button variant="hero" size="xl" className="w-full gap-2 mb-6" onClick={() => navigate(`/order`)}>
                 <ShoppingCart className="w-5 h-5" /> Buy Now — Free
               </Button>
 
