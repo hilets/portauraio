@@ -142,7 +142,7 @@ const Header = () => {
                 transition={{ delay: 0.5, duration: 0.4 }}
                 className="mt-8"
               >
-                <a href="/templates">
+                <a href="/order">
                   <Button variant="hero" size="xl" onClick={() => setIsMenuOpen(false)}>
                     Build Now
                   </Button>

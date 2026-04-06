@@ -201,7 +201,7 @@ const BeforeAfterSection = () => {
             className="flex justify-center mt-12"
           >
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.98 }}>
-              <Button variant="hero" size="xl" className="group relative overflow-hidden" onClick={() => navigate('/templates')}>
+              <Button variant="hero" size="xl" className="group relative overflow-hidden" onClick={() => navigate('/order')}>
                 <motion.span
                   className="absolute inset-0 bg-gradient-to-r from-primary/0 via-white/20 to-primary/0"
                   initial={{ x: '-100%' }}
@@ -210,7 +210,7 @@ const BeforeAfterSection = () => {
                 />
                 <span className="relative z-10 flex items-center gap-3">
                   <MousePointerClick className="w-5 h-5" />
-                  One Click — Portfolio Ready
+                  Build From Your Links
                 </span>
               </Button>
             </motion.div>
