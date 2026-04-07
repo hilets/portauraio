@@ -6,7 +6,6 @@ import afterImage from '@/assets/after-portfolio.jpg';
 import { Check, X, MousePointerClick } from 'lucide-react';
 import SmoothSection from './SmoothSection';
 import { Button } from '@/components/ui/button';
-import { useNavigate } from 'react-router-dom';
 
 const BeforeAfterSection = () => {
   const ref = useRef(null);
