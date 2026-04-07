@@ -1,34 +1,34 @@
 import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
-import { Link2, Palette, Eye, Rocket } from 'lucide-react';
+import { User, Eye, Palette, CreditCard } from 'lucide-react';
 
 const steps = [
   {
     number: '01',
-    icon: Link2,
-    title: 'Paste Your Links',
-    description: 'Drop your GitHub, LinkedIn, Twitter, or any social media link. That\'s your starting point.',
+    icon: User,
+    title: 'Enter Your Name',
+    description: 'Type your name and see premium portfolio templates personalized with YOUR brand — instantly.',
     color: 'from-blue-500 to-cyan-500',
   },
   {
     number: '02',
     icon: Palette,
-    title: 'Customize',
-    description: 'Pick a template, choose colors and fonts. Make your portfolio uniquely yours.',
+    title: 'Pick a Template',
+    description: 'Browse stunning templates that already showcase your name. Click the one you love.',
     color: 'from-purple-500 to-pink-500',
   },
   {
     number: '03',
     icon: Eye,
-    title: 'Preview Live',
-    description: 'See your portfolio come to life in real-time as you build it. No guessing.',
+    title: 'Upload & Polish',
+    description: 'Add your headshot, customize colors and see the full site come alive with your identity.',
     color: 'from-orange-500 to-yellow-500',
   },
   {
     number: '04',
-    icon: Rocket,
-    title: 'Publish & Share',
-    description: 'Hit publish and share your stunning portfolio link with the world.',
+    icon: CreditCard,
+    title: 'Claim & Go Live',
+    description: 'One click, one payment — your premium portfolio is live at your-name.portaura.com.',
     color: 'from-primary to-lime-glow',
   },
 ];
@@ -53,10 +53,10 @@ const WorkflowSection = () => {
               How It Works
             </span>
             <h2 className="font-heading text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
-              LINKS TO <span className="text-gradient">PORTFOLIO</span>
+              NAME TO <span className="text-gradient">PORTFOLIO</span>
             </h2>
             <p className="text-muted-foreground max-w-2xl mx-auto text-lg">
-              Four simple steps from your social profiles to a stunning portfolio.
+              Four simple steps from your name to a live, premium portfolio site.
             </p>
           </motion.div>
 
