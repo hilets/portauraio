@@ -210,7 +210,7 @@ const BeforeAfterSection = () => {
                 />
                 <span className="relative z-10 flex items-center gap-3">
                   <MousePointerClick className="w-5 h-5" />
-                  Build From Your Links
+                  Try It Now — Free
                 </span>
               </Button>
             </motion.div>
