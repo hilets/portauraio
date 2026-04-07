@@ -35,11 +35,11 @@ const Header = () => {
       setIsMenuOpen(true);
       return;
     }
-    setIsBuilding(true);
-    setTimeout(() => {
-      navigate('/order');
-      setIsBuilding(false);
-    }, 1500);
+    if (location.pathname === '/') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+      navigate('/');
+    }
   };
 
   useEffect(() => {

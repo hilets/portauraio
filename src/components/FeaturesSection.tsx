@@ -1,42 +1,42 @@
 import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
-import { Link2, Zap, Shield, Palette, Settings, Star } from 'lucide-react';
+import { Zap, Shield, Palette, Globe, Star, Smartphone } from 'lucide-react';
 
 const features = [
   {
-    icon: Link2,
-    title: 'Paste & Build',
-    description: 'Just drop your social media links — GitHub, LinkedIn, Twitter — and your portfolio builds itself.',
-    gradient: 'from-blue-500/20 to-cyan-500/20',
-  },
-  {
     icon: Zap,
-    title: 'Ready in Minutes',
-    description: 'No waiting. Your professional portfolio is live instantly after pasting your links.',
+    title: '10-Second Preview',
+    description: 'Enter your name and instantly see premium portfolio templates personalized with your brand.',
     gradient: 'from-yellow-500/20 to-orange-500/20',
   },
   {
-    icon: Shield,
-    title: 'Secure & Private',
-    description: 'Your data is protected with enterprise-grade security measures.',
-    gradient: 'from-blue-500/20 to-cyan-500/20',
-  },
-  {
     icon: Palette,
-    title: 'Fully Customizable',
-    description: 'Choose templates, colors, and fonts. Make it truly yours with zero design skills.',
+    title: 'Premium Templates',
+    description: 'Hand-crafted designs with 3D effects, cinematic animations, and luxury aesthetics.',
     gradient: 'from-pink-500/20 to-purple-500/20',
   },
   {
-    icon: Settings,
-    title: 'Admin Panel',
-    description: 'Full control over your portfolio with an intuitive dashboard to update content anytime.',
+    icon: Smartphone,
+    title: 'Photo Personalization',
+    description: 'Upload your headshot and watch the template transform into your personal brand.',
+    gradient: 'from-blue-500/20 to-cyan-500/20',
+  },
+  {
+    icon: Globe,
+    title: 'Custom Domain',
+    description: 'Get your own subdomain at your-name.portaura.com — professional and memorable.',
+    gradient: 'from-green-500/20 to-emerald-500/20',
+  },
+  {
+    icon: Shield,
+    title: 'One-Time Payment',
+    description: 'Pay once, own forever. No subscriptions, no hidden fees. $49 for your entire portfolio.',
     gradient: 'from-violet-500/20 to-indigo-500/20',
   },
   {
     icon: Star,
-    title: 'Premium Quality',
-    description: 'Pixel-perfect designs that impress recruiters and clients.',
+    title: 'Impress Everyone',
+    description: 'Stand out from competition with a portfolio that looks like it cost thousands to build.',
     gradient: 'from-primary/20 to-lime-glow/20',
   },
 ];
@@ -58,13 +58,13 @@ const FeaturesSection = () => {
             className="text-center mb-16"
           >
             <span className="text-primary font-medium text-sm tracking-widest uppercase mb-4 block">
-              Why Choose Us
+              Why Portaura
             </span>
             <h2 className="font-heading text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
-              WHAT WE <span className="text-primary">DELIVER</span>
+              WHAT YOU <span className="text-primary">GET</span>
             </h2>
             <p className="text-muted-foreground max-w-2xl mx-auto text-lg">
-              From social links to stunning portfolio — here's what makes us different.
+              From your name to a live premium portfolio — here's why thousands choose Portaura.
             </p>
           </motion.div>
 

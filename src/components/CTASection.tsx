@@ -1,13 +1,23 @@
 import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
-import { ArrowRight, Link2 } from 'lucide-react';
+import { ArrowRight, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { useNavigate } from 'react-router-dom';
 
-const CTASection = () => {
+interface Props {
+  onScrollToHero?: () => void;
+}
+
+const CTASection = ({ onScrollToHero }: Props) => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
-  const navigate = useNavigate();
+
+  const handleClick = () => {
+    if (onScrollToHero) {
+      onScrollToHero();
+    } else {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
 
   return (
     <section className="py-20 md:py-28 relative overflow-hidden" ref={ref}>
@@ -19,8 +29,8 @@ const CTASection = () => {
             transition={{ duration: 0.5 }}
             className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-primary/10 border border-primary/30 mb-8 backdrop-blur-sm"
           >
-            <Link2 className="w-4 h-4 text-primary" />
-            <span className="text-sm font-medium text-primary">It takes less than 2 minutes</span>
+            <Sparkles className="w-4 h-4 text-primary" />
+            <span className="text-sm font-medium text-primary">It takes 10 seconds</span>
           </motion.div>
 
           <motion.h2
@@ -29,9 +39,9 @@ const CTASection = () => {
             transition={{ duration: 0.5, delay: 0.1 }}
             className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight"
           >
-            Ready to Build
+            Ready to See
             <br />
-            <span className="text-gradient">From Your Links?</span>
+            <span className="text-gradient">Your Portfolio?</span>
           </motion.h2>
 
           <motion.p
@@ -40,7 +50,7 @@ const CTASection = () => {
             transition={{ duration: 0.5, delay: 0.2 }}
             className="text-lg md:text-xl text-muted-foreground mb-10 max-w-2xl mx-auto leading-relaxed"
           >
-            Paste your social media links and get a premium portfolio in minutes. No design skills, no coding — just your links.
+            Just type your name. See your personalized portfolio come to life instantly. No sign up, no credit card.
           </motion.p>
 
           <motion.div
@@ -53,10 +63,10 @@ const CTASection = () => {
               variant="hero"
               size="xl" 
               className="group"
-              onClick={() => navigate('/order')}
+              onClick={handleClick}
             >
-              <Link2 className="w-5 h-5 mr-2" />
-              BUILD MY PORTFOLIO
+              <Sparkles className="w-5 h-5 mr-2" />
+              TRY IT NOW — FREE
               <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform duration-200" />
             </Button>
           </motion.div>
@@ -67,7 +77,7 @@ const CTASection = () => {
             transition={{ duration: 0.5, delay: 0.4 }}
             className="text-sm text-muted-foreground"
           >
-            Free to build • No credit card required • Live in minutes
+            Free preview • No sign up • Live in 10 seconds
           </motion.p>
         </div>
       </div>
