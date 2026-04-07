@@ -201,7 +201,7 @@ const BeforeAfterSection = () => {
             className="flex justify-center mt-12"
           >
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.98 }}>
-              <Button variant="hero" size="xl" className="group relative overflow-hidden" onClick={() => navigate('/order')}>
+              <Button variant="hero" size="xl" className="group relative overflow-hidden" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
                 <motion.span
                   className="absolute inset-0 bg-gradient-to-r from-primary/0 via-white/20 to-primary/0"
                   initial={{ x: '-100%' }}

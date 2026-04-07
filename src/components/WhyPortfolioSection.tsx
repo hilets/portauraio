@@ -67,16 +67,16 @@ const WhyPortfolioSection = () => {
 
           {/* Main Heading */}
           <h2 className="font-heading text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
-            <span className="text-foreground">Your Work Deserves</span>
+            <span className="text-foreground">Your Name Deserves</span>
             <br />
-            <span className="text-primary">A Stunning Stage</span>
+            <span className="text-primary">A Premium Stage</span>
           </h2>
 
           {/* Paragraph */}
           <p className="text-muted-foreground text-lg md:text-xl max-w-3xl mx-auto leading-relaxed">
-            In today's competitive landscape, talent alone isn't enough. Paste your social links and 
-            let us transform them into a professional portfolio that captures attention and opens doors. 
-            <span className="text-foreground font-medium"> Just your links. That's all we need.</span>
+            In today's competitive landscape, talent alone isn't enough. Enter your name and 
+            see how a premium portfolio brings your personal brand to life — instantly. 
+            <span className="text-foreground font-medium"> Just your name. That's all we need to start.</span>
           </p>
         </motion.div>
 
