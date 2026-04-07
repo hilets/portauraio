@@ -11,7 +11,7 @@ const BeforeAfterSection = () => {
   const ref = useRef(null);
   const containerRef = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-80px' });
-  const navigate = useNavigate();
+  const isInView = useInView(ref, { once: true, margin: '-80px' });
   const [sliderPosition, setSliderPosition] = useState(50);
   const [isDragging, setIsDragging] = useState(false);
 
