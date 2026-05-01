@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import Header from '@/components/Header';
-import HeroSection from '@/components/HeroSection';
+import HeroSection, { type PersonalData } from '@/components/HeroSection';
 import PreviewGallery from '@/components/PreviewGallery';
 import TemplateFullPreview from '@/components/TemplateFullPreview';
 import WhyPortfolioSection from '@/components/WhyPortfolioSection';
@@ -14,46 +14,42 @@ import ScrollToTop from '@/components/ScrollToTop';
 
 type FlowState =
   | { step: 'landing' }
-  | { step: 'gallery'; name: string }
-  | { step: 'preview'; name: string; templateId: 'aura-infinity' | 'quantum-studio' };
+  | { step: 'gallery'; data: PersonalData }
+  | { step: 'preview'; data: PersonalData };
 
 const Index = () => {
   const [flow, setFlow] = useState<FlowState>({ step: 'landing' });
 
-  const handleCreatePreview = (name: string) => {
-    setFlow({ step: 'gallery', name });
-    // Scroll to gallery after a tick
+  const handleCreatePreview = (data: PersonalData) => {
+    setFlow({ step: 'gallery', data });
     setTimeout(() => {
       document.getElementById('preview-gallery')?.scrollIntoView({ behavior: 'smooth' });
     }, 100);
   };
 
-  const handleSelectTemplate = (templateId: 'aura-infinity' | 'quantum-studio') => {
+  const handleSelectTemplate = () => {
     if (flow.step === 'gallery') {
-      setFlow({ step: 'preview', name: flow.name, templateId });
+      setFlow({ step: 'preview', data: flow.data });
     }
   };
 
   const handleBackFromPreview = () => {
     if (flow.step === 'preview') {
-      setFlow({ step: 'gallery', name: flow.name });
+      setFlow({ step: 'gallery', data: flow.data });
     }
   };
 
   const handlePayment = () => {
-    // TODO: Integrate Stripe Express Checkout
     alert('Stripe checkout will be integrated here. Redirecting to order page for now.');
     if (flow.step === 'preview') {
-      window.location.href = `/order?name=${encodeURIComponent(flow.name)}&template=${flow.templateId}`;
+      window.location.href = `/order?name=${encodeURIComponent(flow.data.name)}`;
     }
   };
 
-  // Full-screen template preview mode
   if (flow.step === 'preview') {
     return (
       <TemplateFullPreview
-        userName={flow.name}
-        templateId={flow.templateId}
+        personalData={flow.data}
         onBack={handleBackFromPreview}
         onPayment={handlePayment}
       />
@@ -67,11 +63,10 @@ const Index = () => {
       <main className="relative z-10">
         <HeroSection onCreatePreview={handleCreatePreview} />
 
-        {/* Preview Gallery - shown after name entry */}
         {flow.step === 'gallery' && (
           <div id="preview-gallery">
             <PreviewGallery
-              userName={flow.name}
+              personalData={flow.data}
               onSelectTemplate={handleSelectTemplate}
             />
           </div>

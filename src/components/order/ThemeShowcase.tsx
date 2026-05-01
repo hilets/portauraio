@@ -17,20 +17,6 @@ const templates = [
       { icon: Zap, text: 'Scroll FX' },
     ],
   },
-  {
-    id: 'quantum-studio' as const,
-    name: 'Quantum Studio',
-    tagline: 'Editorial minimalism with cinematic reveals',
-    badge: 'Premium',
-    bg: 'linear-gradient(135deg, #0a0a0a 0%, #141414 40%, #0d0d0d 100%)',
-    accent: '#00e5ff',
-    features: [
-      { icon: Type, text: 'Text Reveals' },
-      { icon: Palette, text: 'Editorial' },
-      { icon: Zap, text: 'Scroll Motion' },
-      { icon: MousePointer2, text: 'Hover FX' },
-    ],
-  },
 ];
 
 interface Props {

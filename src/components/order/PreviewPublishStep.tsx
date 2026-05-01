@@ -9,7 +9,6 @@ interface Props {
 
 const templates: { id: PortfolioData['template']; name: string; desc: string }[] = [
   { id: 'aura-infinity', name: 'Aura Infinity', desc: 'Futuristic 3D hero with bento-grid layout' },
-  { id: 'quantum-studio', name: 'Quantum Studio', desc: 'Luxury editorial with cinematic reveals' },
 ];
 
 const presetColors = [
