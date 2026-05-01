@@ -21,7 +21,7 @@ export interface PortfolioData {
   primaryColor: string;
   font: 'Inter' | 'Playfair Display' | 'JetBrains Mono';
   profileImage: string;
-  template: 'aura-infinity' | 'quantum-studio';
+  template: 'aura-infinity';
 }
 
 const defaultData: PortfolioData = {
