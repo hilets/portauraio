@@ -6,7 +6,6 @@ import ProjectsSection from './sections/ProjectsSection';
 import ExperienceSection from './sections/ExperienceSection';
 import TestimonialsSection from './sections/TestimonialsSection';
 import ContactSection from './sections/ContactSection';
-import { FullQuantum } from './QuantumRenderer';
 
 export interface PortfolioProps {
   name: string;
@@ -17,12 +16,9 @@ export interface PortfolioProps {
   socialLinks: { platform: string; url: string }[];
   primaryColor: string;
   font: string;
-  template?: 'aura-infinity' | 'quantum-studio';
+  template?: 'aura-infinity';
 }
 
-/* ================================================================
-   AURA INFINITY — FULL
-   ================================================================ */
 const FullAura = (props: PortfolioProps) => {
   const { name, title, bio, email, phone, socialLinks, primaryColor: c, font } = props;
   const fontFamily = getFontFamily(font);
@@ -48,16 +44,7 @@ const FullAura = (props: PortfolioProps) => {
   );
 };
 
-/* ================================================================
-   MAIN EXPORT
-   ================================================================ */
 const PortfolioRenderer = (props: PortfolioProps) => {
-  const template = props.template || 'aura-infinity';
-
-  if (template === 'quantum-studio') {
-    return <FullQuantum {...props} />;
-  }
-
   return <FullAura {...props} />;
 };
 
