@@ -1,7 +1,6 @@
 import { motion } from 'framer-motion';
 import { ChevronDown } from 'lucide-react';
 import { Reveal, MagneticBtn } from '../PortfolioHelpers';
-import Hero3DScene from '../Hero3D';
 
 interface Props {
   name: string;
@@ -13,8 +12,26 @@ interface Props {
 
 const HeroSection = ({ name, title, bio, color: c, email }: Props) => (
   <section className="min-h-screen flex items-center relative overflow-hidden">
-    {/* Three.js Background */}
-    <Hero3DScene color={c} />
+    <div
+      className="absolute inset-0 z-0"
+      style={{
+        background: `radial-gradient(circle at 50% 30%, ${c}22 0%, ${c}10 18%, transparent 38%), linear-gradient(145deg, #04060b 0%, #071120 50%, #04060c 100%)`,
+      }}
+    />
+
+    <motion.div
+      className="absolute left-1/2 top-[22%] z-0 h-[24rem] w-[24rem] -translate-x-1/2 rounded-full blur-3xl"
+      style={{ background: `${c}22` }}
+      animate={{ scale: [1, 1.08, 1], opacity: [0.45, 0.7, 0.45] }}
+      transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
+    />
+
+    <motion.div
+      className="absolute inset-x-0 bottom-0 z-0 h-56"
+      style={{ background: `linear-gradient(180deg, transparent 0%, ${c}12 45%, transparent 100%)` }}
+      animate={{ opacity: [0.35, 0.55, 0.35] }}
+      transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
+    />
 
     {/* Gradient overlay for text readability */}
     <div className="absolute inset-0 z-[1]" style={{ background: `radial-gradient(ellipse at center, transparent 30%, #04060b 75%)` }} />
