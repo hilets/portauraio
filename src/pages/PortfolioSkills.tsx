@@ -2,7 +2,8 @@ import { motion } from 'framer-motion';
 import { useState } from 'react';
 import { 
   Camera, Code, Languages, Gamepad2, Trophy, User, Mail, Phone, MapPin,
-  Instagram, Github, Linkedin, Twitter, ExternalLink
+  Instagram, Github, Linkedin, Twitter, ExternalLink,
+  type LucideIcon
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
@@ -51,7 +52,7 @@ const SkillBar = ({ name, percentage, delay, color }: { name: string; percentage
 const CircularSkill = ({ name, percentage, icon: Icon, delay, color }: { 
   name: string; 
   percentage: number; 
-  icon: React.ElementType; 
+  icon: LucideIcon; 
   delay: number;
   color: string;
 }) => {
