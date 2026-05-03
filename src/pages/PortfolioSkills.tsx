@@ -52,7 +52,7 @@ const SkillBar = ({ name, percentage, delay, color }: { name: string; percentage
 const CircularSkill = ({ name, percentage, icon: Icon, delay, color }: { 
   name: string; 
   percentage: number; 
-  icon: React.ElementType; 
+  icon: LucideIcon; 
   delay: number;
   color: string;
 }) => {
