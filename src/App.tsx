@@ -4,28 +4,35 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ThemeProvider } from "@/contexts/ThemeContext";
+import { lazy, Suspense } from "react";
 import Index from "./pages/Index";
-import Contact from "./pages/Contact";
-import About from "./pages/About";
-import Careers from "./pages/Careers";
-
-import ResumeWriting from "./pages/ResumeWriting";
-import CareerConsulting from "./pages/CareerConsulting";
-import Privacy from "./pages/Privacy";
-import Terms from "./pages/Terms";
-import Cookies from "./pages/Cookies";
-import AdminPanel from "./pages/AdminPanel";
-
-import PortfolioSkills from "./pages/PortfolioSkills";
-import Templates from "./pages/Templates";
-import TemplateSales from "./pages/TemplateSales";
-import Checkout from "./pages/Checkout";
-import OrderWizard from "./pages/OrderWizard";
-import PortfolioView from "./pages/PortfolioView";
 import NotFound from "./pages/NotFound";
 import ScrollToTopOnNavigate from "./components/ScrollToTopOnNavigate";
 
+const Contact = lazy(() => import("./pages/Contact"));
+const About = lazy(() => import("./pages/About"));
+const Careers = lazy(() => import("./pages/Careers"));
+const ResumeWriting = lazy(() => import("./pages/ResumeWriting"));
+const CareerConsulting = lazy(() => import("./pages/CareerConsulting"));
+const Privacy = lazy(() => import("./pages/Privacy"));
+const Terms = lazy(() => import("./pages/Terms"));
+const Cookies = lazy(() => import("./pages/Cookies"));
+const AdminPanel = lazy(() => import("./pages/AdminPanel"));
+const PortfolioSkills = lazy(() => import("./pages/PortfolioSkills"));
+const Templates = lazy(() => import("./pages/Templates"));
+const TemplateSales = lazy(() => import("./pages/TemplateSales"));
+const Checkout = lazy(() => import("./pages/Checkout"));
+const OrderWizard = lazy(() => import("./pages/OrderWizard"));
+const PortfolioView = lazy(() => import("./pages/PortfolioView"));
+const PortfolioAdmin = lazy(() => import("./pages/PortfolioAdmin"));
+
 const queryClient = new QueryClient();
+
+const Loader = () => (
+  <div className="min-h-screen flex items-center justify-center bg-background">
+    <div className="w-8 h-8 border-2 border-primary/30 border-t-primary rounded-full animate-spin" />
+  </div>
+);
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
@@ -35,28 +42,28 @@ const App = () => (
         <Sonner />
         <BrowserRouter>
           <ScrollToTopOnNavigate />
-          <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/careers" element={<Careers />} />
-            
-            <Route path="/resume-writing" element={<ResumeWriting />} />
-            <Route path="/career-consulting" element={<CareerConsulting />} />
-            <Route path="/privacy" element={<Privacy />} />
-            <Route path="/terms" element={<Terms />} />
-            <Route path="/cookies" element={<Cookies />} />
-            <Route path="/admin" element={<AdminPanel />} />
-            
-            <Route path="/portfolio-skills" element={<PortfolioSkills />} />
-            <Route path="/templates" element={<Templates />} />
-            <Route path="/templates/:id" element={<TemplateSales />} />
-            <Route path="/checkout/:templateId" element={<Checkout />} />
-            <Route path="/order" element={<OrderWizard />} />
-            <Route path="/p/:id" element={<PortfolioView />} />
-            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-            <Route path="*" element={<NotFound />} />
-          </Routes>
+          <Suspense fallback={<Loader />}>
+            <Routes>
+              <Route path="/" element={<Index />} />
+              <Route path="/contact" element={<Contact />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/careers" element={<Careers />} />
+              <Route path="/resume-writing" element={<ResumeWriting />} />
+              <Route path="/career-consulting" element={<CareerConsulting />} />
+              <Route path="/privacy" element={<Privacy />} />
+              <Route path="/terms" element={<Terms />} />
+              <Route path="/cookies" element={<Cookies />} />
+              <Route path="/admin" element={<AdminPanel />} />
+              <Route path="/portfolio-skills" element={<PortfolioSkills />} />
+              <Route path="/templates" element={<Templates />} />
+              <Route path="/templates/:id" element={<TemplateSales />} />
+              <Route path="/checkout/:templateId" element={<Checkout />} />
+              <Route path="/order" element={<OrderWizard />} />
+              <Route path="/p/:id" element={<PortfolioView />} />
+              <Route path="/p/:id/admin" element={<PortfolioAdmin />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </Suspense>
         </BrowserRouter>
       </TooltipProvider>
     </ThemeProvider>
