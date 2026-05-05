@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { useRef, useEffect, useState } from 'react';
+import { useRef, useEffect, useState, useCallback } from 'react';
 import { Sparkles, ArrowRight, Star } from 'lucide-react';
 import PortfolioRenderer from '@/components/portfolio/PortfolioRenderer';
 import { PreviewModeProvider } from '@/contexts/PreviewModeContext';
@@ -10,26 +10,37 @@ interface Props {
   onSelectTemplate: () => void;
 }
 
-const SCALE = 0.28;
 const INNER_WIDTH = 1280;
 
 const PreviewGallery = ({ personalData, onSelectTemplate }: Props) => {
   const innerRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [scale, setScale] = useState(0.28);
   const [scaledHeight, setScaledHeight] = useState(450);
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
+  const recalculate = useCallback(() => {
+    if (!containerRef.current) return;
+    const containerWidth = containerRef.current.offsetWidth;
+    const newScale = containerWidth / INNER_WIDTH;
+    setScale(newScale);
+
+    setTimeout(() => {
       if (innerRef.current) {
         const heroHeight = Math.min(innerRef.current.scrollHeight, 900);
-        setScaledHeight(heroHeight * SCALE);
+        setScaledHeight(heroHeight * newScale);
       }
-    }, 500);
-    return () => clearTimeout(timer);
+    }, 300);
   }, []);
+
+  useEffect(() => {
+    recalculate();
+    window.addEventListener('resize', recalculate);
+    return () => window.removeEventListener('resize', recalculate);
+  }, [recalculate]);
 
   return (
     <section className="py-16 md:py-24 px-4 sm:px-6 md:px-10 lg:px-16">
-      <div className="max-w-4xl mx-auto">
+      <div className="max-w-5xl mx-auto">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -67,6 +78,7 @@ const PreviewGallery = ({ personalData, onSelectTemplate }: Props) => {
           onClick={onSelectTemplate}
         >
           <motion.div
+            ref={containerRef}
             className="rounded-2xl border-2 border-border/50 overflow-hidden bg-card/50 backdrop-blur-sm transition-all duration-500 group-hover:border-primary/60 group-hover:shadow-[0_0_40px_hsl(var(--primary)_/_0.15)]"
             whileHover={{ y: -8 }}
             transition={{ duration: 0.3 }}
@@ -97,7 +109,7 @@ const PreviewGallery = ({ personalData, onSelectTemplate }: Props) => {
                   className="origin-top-left pointer-events-none"
                   style={{
                     width: INNER_WIDTH,
-                    transform: `scale(${SCALE})`,
+                    transform: `scale(${scale})`,
                     overflowX: 'hidden',
                   }}
                 >
