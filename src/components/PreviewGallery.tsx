@@ -10,7 +10,6 @@ interface Props {
   onSelectTemplate: () => void;
 }
 
-const SCALE = 0.28;
 const INNER_WIDTH = 1280;
 
 const PreviewGallery = ({ personalData, onSelectTemplate }: Props) => {
