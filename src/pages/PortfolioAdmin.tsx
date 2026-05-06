@@ -13,7 +13,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Switch } from '@/components/ui/switch';
 import { useToast } from '@/hooks/use-toast';
-import { getPortfolio, type StoredPortfolio } from '@/lib/portfolioStore';
+import { getPortfolio, updatePortfolio as persistPortfolio, type StoredPortfolio } from '@/lib/portfolioStore';
 import ReactMarkdown from 'react-markdown';
 
 interface PortfolioState {
