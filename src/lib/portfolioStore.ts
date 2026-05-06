@@ -70,3 +70,21 @@ export const getAllPortfolios = (): StoredPortfolio[] => {
   });
   return merged;
 };
+
+export const updatePortfolio = (id: string, updates: Partial<PortfolioData>): boolean => {
+  const local = readFromLocalStorage();
+  const idx = local.findIndex((p) => p.id === id);
+  if (idx === -1) {
+    // Try memory
+    const memIdx = memoryPortfolios.findIndex((p) => p.id === id);
+    if (memIdx === -1) return false;
+    Object.assign(memoryPortfolios[memIdx], updates);
+    return true;
+  }
+  local[idx] = { ...local[idx], ...updates };
+  writeToLocalStorage(local);
+  // Also update memory copy
+  const memIdx = memoryPortfolios.findIndex((p) => p.id === id);
+  if (memIdx !== -1) Object.assign(memoryPortfolios[memIdx], updates);
+  return true;
+};
