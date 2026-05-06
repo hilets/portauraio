@@ -81,13 +81,19 @@ const PortfolioAdmin = () => {
     });
   }, [id]);
 
-  // Auto-save to localStorage
+  // Auto-save to main portfolio store
   useEffect(() => {
     if (!portfolio || !id) return;
-    try {
-      const key = `portaura_admin_${id}`;
-      localStorage.setItem(key, JSON.stringify(portfolio));
-    } catch {}
+    persistPortfolio(id, {
+      name: portfolio.name,
+      title: portfolio.title,
+      bio: portfolio.bio,
+      email: portfolio.email,
+      phone: portfolio.phone,
+      primaryColor: portfolio.primaryColor,
+      font: portfolio.font,
+      socialLinks: portfolio.socialLinks,
+    });
   }, [portfolio, id]);
 
   useEffect(() => {
