@@ -8,7 +8,7 @@ const footerLinks = {
     { name: 'Contact', href: '/contact' },
   ],
   services: [
-    { name: 'Portfolio Design', href: '/portfolio-design' },
+    { name: 'Custom Portfolio Design', href: '/custom-portfolio-design' },
     { name: 'Resume Writing', href: '/resume-writing' },
   ],
   legal: [

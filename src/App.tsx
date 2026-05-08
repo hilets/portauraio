@@ -17,8 +17,8 @@ const CareerConsulting = lazy(() => import("./pages/CareerConsulting"));
 const Privacy = lazy(() => import("./pages/Privacy"));
 const Terms = lazy(() => import("./pages/Terms"));
 const Cookies = lazy(() => import("./pages/Cookies"));
-const AdminPanel = lazy(() => import("./pages/AdminPanel"));
 const PortfolioSkills = lazy(() => import("./pages/PortfolioSkills"));
+const CustomPortfolioDesign = lazy(() => import("./pages/CustomPortfolioDesign"));
 const Templates = lazy(() => import("./pages/Templates"));
 const TemplateSales = lazy(() => import("./pages/TemplateSales"));
 const Checkout = lazy(() => import("./pages/Checkout"));
@@ -53,8 +53,8 @@ const App = () => (
               <Route path="/privacy" element={<Privacy />} />
               <Route path="/terms" element={<Terms />} />
               <Route path="/cookies" element={<Cookies />} />
-              <Route path="/admin" element={<AdminPanel />} />
               <Route path="/portfolio-skills" element={<PortfolioSkills />} />
+              <Route path="/custom-portfolio-design" element={<CustomPortfolioDesign />} />
               <Route path="/templates" element={<Templates />} />
               <Route path="/templates/:id" element={<TemplateSales />} />
               <Route path="/checkout/:templateId" element={<Checkout />} />
