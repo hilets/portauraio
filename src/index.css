@@ -72,51 +72,51 @@
   }
 
   .theme-minimal {
-    /* Cool blue-grey minimal palette */
-    --background: 220 30% 98%;
-    --foreground: 220 40% 12%;
+    /* Warm cream nas.com inspired palette */
+    --background: 35 38% 94%;
+    --foreground: 20 18% 11%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 220 40% 12%;
+    --card: 35 35% 97%;
+    --card-foreground: 20 18% 11%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 220 40% 12%;
+    --popover: 35 35% 97%;
+    --popover-foreground: 20 18% 11%;
 
-    --primary: 220 70% 32%;
-    --primary-foreground: 220 30% 98%;
+    --primary: 14 78% 48%;
+    --primary-foreground: 35 38% 97%;
 
-    --secondary: 220 26% 92%;
-    --secondary-foreground: 220 40% 18%;
+    --secondary: 35 22% 88%;
+    --secondary-foreground: 20 18% 14%;
 
-    --muted: 220 22% 94%;
-    --muted-foreground: 220 12% 42%;
+    --muted: 35 24% 90%;
+    --muted-foreground: 25 10% 38%;
 
-    --accent: 220 80% 58%;
-    --accent-foreground: 220 30% 98%;
+    --accent: 14 82% 56%;
+    --accent-foreground: 35 38% 97%;
 
-    --destructive: 0 72% 55%;
+    --destructive: 0 72% 50%;
     --destructive-foreground: 0 0% 99%;
 
-    --border: 220 22% 88%;
-    --input: 220 22% 88%;
-    --ring: 220 70% 32%;
+    --border: 30 20% 84%;
+    --input: 30 20% 84%;
+    --ring: 14 78% 48%;
 
     --radius: 0.75rem;
 
-    --lime: 220 70% 32%;
-    --lime-glow: 220 80% 58%;
-    --dark: 220 30% 97%;
-    --dark-lighter: 220 26% 94%;
-    --dark-card: 0 0% 100%;
+    --lime: 14 78% 48%;
+    --lime-glow: 14 82% 60%;
+    --dark: 35 38% 94%;
+    --dark-lighter: 35 30% 91%;
+    --dark-card: 35 35% 97%;
 
-    --gradient-primary: linear-gradient(135deg, hsl(220 70% 32%), hsl(220 80% 55%));
-    --gradient-dark: linear-gradient(180deg, hsl(220 30% 98%), hsl(220 26% 92%));
-    --gradient-glow: radial-gradient(circle at center, hsl(220 80% 58% / 0.18), transparent 70%);
+    --gradient-primary: linear-gradient(135deg, hsl(14 78% 48%), hsl(28 90% 58%));
+    --gradient-dark: linear-gradient(180deg, hsl(35 38% 95%), hsl(35 24% 88%));
+    --gradient-glow: radial-gradient(circle at center, hsl(14 82% 56% / 0.18), transparent 70%);
     --gradient-lime: var(--gradient-primary);
 
-    --shadow-primary: 0 10px 40px hsl(220 70% 32% / 0.15);
+    --shadow-primary: 0 10px 40px hsl(14 78% 48% / 0.18);
     --shadow-lime: var(--shadow-primary);
-    --shadow-card: 0 1px 3px hsl(220 30% 20% / 0.06), 0 8px 24px hsl(220 30% 20% / 0.06);
+    --shadow-card: 0 1px 3px hsl(20 30% 18% / 0.06), 0 8px 24px hsl(20 30% 18% / 0.06);
 
     --font-heading: 'Inter', sans-serif;
     --font-body: 'Inter', sans-serif;
