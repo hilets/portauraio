@@ -192,22 +192,24 @@ const Header = () => {
                 </motion.button>
                 <Link to="/">
                   <motion.span
-                    className="font-heading text-xl md:text-2xl font-bold text-foreground tracking-widest cursor-pointer"
+                    className="text-2xl md:text-3xl font-semibold text-foreground cursor-pointer leading-none"
+                    style={{ fontFamily: "'Instrument Serif', serif", letterSpacing: '-0.01em' }}
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                   >
-                    PORT<span className="text-primary">AURA</span>
+                    portaura<span className="text-primary">.</span>
                   </motion.span>
                 </Link>
               </div>
             ) : (
               <motion.a
                 href="#"
-                className="font-heading text-xl md:text-2xl font-bold text-foreground tracking-widest"
+                className="text-2xl md:text-3xl font-semibold text-foreground leading-none"
+                style={{ fontFamily: "'Instrument Serif', serif", letterSpacing: '-0.01em' }}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
-                PORT<span className="text-primary">AURA</span>
+                portaura<span className="text-primary">.</span>
               </motion.a>
             )}
 

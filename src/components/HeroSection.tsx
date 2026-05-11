@@ -37,7 +37,7 @@ const HeroSection = ({ onCreatePreview }: Props) => {
         className="absolute inset-0 -z-10"
         style={{
           background:
-            'radial-gradient(1200px 600px at 50% -10%, hsl(35 90% 92% / 0.55), transparent 60%), radial-gradient(900px 500px at 50% 110%, hsl(220 80% 92% / 0.6), transparent 60%), linear-gradient(180deg, hsl(220 30% 99%) 0%, hsl(220 30% 97%) 100%)',
+            'radial-gradient(1200px 600px at 50% -10%, hsl(28 90% 88% / 0.7), transparent 60%), radial-gradient(900px 500px at 50% 110%, hsl(14 80% 86% / 0.55), transparent 60%), linear-gradient(180deg, hsl(35 40% 96%) 0%, hsl(35 38% 93%) 100%)',
         }}
       />
 
