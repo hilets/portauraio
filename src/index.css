@@ -72,63 +72,63 @@
   }
 
   .theme-minimal {
-    /* Springer palette - 3rd column (#bfdbdd / #9ec5c6) */
-    --background: 184 30% 97%;
-    --foreground: 184 40% 12%;
+    /* Cool blue-grey minimal palette */
+    --background: 220 30% 98%;
+    --foreground: 220 40% 12%;
 
     --card: 0 0% 100%;
-    --card-foreground: 184 40% 12%;
+    --card-foreground: 220 40% 12%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 184 40% 12%;
+    --popover-foreground: 220 40% 12%;
 
-    --primary: 184 38% 28%;
-    --primary-foreground: 184 30% 98%;
+    --primary: 220 70% 32%;
+    --primary-foreground: 220 30% 98%;
 
-    --secondary: 184 26% 90%;
-    --secondary-foreground: 184 40% 18%;
+    --secondary: 220 26% 92%;
+    --secondary-foreground: 220 40% 18%;
 
-    --muted: 184 22% 93%;
-    --muted-foreground: 184 12% 42%;
+    --muted: 220 22% 94%;
+    --muted-foreground: 220 12% 42%;
 
-    --accent: 182 26% 75%;
-    --accent-foreground: 184 40% 15%;
+    --accent: 220 80% 58%;
+    --accent-foreground: 220 30% 98%;
 
     --destructive: 0 72% 55%;
     --destructive-foreground: 0 0% 99%;
 
-    --border: 184 22% 85%;
-    --input: 184 22% 85%;
-    --ring: 184 38% 28%;
+    --border: 220 22% 88%;
+    --input: 220 22% 88%;
+    --ring: 220 70% 32%;
 
-    --radius: 0.5rem;
+    --radius: 0.75rem;
 
-    --lime: 184 38% 28%;
-    --lime-glow: 182 26% 60%;
-    --dark: 184 30% 97%;
-    --dark-lighter: 184 26% 94%;
+    --lime: 220 70% 32%;
+    --lime-glow: 220 80% 58%;
+    --dark: 220 30% 97%;
+    --dark-lighter: 220 26% 94%;
     --dark-card: 0 0% 100%;
 
-    --gradient-primary: linear-gradient(135deg, hsl(184 38% 28%), hsl(182 26% 55%));
-    --gradient-dark: linear-gradient(180deg, hsl(184 30% 98%), hsl(184 26% 92%));
-    --gradient-glow: radial-gradient(circle at center, hsl(182 26% 60% / 0.18), transparent 70%);
+    --gradient-primary: linear-gradient(135deg, hsl(220 70% 32%), hsl(220 80% 55%));
+    --gradient-dark: linear-gradient(180deg, hsl(220 30% 98%), hsl(220 26% 92%));
+    --gradient-glow: radial-gradient(circle at center, hsl(220 80% 58% / 0.18), transparent 70%);
     --gradient-lime: var(--gradient-primary);
 
-    --shadow-primary: 0 0 30px hsl(184 38% 28% / 0.12);
+    --shadow-primary: 0 10px 40px hsl(220 70% 32% / 0.15);
     --shadow-lime: var(--shadow-primary);
-    --shadow-card: 0 1px 3px hsl(184 30% 20% / 0.06), 0 6px 18px hsl(184 30% 20% / 0.05);
+    --shadow-card: 0 1px 3px hsl(220 30% 20% / 0.06), 0 8px 24px hsl(220 30% 20% / 0.06);
 
     --font-heading: 'Inter', sans-serif;
     --font-body: 'Inter', sans-serif;
 
-    --sidebar-background: 184 30% 98%;
-    --sidebar-foreground: 184 25% 25%;
-    --sidebar-primary: 184 38% 28%;
-    --sidebar-primary-foreground: 184 30% 98%;
-    --sidebar-accent: 184 26% 92%;
-    --sidebar-accent-foreground: 184 38% 28%;
-    --sidebar-border: 184 22% 88%;
-    --sidebar-ring: 184 38% 28%;
+    --sidebar-background: 220 30% 98%;
+    --sidebar-foreground: 220 25% 25%;
+    --sidebar-primary: 220 70% 32%;
+    --sidebar-primary-foreground: 220 30% 98%;
+    --sidebar-accent: 220 26% 92%;
+    --sidebar-accent-foreground: 220 70% 32%;
+    --sidebar-border: 220 22% 88%;
+    --sidebar-ring: 220 70% 32%;
   }
 }
 
